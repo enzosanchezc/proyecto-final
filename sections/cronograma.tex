@@ -1,44 +1,47 @@
 \section{Cronograma}
 El proyecto se realizará en siete (7) meses. A continuación, se presenta un esquema de las tareas
 a desarrollar y sus tiempos correspondientes.
-\begin{center}
-    \begin{ganttchart}[y unit title=0.8cm,
-            y unit chart=0.7cm,
-            x unit=0.36cm,
-%            vgrid,hgrid,
-            title label anchor/.style={below=-1.6ex},
-            title left shift=0,
-            title right shift=0,
-            title height=1,
-            progress label text={},
-            bar height=0.7,
-            group right shift=0,
-            group top shift=.6,
-            group height=.3,]{1}{28}
-        %labels
-        \gantttitle{Mes}{28} \\
-        \gantttitle{May}{4}
-        \gantttitle{Jun}{4}
-        \gantttitle{Jul}{4}
-        \gantttitle{Ago}{4}
-        \gantttitle{Sep}{4}
-        \gantttitle{Oct}{4}
-        \gantttitle{Nov}{4} \\
+\begin{figure}[H]
+    \begin{center}
+        \begin{ganttchart}[y unit title=0.8cm,
+                y unit chart=0.7cm,
+                x unit=0.36cm,
+                %            vgrid,hgrid,
+                title label anchor/.style={below=-1.6ex},
+                title left shift=0,
+                title right shift=0,
+                title height=1,
+                progress label text={},
+                bar height=0.7,
+                group right shift=0,
+                group top shift=.6,
+                group height=.3,]{1}{28}
+            %labels
+            \gantttitle{Mes}{28} \\
+            \gantttitle{May}{4}
+            \gantttitle{Jun}{4}
+            \gantttitle{Jul}{4}
+            \gantttitle{Ago}{4}
+            \gantttitle{Sep}{4}
+            \gantttitle{Oct}{4}
+            \gantttitle{Nov}{4} \\
 
-        %tasks
-        \ganttbar{Investigación}{1}{10} \\
-        \ganttgroup{Diseño}{2}{10} \\
-        \ganttbar{Fuente conmutada}{2}{5} \\
-        \ganttbar{Fuente de corriente}{5}{7} \\
-        \ganttbar{Control}{6}{9} \\
-        \ganttbar{Protecciones}{9}{10} \\
-        \ganttbar{Implementación}{11}{18} \\
-        \ganttbar{Validación}{16}{21} \\
-        \ganttbar{Informe}{21}{28}
+            %tasks
+            \ganttbar{Investigación}{1}{10} \\
+            \ganttgroup{Diseño}{2}{10} \\
+            \ganttbar{Fuente conmutada}{2}{5} \\
+            \ganttbar{Fuente de corriente}{5}{7} \\
+            \ganttbar{Control}{6}{9} \\
+            \ganttbar{Protecciones}{9}{10} \\
+            \ganttbar{Implementación}{11}{18} \\
+            \ganttbar{Validación}{16}{21} \\
+            \ganttbar{Informe}{21}{28}
 
-        %relations
-        %\ganttlink{elem1}{elem2}
-    \end{ganttchart}
-\end{center}
+            %relations
+            %\ganttlink{elem6}{elem7}
+        \end{ganttchart}
+    \end{center}
+    \caption{Cronograma del proyecto}
+\end{figure}
 
 \end{document}
