@@ -49,7 +49,7 @@ se corregirán los circuitos propuestos.
 Esta etapa finaliza con la presentación del informe parcial. 
 
 \subsection{Simulaciones}
-El circuito fue diseñado y probado en LTSPICE (FALTA REFERENCIA), con el fin de verificar el diseño.
+El circuito fue diseñado y probado en LTspice \cite{ltspice}, con el fin de verificar el diseño.
 El proceso hasta el día de la fecha podría dividirse en las siguientes secciones:
 \begin{enumerate}
     \item Simulación del conversor.
@@ -63,30 +63,30 @@ enumerando los problemas encontrados y las soluciones propuestas.
 
 \subsubsection{Simulación del conversor}
 El primer paso de diseño fue la elección de una topología de conversión DC-DC.
+Esta etapa introduce aislación a partir de un transformador de alta frecuencia,
+disminuyendo el coste, tamaño y peso respecto a uno de baja frecuencia en base al núcleo magnético necesario.
+Como se requiere una única tensión de salida se evita utilizar múltiples devanados.
 El conversor debe alcanzar una potencia máxima de 300W y debe ser lo más sencillo posible para evitar un costo elevado. 
+
 La topología flyback es de baja complejidad al estar integrada por muy pocos componentes. 
 Como desventajas, el tamaño del núcleo del transformador se incrementa con la potencia requerida y en bornes del
-interruptor presenta una tensión igual al doble de la tensión máxima de entrada. En aplicaciones típicas se alcanzar valores de hasta 150W.
-La topología forward con un solo switch disminuye el tamaño del núcleo del transformador. 
+interruptor presenta una tensión igual al doble de la tensión máxima de entrada.
+En aplicaciones típicas se alcanzar valores de hasta 150W.
+
+La topología forward con un solo switch disminuye el tamaño del núcleo del transformador ya que la energía no necesita almacenarse en el entrehierro.
 Como desventajas, al igual que el flyback presenta alta tensión en bornes del interruptor y se eleva el costo debido al agregado de la bobina de filtrado.
-Admite una mayor potencia de salida entre 150-250W.
-por lo que se optó por la topología forward con dos switches. 
+La topología forward con dos switches reduce la tensión en bornes del interruptor a la mitad respecto a la de un solo switch (y con ello la disipación de potencia por switch), 
+pero el circuito de excitación de uno de los transistores queda flotante respecto a masa. 
+La topología con un solo switch admite una potencia de salida entre 150-250W y con 2 switches se eleva a 500W \cite{mohan}\cite{hart}. 
+En base a los criterios definidos inicialmente se eligió el conversor forward con dos switches como topología de conversión DC-DC. 
 
-Esta topología permite que la disipación de potencia por switch se reduzca a la mitad con respecto a
-su contraparte de un solo switch y cuenta con un tamaño del transformador reducido con respecto a
-un flyback de doble switch, ya que la energía no necesita almacenarse en el entrehierro.
-
-El problema que presentó la utilización de un conversor de tipo forward con doble switch fue que
-las señales que controlan a los switches son poco convencionales, lo cual se detallará en la secciones siguientes.
+El principal problema que presentó la utilización de este conversor fue que las señales que controlan a los switches son poco convencionales.
 
 \subsubsection{Simulación del rectificador de entrada}
-Una vez definido el circuito de conversión, se procedió a analizar los requisitos de la tensión de entrada.
-Una primera aproximación fue la de utilizar un rectificador de onda completa con un filtro pasa bajos,
-lo cual fue suficiente para esta aplicación.
-
-En base a sugerencias de la cátedra, se analizó también la posibilidad de utilizar un rectificador controlado,
-pero después de realizar las simulaciones correspondientes se llegó a la conclusión de que no daría ningún beneficio
-significativo y acomplejaría demasiado el diseño del circuito.
+Una vez definido el circuito de conversión DC-DC, se procedió a analizar los requisitos de la tensión de entrada.
+Al no existir limitaciones, se eligió implementar un rectificador de onda completa con un filtro pasa bajos. 
+Se analizó la posibilidad de utilizar un rectificador controlado, 
+pero luego de realizar las simulaciones correspondientes se concluyó que el costo de complicar el diseño del circuito no aporta ningún beneficio significativo.
 
 % Agregar lo del criterio de selección del rectificador, creo que era lo de la potencia del capacitor
 % pero no tengo idea como ponerlo
@@ -141,7 +141,7 @@ tanto de tensión como de corriente de salida, lo cual es importante porque repr
 Finalmente, para la selección de un controlador para los MOSFETs se tuvieron en cuenta algunos parámetros como
 la tensión máxima de entrada, frecuencia de switching y sincronización de las señales,
 pero no se logró hallar un controlador adecuado para esta aplicación.
-El principal motivo fue que los controladores convencionales generan señales alternadas mediante el método de bootstrapping (REFERENCIA),
+El principal motivo fue que los controladores convencionales generan señales alternadas mediante el método de bootstrapping \cite{hart},
 lo cual no sirve para la topología elegida. Esto, combinado con el elevado nivel de tensión en la entrada,
 llevó a la búsqueda de otros métodos de control; por eso, se diseñó un controlador propio que se adaptara
 a las necesidades del proyecto, cuyo diagrama puede observarse en la figura \ref{fig:driver}.
@@ -154,15 +154,43 @@ a las necesidades del proyecto, cuyo diagrama puede observarse en la figura \ref
 \end{figure}
 
 \subsubsection{Simulación de distintos modelos de batería}
-Para obtener resultados fiables de una simulación es necesario contar con un buen modelo.
-Inicialmente se realizó un modelo de resistencia variable a partir de los datos confeccionados durante los ensayos,
-el cual fue util para verificar el correcto funcionamiento de los límites de tensión y corriente,
-pero a medida que el proyecto fue avanzando, dejó de ser representativo de la realidad y hubo que corregirlo.
+Para que las simulaciones permitan obtener resultados fiables se buscó un modelo apropiado para la batería.
+El primer modelo consta de una resistencia variable a partir de los datos obtenidos de los ensayos. 
+Este componente representa la resistencia interna de la batería, que es responsable de la caída de tensión instantánea que se produce ante un escalón en la intensidad demandada.
 
-El siguiente modelo propuesto fue un capacitor de muy alto valor, el cual permitiría agregar el parámetro de capacidad
-de la batería. Este modelo no fue satisfactorio, por lo que se optó por la solución que actualmente se está utilizando:
-Un modelo dinámico con resistencia interna, estado de carga y tensión de circuito abierto dependiente del estado de carga (REFERENCIA).
+El siguiente modelo propuesto añade un capacitor de muy alto valor en serie con la resistencia variable,
+el cual representa la capacidad de almacenar carga de la batería.
+El modelo actual es un modelo dinámico donde los valores de los componentes no son fijos,
+sino que dependen de las condiciones de funcionamiento de la batería: estado de carga y funcionamiento en carga o descarga.
 
+El circuito de la izquierda modela la resistencia interna de la batería y el comportamiento transitorio ante distintas cargas.
+Por otro lado, el circuito de la derecha modela la capacidad de almacenamiento de energía de la batería y la carga almacenada durante los procesos de carga o descarga \cite{bateria}.
+
+Respecto al segundo modelo se agregan los siguientes componentes:
+\begin{itemize}
+    \item Los bloques compuestos por una resistencia y un capacitor en paralelo, que modelan la capacidad en los electrodos de las celdas y
+    la resistencia no lineal entre electrodos y electrolito.
+    En conjunto modelan las constantes de tiempo corta y larga de la respuesta transitoria de la tensión en la batería\cite{bateria_espanol}.
+    \item La fuente de tensión controlada por tensión, que representa la dependencia no lineal entre el estado de carga ($SOC$)
+    y la tensión de circuito abierto($V_{OC}$) dependiente del $SOC$.
+    \item La fuente de corriente controlada por corriente, representando la corriente de carga que modifica el $SOC$.
+\end{itemize}
+La tensión que existe en el circuito secundario ($V_{SOC}$) se normaliza de forma que $V_{SOC}=1V$ equivale al $SOC (100\%)$.
+La resistencia en paralelo modela la autodescarga de la batería.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{images/bateria_3.png}
+    \caption{Tercer y actual modelo de batería utilizado}
+    \label{fig:bateria_3}
+\end{figure}
+
+\subsection{Diseños pendientes}
+Habiendo desarrollado el cargador casi en su totalidad, aún queda por diseñar el circuito de protección
+contra cortocircuitos y el LED indicador. Ambos serán desarrollados durante la segunda parte del proyecto,
+debido a su baja complejidad con respecto al resto del circuito.
+
+Inicialmente se planeó implementar un filtro de entrada para evitar (ACA VAS VOS)
 
 \subsection{Implementación}
 Se diseñará un circuito impreso y se construirá un prototipo funcional que cumpla con las especificaciones propuestas. 
