@@ -50,7 +50,7 @@ Esta etapa finaliza con la presentación del informe parcial.
 
 \subsection{Simulaciones}
 El circuito fue diseñado y probado en LTspice \cite{ltspice}, con el fin de verificar el diseño.
-El proceso hasta el día de la fecha podría dividirse en las siguientes etapas:
+El proceso podría dividirse en las siguientes etapas:
 \begin{enumerate}
     \item Simulación del conversor.
     \item Simulación del rectificador de entrada.
@@ -61,7 +61,7 @@ El proceso hasta el día de la fecha podría dividirse en las siguientes etapas:
 En las siguientes secciones se detallarán cada una de estas etapas,
 enumerando los problemas encontrados y las soluciones propuestas.
 
-\subsubsection{Simulación del conversor}
+\subsubsection{Simulación del conversor DC-DC}
 El primer paso de diseño fue la elección de una topología de conversión DC-DC.
 Esta etapa introduce aislación a partir de un transformador de alta frecuencia,
 disminuyendo el coste, tamaño y peso respecto a uno de baja frecuencia en base al núcleo magnético necesario.
@@ -86,40 +86,42 @@ El principal problema que presentó la utilización de este conversor fue que la
 Una vez definido el circuito de conversión DC-DC, se procedió a analizar los requisitos de la tensión de entrada. 
 Los circuitos rectificadores AC-DC permiten convertir una tensión alterna en una tensión continua.
 
-Rectificador de media onda u onda completa
+\paragraph{Rectificador de media onda u onda completa}
 
-Si bien el rectificador de media onda es más simple ya que cuenta con un menor número de diodos, existen muchas ventajas del rectificador de onda completa frente al de media onda. 
-La primera de ellas es que la corriente media del generador de alterna(alimentación) es nula, lo cual beneficia a los transformadores. 
-La segunda se basa en el hecho de que para una misma carga, la tensión de rizado pico a pico para el rectificador de onda completa es aproximadamente la mitad que para el rectificador de media onda. 
-Esto se debe a que en el circuito de onda completa, el tiempo durante el que se descarga el capacitor es menor que en el circuito de media onda debido a la onda sinusoidal rectificada de la segunda mitad de cada período. 
-
+Si bien el rectificador de media onda es más simple ya que cuenta con un menor número de diodos,
+existen muchas ventajas del rectificador de onda completa frente al de media onda. 
+La primera de ellas es que la corriente media del generador de alterna(alimentación) es nula,
+lo cual beneficia a los transformadores. 
+La segunda se basa en el hecho de que para una misma carga, la tensión de rizado pico a pico para el rectificador de onda completa
+es aproximadamente la mitad que para el rectificador de media onda. 
+Esto se debe a que en el circuito de onda completa, el tiempo durante el que se descarga el capacitor es menor que en el circuito de media onda
+debido a la onda sinusoidal rectificada de la segunda mitad de cada período. 
 Por todos estos motivos se decidió implementar un rectificador de onda completa.
 
-Rectificador de onda completa en puente o con toma media
+\paragraph{Rectificador de onda completa en puente o con toma media}
 
-En puente
+El rectificador en puente presenta la caída de tensión de 2 diodos entre el generador y la carga. 
+La tensión máxima en un diodo polarizado en inversa es igual al valor pico del generador.
 
-Presenta la caída de tensión de 2 diodos entre el generador y la carga. 
-La tensión máxima en un diodo polarizado en inversa es el valor pico del generador.
-
-Transformador de toma media
-
-Sólo presenta la caída de tensión de un diodo entre el generador y la carga. 
+El transformador de toma media sólo presenta la caída de tensión de un diodo entre el generador y la carga. 
 Para una misma potencia entregada por el generador, los diodos consumen potencia y disminuyen la corriente y potencia que absorbe la carga. 
 La tensión máxima en un diodo polarizado en inversa es el doble del valor pico del generador.
 El transformador proporciona aislamiento eléctrico entre el generador y la carga. 
 
-Como la reducción de tensión a la salida no es significativa en esta aplicación, y el puente de diodos se puede implementar con un pequeño integrado, con el objetivo de disminuir el tamaño del circuito se decidió evitar el transformador y utilizar un rectificador de onda completa tipo puente.
+Como la reducción de tensión a la salida no es significativa en esta aplicación
+y el puente de diodos se puede implementar con un pequeño integrado,
+con el objetivo de disminuir el tamaño del circuito se decidió evitar el transformador
+y utilizar un rectificador de onda completa tipo puente.
 
-Filtrado
-% ¿No usamos bobina?
+\paragraph{Filtrado}
+
 El filtro pasa bajos compuesto por una red LC permite disminuir el rizado, es decir, la componente de alterna de la señal rectificada. 
 Como resultado se logra una tensión de salida aproximadamente continua.
 El capacitor mantiene la tensión de salida en un nivel constante y la bobina suaviza la corriente del rectificador y reduce la corriente de pico en los diodos. 
 
 Para disminuir el número de componentes se decidió utilizar únicamente un capacitor en paralelo con la capacidad suficiente para obtener una tensión continua.
 
-Rectificación controlada
+\paragraph{Rectificación controlada}
 
 Los tiristores son interruptores electrónicos controlados que son activados por una señal externa. 
 Poseen 3 terminales: ánodo, cátodo y puerta. Presentan altos valores nominales de corriente y tensión. Soportan altas corrientes y altas tensiones de bloqueo. 
@@ -130,11 +132,12 @@ Mediante conmutadores controlados como los SCR se controla la tensión de salida
 El ángulo de disparo es el intervalo angular entre la polarización directa del SCR y la aplicación de la señal de puerta. 
 Si el ángulo de disparo es 0, el comportamiento es igual al de un rectificador no controlado con diodos. 
 
-Se decidió utilizar rectificación no controlada ya que no se necesita una tensión específica a la salida y el costo de complejizar el diseño con el agregado de SCRs y un circuito dedicado de disparo no aporta ningún beneficio significativo.
+Se decidió utilizar rectificación no controlada ya que no se necesita una tensión específica a la salida
+y el costo de complejizar el diseño con el agregado de SCRs y un circuito dedicado de disparo no aporta ningún beneficio significativo.
 
 \subsubsection{Simulación del circuito de control}
-Esta etapa fue la mas extensa en diseñar debido a su complejidad. Inicialmente solo debía realimentar la tensión de salida
-y generar la señal PWM en base a esta, pero en base a los cambios descritos en la sección \ref{subsection:estudio_bibliografia}
+Esta etapa fue la mas extensa de diseñar debido a su complejidad. Inicialmente sólo debía realimentar la tensión de salida
+y generar la señal PWM en base a ésta, pero en base a los cambios descritos en la sección \ref{subsection:estudio_bibliografia}
 se separó su diseño en tres etapas:
 
 \begin{enumerate}
@@ -189,10 +192,13 @@ a las necesidades del proyecto, cuyo diagrama puede observarse en la figura \ref
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{images/driver.png}
+    \includegraphics[width=0.8\textwidth]{images/driver.png}
     \caption{Esquema del controlador de los MOSFETs}
     \label{fig:driver}
 \end{figure}
+
+Se utilizaron buffers en el sensado de tensión y en el driver debido a un elevado consumo de corriente de las etapas posteriores que disminuye notablemente la tensión obtenida sin la utilización de estos dispositivos.
+Como el amplificador operacional tiene una alta impedancia de entrada, no consume corriente en el divisor de tensión y permite obtener la misma tensión que tiene a la entrada en su salida.
 
 \subsubsection{Simulación de distintos modelos de batería}
 Para que las simulaciones permitan obtener resultados fiables se buscó un modelo apropiado para la batería.
@@ -226,18 +232,11 @@ La resistencia en paralelo modela la autodescarga de la batería.
     \label{fig:bateria_3}
 \end{figure}
 
-\subsection{Diseños pendientes}
-Habiendo desarrollado el cargador casi en su totalidad, aún queda por diseñar el circuito de protección
-contra cortocircuitos y el LED indicador. Ambos serán desarrollados durante la segunda parte del proyecto,
-debido a su baja complejidad con respecto al resto del circuito.
+\subsection{Tareas a realizar}
+Habiendo implementado cada una de las etapas de carga para todo el rango de variación de la tensión de entrada y los siete modos disponibles, 
+aún queda pendiente el diseño del circuito de protección contra cortocircuitos y el LED indicador de estado. 
 
-Inicialmente se planeó implementar un filtro de entrada para evitar (ACA VAS VOS)
-
-\subsection{Implementación}
-Se diseñará un circuito impreso y se construirá un prototipo funcional que cumpla con las especificaciones propuestas. 
+Para la segunda parte del proyecto se diseñará un circuito impreso y se construirá un prototipo funcional que cumpla con las especificaciones propuestas. 
 Debido a que el costo de una batería de litio de las características necesarias es elevado,
 se evaluará la posibilidad de realizarlo a escala con una batería de menor tensión y/o capacidad.
-
-\subsection{Validación}
-Una vez terminado el proceso de diseño e implementación,
-se verificará que el prototipo cumpla con las especificaciones presentadas.
+Una vez terminado el proceso de diseño e implementación, se verificará que el prototipo cumpla con las especificaciones presentadas.
