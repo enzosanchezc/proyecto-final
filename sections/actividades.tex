@@ -82,14 +82,55 @@ En base a los criterios definidos inicialmente se eligió el conversor forward c
 
 El principal problema que presentó la utilización de este conversor fue que las señales que controlan a los switches son poco convencionales.
 
-\subsubsection{Simulación del rectificador de entrada}
-Una vez definido el circuito de conversión DC-DC, se procedió a analizar los requisitos de la tensión de entrada.
-Al no existir limitaciones, se eligió implementar un rectificador de onda completa con un filtro pasa bajos. 
-Se analizó la posibilidad de utilizar un rectificador controlado, 
-pero luego de realizar las simulaciones correspondientes se concluyó que el costo de complicar el diseño del circuito no aporta ningún beneficio significativo.
+\subsubsection{Simulación del rectificador de entrada AC-DC}
+Una vez definido el circuito de conversión DC-DC, se procedió a analizar los requisitos de la tensión de entrada. 
+Los circuitos rectificadores AC-DC permiten convertir una tensión alterna en una tensión continua.
 
-% Agregar lo del criterio de selección del rectificador, creo que era lo de la potencia del capacitor
-% pero no tengo idea como ponerlo
+Rectificador de media onda u onda completa
+
+Si bien el rectificador de media onda es más simple ya que cuenta con un menor número de diodos, existen muchas ventajas del rectificador de onda completa frente al de media onda. 
+La primera de ellas es que la corriente media del generador de alterna(alimentación) es nula, lo cual beneficia a los transformadores. 
+La segunda se basa en el hecho de que para una misma carga, la tensión de rizado pico a pico para el rectificador de onda completa es aproximadamente la mitad que para el rectificador de media onda. 
+Esto se debe a que en el circuito de onda completa, el tiempo durante el que se descarga el capacitor es menor que en el circuito de media onda debido a la onda sinusoidal rectificada de la segunda mitad de cada período. 
+
+Por todos estos motivos se decidió implementar un rectificador de onda completa.
+
+Rectificador de onda completa en puente o con toma media
+
+En puente
+
+Presenta la caída de tensión de 2 diodos entre el generador y la carga. 
+La tensión máxima en un diodo polarizado en inversa es el valor pico del generador.
+
+Transformador de toma media
+
+Sólo presenta la caída de tensión de un diodo entre el generador y la carga. 
+Para una misma potencia entregada por el generador, los diodos consumen potencia y disminuyen la corriente y potencia que absorbe la carga. 
+La tensión máxima en un diodo polarizado en inversa es el doble del valor pico del generador.
+El transformador proporciona aislamiento eléctrico entre el generador y la carga. 
+
+Como la reducción de tensión a la salida no es significativa en esta aplicación, y el puente de diodos se puede implementar con un pequeño integrado, con el objetivo de disminuir el tamaño del circuito se decidió evitar el transformador y utilizar un rectificador de onda completa tipo puente.
+
+Filtrado
+% ¿No usamos bobina?
+El filtro pasa bajos compuesto por una red LC permite disminuir el rizado, es decir, la componente de alterna de la señal rectificada. 
+Como resultado se logra una tensión de salida aproximadamente continua.
+El capacitor mantiene la tensión de salida en un nivel constante y la bobina suaviza la corriente del rectificador y reduce la corriente de pico en los diodos. 
+
+Para disminuir el número de componentes se decidió utilizar únicamente un capacitor en paralelo con la capacidad suficiente para obtener una tensión continua.
+
+Rectificación controlada
+
+Los tiristores son interruptores electrónicos controlados que son activados por una señal externa. 
+Poseen 3 terminales: ánodo, cátodo y puerta. Presentan altos valores nominales de corriente y tensión. Soportan altas corrientes y altas tensiones de bloqueo. 
+Un ejemplo de tiristores con los rectificadores controlados de silicio(SCR). Para que conduzcan se los debe polarizar en directa y deben recibir una corriente de puerta. 
+Al entrar en conducción no es necesaria la señal de puerta para mantener la corriente de ánodo. 
+El SCR continuará conduciendo siempre que la corriente de ánodo sea positiva y esté por arriba de un valor mínimo. 
+Mediante conmutadores controlados como los SCR se controla la tensión de salida en un rango limitado de variación, ajustando el ángulo de disparo de cada SCR. 
+El ángulo de disparo es el intervalo angular entre la polarización directa del SCR y la aplicación de la señal de puerta. 
+Si el ángulo de disparo es 0, el comportamiento es igual al de un rectificador no controlado con diodos. 
+
+Se decidió utilizar rectificación no controlada ya que no se necesita una tensión específica a la salida y el costo de complejizar el diseño con el agregado de SCRs y un circuito dedicado de disparo no aporta ningún beneficio significativo.
 
 \subsubsection{Simulación del circuito de control}
 Esta etapa fue la mas extensa en diseñar debido a su complejidad. Inicialmente solo debía realimentar la tensión de salida
