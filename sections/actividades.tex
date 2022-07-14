@@ -26,12 +26,24 @@ se evita una etapa posterior limitadora de corriente.
     \label{fig:esquema_cargador}
 \end{figure}
 
+\subsection{Proceso de carga}
+La carga se efectúa en tres etapas: precarga, corriente constante y tensión constante. 
+La etapa de precarga permite recuperar baterías que han sido profundamente descargadas, donde la
+corriente se limita a una fracción de la corriente de carga nominal. 
+Esta etapa es exclusiva para baterías que tienen una tensión menor a 30V en el momento de su conexión. 
+En la siguiente etapa se suministra una corriente constante mientras la tensión de la batería se eleva hasta
+llegar a un voltaje de 42V. En la etapa final se mantiene la tensión en su valor nominal, mientras
+la batería reduce su corriente hasta llegar a la corriente de corte. En este momento la batería se
+encuentra completamente cargada y se corta la alimentación.
+
 \subsection{Ensayos realizados}
-Con el objetivo de conocer en profundidad cada una de las etapas del proceso de carga,
+Con el objetivo de conocer de forma experimental cada una de las etapas del proceso de carga,
 a partir de una antigua batería de notebook provista por la cátedra
 se realizaron ensayos en el ATEI con sus celdas modelo LGAAS31865 \cite{icr18650s3}.
 Los ensayos de carga y descarga fueron realizados en base a la hoja de datos
-del fabricante de una celda similar modelo NCR18650GA.
+del fabricante de una celda similar modelo NCR18650GA, utilizando 2 celdas en paralelo. 
+En base a estos resultados, se extrapolaron los mismos para configuraciones de una única celda,
+10 serie y 
 
 \subsection{Simulaciones}
 Para verificar el diseño realizado el circuito fue probado en LTspice \cite{ltspice}.
@@ -42,7 +54,7 @@ El proceso se divide en las siguientes etapas:
     \item Simulación del circuito de control.
     \item Simulación de distintos modelos de batería.
 \end{enumerate}
-
+Las imágenes de las simulaciones más significativas están incluidas en el apéndice.
 En las siguientes secciones se detallarán cada una de estas etapas,
 enumerando los problemas encontrados y las soluciones propuestas.
 
@@ -155,9 +167,9 @@ en la figura \ref{fig:esquema_compensador}, un modelo simplificado del circuito.
     \label{fig:esquema_compensador}
 \end{figure}
 
-Los parámetros del bloque proporcional-integrador (PI) fueron definidos a partir de valores típicos obtenidos de \cite{mohan}
+Los parámetros del bloque proporcional-integrador (PI) fueron definidos a partir de valores obtenidos de \cite{mohan}
 y posteriormente ajustados para que el circuito funcione en las condiciones de la aplicación.
-La frecuencia de switching es definida por la frecuencia de la señal de diente de sierra y también se tomó un valor típico.
+La frecuencia de switching es definida por la frecuencia de la señal de diente de sierra.
 
 \begin{figure}
     \centering
@@ -229,6 +241,60 @@ La resistencia en paralelo modela la autodescarga de la batería.
     \includegraphics[width=\textwidth]{images/bateria_3.png}
     \caption{Tercer y actual modelo de batería utilizado}
     \label{fig:bateria_3}
+\end{figure}
+
+\subsection{Resultados de simulaciones}
+En la figura [FALTA REFERENCIA] se observan todas las etapas de carga para los siete modos
+disponibles. En color verde se muestra la tensión aplicada a la batería y en
+color rojo la corriente que ingresa a la misma. El estado inicial de carga(SOC)
+es establecido en 0.3(30\%) para poder simular la etapa de precarga.    
+Para la etapa de corriente constante, en todos los casos se alcanza la corriente
+deseada para el modo seleccionado y se llega a una tensión final de 42V.
+
+En las figuras \ref{fig:desconexion_CC} e \ref{fig:desconexion_CV} se simula la
+desconexión de la batería en el caso de que la misma se encuentre en la etapa de
+corriente constante o tensión constante respectivamente. En la figura
+\ref{fig:conexion} se simula la conexión de la batería cuando que el cargador
+ya se encuentra conectado a la red. Se comprueba que el transitorio generado
+ante cualquier situación de conexión/desconexión indeseada no afecta el
+desempeño del cargador. En la figura \ref{fig:110V_1A} e \ref{fig:240V_1A} se
+simula con una tensión de entrada de 110V y 240V respectivamente. Se puede
+comprobar el correcto funcionamiento del dispositivo en todo el rango de tensión
+de entrada requerido.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{images/desconexion_CC.png}
+    \caption{Desconexión de la batería durante la etapa de corriente constante}
+    \label{fig:desconexion_CC}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{images/desconexion_CV.png}
+    \caption{Desconexión de la batería durante la etapa de tensión constante}
+    \label{fig:desconexion_CV}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{images/conexion.png}
+    \caption{Conexión de la batería cuando el cargador fue previamente conectado}
+    \label{fig:conexion}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{images/110V_1A.png}
+    \caption{Carga completa a $V_{in}=110V_{rms}$}
+    \label{fig:110V_1A}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{images/240V_1A.png}
+    \caption{Carga completa a $V_{in}=240V_{rms}$}
+    \label{fig:240V_1A}
 \end{figure}
 
 \subsection{Tareas a realizar}
