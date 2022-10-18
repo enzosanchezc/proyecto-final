@@ -1,1 +1,235 @@
 \section{Problemas afrontados y soluciones}
+Implementación
+
+Las primeras pruebas se realizaron en una placa de cobre perforada. 
+Para una mayor seguridad se optó por reemplazar la primera etapa de conversión AC-DC por una fuente regulable cuya tensión de entrada sea de 36V.
+Esta fuente tiene una corriente máxima de X A y por lo tanto es capaz de proveer la corriente necesaria que consume el circuito. 
+
+Las fuentes de potencia otorgan una alta densidad de potencia en un tamaño y con un peso reducido.  
+Permiten aislar eléctricamente a la carga de la red de alimentación. 
+Dirección controlada del flujo de potencia. 
+Alta eficiencia de conversión. 
+Utilizando pequeños filtros es posible tener formas de onda con baja distorsión armónica tanto en la entrada como en la salida. 
+Permiten controlar el factor de potencia si la fuente es de AC. 
+
+
+
+En base a la tensión de salida requerida existen fuentes de alimentación AC y fuentes de alimentación DC.
+Las fuentes de alimentación DC se clasifican en:
+1) Conmutación
+Tienen una alta eficiencia y pueden suministrar altas corrientes de carga a una tensión baja.
+Existen 5 topologías comunes: fly-back, forward, push–pull, half-bridge, y full-bridge.
+Por lo general se utilizan 2 etapas de conversión: DC-AC mediante modulación de ancho de pulso (PWM) de la etapa del inversor y de AC-DC.
+La salida del inversor, que varía mediante una técnica PWM, se convierte en un voltaje de DC mediante un rectificador de diodos. 
+Debido a que el inversor puede operar a una frecuencia muy alta, las fluctuaciones en la tensión de salida de DC se pueden filtrar fácilmente con filtros pequeños. 
+2) Resonantes
+Si la variación del voltaje de salida no es amplia se pueden usar inversores de pulso resonante. 
+La frecuencia del inversor, que podría ser la misma que la frecuencia de resonancia, es muy alta y la tensión de salida del inversor es casi sinusoidal 
+Debido a la oscilación resonante, el núcleo del transformador siempre se restablece y no hay problemas de saturación. 
+Los tamaños del transformador y del filtro de salida se reducen debido a la alta frecuencia del inversor.
+3) Bidireccionales 
+Aptas para carga y descarga de baterías donde el flujo de potencia es bidireccional. 
+El flujo de potencia depende de la tensión de entrada, de la tensión de salida y de la relación de vueltas del transformador. 
+Permiten que la corriente inductiva fluya en cualquier dirección y que el flujo de corriente se vuelve continuo.
+
+Especificaciones de la tensión de salida del prototipo: 12.6VDC
+Para seleccionar una topología adecuada para una aplicación, es necesario comprender las ventajas y desventajas de cada topología y los requisitos de la aplicación. 
+Existen diversas topologías, las cuales serán analizadas en orden creciente de complejidad. 
+Aunque la mayoría de los convertidores se pueden utilizar para cumplir con los requerimientos de salida, 
+los valores nominales del dispositivo de conmutación y el tamaño del transformador limitan sus aplicaciones a una potencia de salida específica. 
+La elección del convertidor depende del requisito de potencia de salida.
+
+
+Conversor Forward
+
+
+El convertidor forward es un convertidor CC-CC acoplado magnéticamente. 
+
+El transistor funciona como interruptor, estará cerrado un tiempo DT y abierto el resto del tiempo,
+ (1 - D)T, siendo T el periodo de conmutación. 
+Para el análisis del circuito se supondrá funcionamiento 
+en régimen permanente y que la corriente en la inductancia Lx es permanente.
+El transformador posee tres devanados: los devanados 1 y 2 transfieren la energía de la
+fuente a la carga cuando el interruptor está cerrado; el devanado 3 se usa para proporcionar un
+camino a la corriente magnetizante cuando el interruptor está abierto y reducirla a cero antes del
+inicio de cada periodo de conmutación. El transformador se modela como tres devanados ideales
+con una inductancia magnetizante Lm conectada en paralelo con el devanado 1. En este modelo
+de transformador simplificado, no se incluyen las pérdidas ni las inductancias de dispersión.
+En el convertidor forward, la energía del generador se transfiere a la carga cuando el interruptor
+está cerrado. En el convertidor flyback, la energía se almacenaba en Lm cuando el conmutador
+estaba cerrado y era transferida a la carga cuando estaba abierto. En el convertidor directo, Lm
+es un parámetro no incluido en la relación entrada-salida, y se suele hacer grande su valor
+
+Análisis con el interruptor cerrado
+En la Figura 7.5b se muestra el circuito equivalente del convertidor forward cuando el interruptor
+está cerrado. Al cerrarse el interruptor se establece una tensión en el devanado 1 del transformador,
+por lo que
+
+La corriente en Lm deberá anularse antes del inicio del siguiente período, para desmagnetizar
+el núcleo del transformador. Cuando se abre el interruptor, la Ecuación 7.26 indica que la corriente
+iL decrece linealmente. Como D3 impide que la corriente iL se haga negativa, la Ecuación
+7.26m será válida siempre que iL sea positiva. Utilizando la Ecuación 7.26 obtenemos
+
+
+
+Para que la corriente iL se anule una vez abierto el interruptor, la disminución de corriente
+debe ser igual al incremento de la corriente indicado en la Ecuación 7 .20. Si el tiempo necesario
+para que la corriente iL de pico se anule es deltaTx, 
+
+
+Resolviendo para obtener deltaTx, 
+
+
+El instante t0 en el que se anula la corriente es
+
+
+Teniendo en cuenta que la corriente debe anularse antes del inicio del siguiente periodo,
+
+
+Por ejemplo, si la relación N3/N1 = 1, el ciclo de trabajo D deberá ser menor que 0,5. La tensión
+en el interruptor abierto es Vs-v1, por lo que
+
+
+La configuración del circuito a la salida del convertidor forward es la misma que la del convertidor
+reductor, por lo que el rizado de la tensión de salida también será el mismo:
+
+
+Cuando el interruptor está cerrado, la fuente entrega energía a la carga a través del transformador.
+La tensión en el secundario del transformador es una forma de onda pulsante y la salida se
+analiza de la misma manera que la del convertidor CC-CC reductor. La energía almacenada en
+274 Electrónica de potencia
+la inductancia magnetizante cuando el interruptor está cerrado puede ser devuelta a la fuente de
+entrada a través de un tercer devanado del transformador cuando el interruptor está abierto.
+
+Restablecimiento del núcleo del transformador:
+La energía almacenada en el núcleo del transformador es devuelta a la fuente regulable y se incrementa la eficiencia. 
+
+A diferencia del convertidor flyback, la energía no se almacena en el primario y sólo se opera 
+en el modo de conducción continua por la mayor dificultad del control en base al doble polo existente en el filtro de salida. 
+Asumiendo modo de conducción continua, operación en estado estacionario y ripple de salida nulo, 
+existen 2 modos de operación del transistor:
+
+Cuando el transistor se encuentre encendido:
+
+La tensión en el bobinado primario es Vs. La corriente que circula por el mismo comienza a incrementarse 
+y se transfiere energía del primario al secundario y de aquí al filtro de salida y la carga por medio del diodo D2. 
+Debido a esta corriente se induce una corriente en el secundario dada por:
+
+La corriente magnetizante se incrementa linealmente con el tiempo:
+
+La corriente total que circula por el primario resulta:
+
+Cuando finaliza el tiempo de conducción del transistor en un tiempo t=DT, esta corriente total llega a un valor máximo dado por:
+
+donde XXX es la corriente pico reflejada del inductor de salida del secundario y está dada por:
+
+La tensión inducida en el secundario es:
+
+Debido a la tensión Vsecundario-Vo existente en bornes del inductor, su corriente se incrementa linealmente:
+
+Esta misma también tendrá su valor máximo en t=DT:
+
+
+Cuando el transistor se encuentre apagado:
+
+La tensión del transformador toma polaridad negativa, lo cual apaga al diodo D2 y enciende a los diodos D1 y D3. 
+Mientras conduce D3, la energía es entregada a la carga a través del inductor de salida. 
+La corriente por ambos dispositivos es la misma y decrece linealmente con el tiempo:
+
+Lo cual nos da el valor de I1(0):
+
+
+El diodo D1 y el tercer bobinado del transformador le proporcionan un camino 
+a la corriente magnetizante para que regrese a la fuente de entrada. 
+La tensión de salida es la integral en el tiempo de la tensión del bobinado secundario:
+
+La máxima corriente de colector se da durante el encendido del transistor y la máxima tensión de colector durante el apagado:
+
+
+Igualando la integral en el tiempo de la tensión de entrada cuando el transistor está encendido a la tensión Vr cuando el transistor está apagado nos da el ciclo de trabajo máximo:
+
+
+El ciclo de trabajo debe mantenerse siempre debajo del máximo para evitar la saturación del núcleo del transformador. 
+Además, la corriente debe ser reseteada a 0 al final de cada ciclo de conmutación. 
+Si el núcleo está saturado, se puede dañar el transistor. 
+
+Comparación con el conversor flyback:
+
+El conversor forward requiere de una carga mínima para evitar un exceso en la tensión de salida. 
+Como el transformador no almacena energía, para un mismo nivel de potencia de salida, 
+el tamaño del mismo es menor en el convertidor forward que en el flyback. 
+La corriente de salida es aproximadamente constante ya que el ripple disminuye notablemente 
+debido al agregado del inductor en la salida y al diodo de rueda libre D3.
+Por esto mismo, el capacitor de salida puede ser más pequeño. 
+
+
+Conversor Forward Doble Switch
+
+El conversor forward se utiliza para potencias de salida de hasta 200W ya que se encuentra limitado 
+por los esfuerzos de tensión y de corriente durante su funcionamiento. 
+El conversor forward de doble switch permite ser utilizado con potencias de hasta X W debido a la 
+reducción de la tensión en los transistores cuando los mismos se encuentran apagados. 
+Esto permite su uso en aplicaciones de alta tensión mediante transistores de menores prestaciones en tensión. 
+
+Funcionamiento 
+
+Los transistores se encienden y se apagan de forma simultánea. 
+Cuando los transistores están encendidos, la tensión en el primario del transformador es igual a la tensión de entrada Vs. 
+Como la relación del mismo es 1:1, la misma tensión se establece en su secundario y la energía se transfiere a la carga. 
+Además se incrementa la corriente que circula por la inductancia magnetizante. 
+
+Cuando los transistores se apagan, el diodo D1 evita que la corriente magnetizante circule por el secundario 
+(y por lo tanto también en el primario) del transformador, forzando su camino por los diodos D3 y D4 de regreso a la fuente regulable.  
+Con esto se elimina la necesidad del tercer devanado de desmagnetización. 
+La tensión en el primario del transformador es -Vs, causando un decremento de la corriente magnetizante. 
+Si la relación de trabajo de los transistores es menor a 0.5, en cada ciclo el núcleo del transformador se restablece, 
+haciendo que el flujo magnético regrese a 0. 
+La tensión en los transistores cuando los mismos se encuentran apagados es Vs y no Vs(1+N1/N3).
+
+La tensión de salida resulta:
+$$ V_{o}=V_{s}D(\frac{N_{2}}{N_{1}}) $$
+
+
+
+
+Circuitos de control
+
+La tensión de salida del convertidor puede ser controlada variando el ciclo de trabajo D. 
+Para ello se utilizan controladores de circuito integrado PWM que sólo requieren de unos pocos componentes pasivos adicionales para su funcionamiento. 
+Internamente presenta 4 componentes principales:
+1) Un reloj ajustable que permite configurar la frecuencia de conmutación 
+2) Amplificador de error para la tensión de salida
+3) Generador de forma de onda de dientes de sierra sincronizado con el reloj
+4) Un comparador para comparar la señal de salida de error con la señal de dientes de sierra.
+Su señal de salida es la que controla a los transistores. 
+
+Para controlar la tensión de salida, los convertidores funcionan con un circuito de retroalimentación,
+ en base a la señal realimentada , en un control por tensión o corriente.
+
+Control por tensión
+
+COMPLETAR CON LIBRO
+
+La duración del tiempo de encendido está determinada por el tiempo entre el reinicio del generador de diente de sierra
+ y la intersección del voltaje de error con la señal de rampa positiva. 
+ Cuando la tensión de salida es inferior al valor nominal se genera una tensión de error. 
+ El ciclo de trabajo aumenta para causar un aumento posterior en el voltaje de salida. 
+ La dinámica de retroalimentación está determinada por el circuito amplificador de error que consta de Z1 y Z2.
+
+
+
+ Control por corriente 
+
+ Consiste en un lazo interno que muestrea el valor de la corriente primaria y apaga los interruptores tan pronto como la corriente alcanza cierto valor establecido por el lazo de voltaje externo. 
+ De esta manera, el control de corriente logra una respuesta más rápida que el modo de voltaje. 
+ La forma de onda de corriente primaria actúa como onda de diente de sierra. 
+ El voltaje análogo a la corriente puede ser proporcionado por una pequeña resistencia o por un transformador de corriente. 
+ La figura 13.19a muestra un convertidor flyback controlado por modo de corriente, donde la corriente del interruptor isw se usa como señal portadora. 
+ La corriente del interruptor isw produce un voltaje a través de Rs, que se retroalimenta al comparador. 
+ El encendido está sincronizado con el pulso del reloj y el apagado está determinado por el instante en que la corriente de entrada es igual al voltaje de error.
+ Debido a su capacidad inherente de limitación de corriente máxima, el control de modo de corriente puede mejorar la confiabilidad de los interruptores de alimentación. El rendimiento dinámico se mejora debido al uso de la información actual adicional. El control de modo de corriente reduce efectivamente el sistema a primer orden al obligar a que la corriente del inductor se relacione con el voltaje de salida, logrando así una respuesta más rápida. Las figuras 13.18b–e muestran las formas de onda.
+
+ COMPLETAR CON JUSTIFICACIÓN DE POR QUÉ NO ELEGIMOS CONTROL POR CORRIENTE QUE PARECERÍA SER MEJOR. 
+
+
+ 
