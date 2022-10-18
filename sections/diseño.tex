@@ -1,0 +1,96 @@
+\section{Diseño}
+
+Transformador
+
+La potencia aparente del transformador es la suma de la potencia de entrada y la potencia de salida:
+
+$$ P_{t}=P_{i}+P_{o}=\frac{P_{o}}{\eta}+P_{o}=(1+\frac{1}{\eta})P_{o} $$
+
+La tensión en el bobinado primario está dada por: 
+
+$$ V_{1}=K_{t} f N_{1} \phi_{m} $$
+
+donde f es la frecuencia de conmutación de la señal de entrada y 
+Kt es un factor que vale 4.44 si la forma de onda es sinusoidal o 4 si es rectangular.
+
+El flujo se relaciona con el área de la sección transversal de la trayectoria del flujo Ac y la densidad de flujo B de la siguiente manera:
+
+$$ \Phi=BA $$
+
+Densidad de corriente:
+
+$$ J=K_{j} A_{p}^{x} $$
+
+donde Kj y x son constantes que dependen del núcleo magnético dadas por la siguiente tabla:
+
+INSERTAR TABLA!
+
+El factor Ap se puede calcular como: 
+
+$$ A_{p}=[\frac{P_{t} \times 10^{4}}{K_{t} f B_{m} K_{u} K_{j}}]^{\frac{1}{1+x}} [{cm}^{4}] $$
+
+donde Ku es el factor de relleno que varía entre 0.4 y 0.6 y Bm es la densidad de flujo máxima.
+
+La cantidad de alambre de cobre y la cantidad de material del núcleo (por lo general ferrita de hierro) determinan la capacidad de potencia del transformador. 
+Existen distintos tipos de núcleo como Toridal core, Pot core, Power core, E-laminated core, EI-core, C-core, Single-coil, Tape-wound core, etc. 
+En este proyecto se trabajará con los núcleos disponibles provistos por la cátedra: E70, E30 y E25.  
+
+Especificaciones obtenidas por simulación:
+
+Frecuencia de la forma de onda rectangular: f=125kHz
+Tensión máxima aplicada a la bobina del primario: V1máx=350V
+Tensión de salida en el secundario: V0=12.6V
+Corriente de salida en el secundario: I0=1.6A
+Eficiencia: n=95%
+
+INSERTAR IMÁGEN DE SIMULACIÓN V1MÁX!
+
+Cálculos:
+
+Potencia de salida:
+
+Po=Vo*Io=12.6V*1.6A=20.16W
+
+Potencia aparente: 
+
+Pt=Po+Pi=Po*(1+1/n)=20.16W*(1+1/0.95)=41.38W
+
+INSERTAR IMÁGEN B-H DE KIKE!
+
+En base a las curvas de magnetización se observa como las ferrites no soportan tanto flujo como el hierro y como disminuye la permeabilidad para campos mayores.  
+Presenta el ciclo de histéresis y comienza a saturar en B=300mT. 
+La saturación implica mayor circulación de corriente que conlleva a que el núcleo deje de responder. 
+La saturación se da en campos menores si la temperatura aumenta con el funcionamiento del dispositivo. 
+Por lo tanto se elige una inducción magnética máxima de Bm=100mT para estar lejos del codo y asegurarnos tener la permeabilidad especificada en las hojas de datos. 
+
+Para el núcleo E70, el área efectiva es: Ae=279mm^2
+
+Número de vueltas del primario:
+
+N1=(V1máx/Kt*f*Bm*Aa)=(350V/4*125KHz*100mT*0,000279)=25.09≈25
+ 
+Número de vueltas del secundario: 
+
+N2=N1*(V2/V1)
+
+Como no se requiere ni desea elevar o reducir la tensión del secundario, se elige una relación de vueltas 1:1. 
+Por lo tanto, el número de vueltas del bobinado secundario es igual al del primario. 
+
+N2=25
+
+Ap=[(41.38*10^4)/(4*125kHz*100mT*0.4*366*)]^(1/1-0.14) [cm^4]
+
+Ap= 
+
+
+J=366*()^-0.14 [A/cm^2]
+
+J=584
+
+
+Inductor
+
+Se utiliza para almacenar energía y permitir su transferencia. 
+Por el inductor circula una corriente continua. Si la misma es muy elevada puede saturar el núcleo magnético. 
+
+
