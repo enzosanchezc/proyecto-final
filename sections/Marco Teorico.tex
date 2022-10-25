@@ -190,7 +190,7 @@ $$ V_{o}=V_{s}D(\frac{N_{2}}{N_{1}}) $$
 Circuitos de control
 
 La tensión de salida del convertidor puede ser controlada variando el ciclo de trabajo D. 
-Para ello se utilizan controladores de circuito integrado PWM que sólo requieren de unos pocos componentes pasivos adicionales para su funcionamiento. 
+Para ello se utilizan circuitos integrados controladores PWM que sólo requieren de unos pocos componentes pasivos adicionales para su funcionamiento. 
 Internamente presenta 4 componentes principales:
 1) Un reloj ajustable que permite configurar la frecuencia de conmutación 
 2) Amplificador de error para la tensión de salida
@@ -226,5 +226,90 @@ La duración del tiempo de encendido está determinada por el tiempo entre el re
 
  COMPLETAR CON JUSTIFICACIÓN DE POR QUÉ NO ELEGIMOS CONTROL POR CORRIENTE QUE PARECERÍA SER MEJOR. 
 
+ TL494 
 
- 
+El TL494 es un circuito de control de modulación de ancho de pulso (PWM) de frecuencia fija. 
+La modulación de los pulsos de salida se logra comparando la forma de onda de diente de sierra creada por el oscilador interno en el capacitor de temporización (CT) con cualquiera de las dos señales de control. 
+La etapa de salida se habilita durante el tiempo en que el voltaje de diente de sierra es mayor que las señales de control de voltaje. 
+A medida que aumenta la señal de control, disminuye el tiempo durante el cual la entrada en diente de sierra es mayor; por lo tanto, la duración del pulso de salida disminuye. 
+Un flip-flop de dirección de pulso dirige alternativamente el pulso modulado a cada uno de los dos transistores de salida.
+
+
+Alimentación: 7-40V.
+El TL494 está diseñado para operar desde un rango de suministro de voltaje de entrada entre 7 V y 40 V.
+
+Feedback: sin conexión ya que se trabaja a lazo abierto
+
+Regulador interno de 5V con precisión del 5\%. 
+
+Oscilador interno ajustable 
+Provee la forma de onda de diente de sierra al tiempo muerto y al comparador PWM. 
+Su frecuencia se programa mediante la selección de una resistencia Rt y un capacitor Ct. 
+El oscilador carga al Ct con una corriente constante determinada por Rt produciendo una rampa de tensión sobre Ct.
+Icarga=3V/Rt.
+Cuando la tensión sobre el mismo llega a 3V, el circuito se descarga y se reinicia el ciclo. 
+f=1/(Rt*Ct) para single ended 
+% COMPLETAR CON COMPONENTES ELEGIDOS PARA f=125KHz
+
+Control de tiempo muerto (DTC)
+Permite controlar el ciclo de trabajo. 
+Es una entrada de alta impedancia. 
+Controla el tiempo de apagado mínimo. Con DTC a tierra es del 3%.
+Si se aplica tensión en este puerto se le puede adicionar.
+El tiempo muerto o de apagado se controla linealmente desde su mínimo de 3\% hasta su máximo de 100\%, 
+variando su tensión de entrada entre 0 y 3.3V respectivamente. 
+
+Comparador 
+Alimentado por el regulador interno. 
+Tiempo de respuesta de 400ns. 
+Modula el ancho de pulso de la salida. Para esto se compara la rampa de tensión sobre el capacitor Ct con la señal de control
+presente en la salida de los amplificadores de error. 
+
+2 amplificadores de error 
+Alta ganancia
+Se alimentan mediante su entrada Vi. 
+Tensión de MC de entrada: -0.3V a Vcc-2V
+
+Output-Control Input
+Determinan el modo de operación de la salida de los transistores. 
+Si está a tierra opera en modo single-ended o modo paralelo donde los pulsos vistos en la salida del DTC son transmitidos por ambos transistores de salida en paralelo.
+Si está a Vref opera en push-pull donde cada transistor de salida está habilitado alternativamente por el flip-flop de dirección de pulsos.
+
+Transistores de salida
+El integrado incluye 2 transistores que tienen la posibilidad de ser emisor común o seguidor por emisor. 
+Son capaces de generar hasta 200mA de salida. 
+
+
+Transformador: permite que no circule corriente continua por su secundario. 
+
+Amplificadores de potencia
+
+Amplificador Clase B con transistores complementarios
+
+Permite acoplar la carga en continua. 
+El dispositivo de amplificación conduce durante medio ciclo de la señal de entrada. 
+El transistor sólo puede reproducir medio ciclo de la señal de entrada. 
+Se excita al transistor inyectándole corriente por su base.
+Los transistores son de potencia y no de señal. 
+Se compone de un transistor NPN y otro PNP que se alimentan de forma inversa.
+El transistor NPN requiere de una tensión positiva en su colector y 
+el transistor PNP requiere de una tensión negativa en su colector.
+Ambos funcionan como seguidor por emisor o colector común, con su tensión de alimentación en colector, la señal de excitación en la base y la carga conectada el emisor. 
+Su ganancia de tensión es aproximadamente 1. 
+La topología seguidor por emisor tiene ganancia de corriente hfe. 
+La corriente que se entrega por la base es hfe veces menor que la que se le entrega a la carga. 
+Los transistores conducen en base a la tensión Vbe en sus junturas ya que entra base y emisor existe una juntura PN similar a un diodo. 
+Si no se polariza de forma correcta, no circula corriente por su base y en consecuencia tampoco por su colector. 
+El transistor NPN conduce corriente en su emisor cuando Vbe>0. 
+El transistor PNP conduce corriente en su emisor cuando Vbe<0 o Veb>0.
+En el semiciclo positivo de la señal conduce el NPN y el PNP se corta y en el semiciclo negativo conduce el PNP y el NPN se corta. 
+Los transistores conducen de forma alternativa. 
+Cuando la tensión de entrada en la base de ambos transistores es 0 no conduce ningún transistor. 
+Esto implica que no existe consumo de corriente ni de potencia. 
+Vce de ambos transistores va de Vcc a 0.
+
+Seguidor
+
+Su impedancia de entrada es mucho mas alta que su impedancia de salida, de modo que una fuente de señal no tendría que trabajar tan duro.
+ Esto puede verse en el hecho de que la corriente de base es del orden de 100 veces menos que la corriente de emisor. 
+ La baja impedancia de salida del seguidor emisor se adapta con una carga de baja impedancia y amortigua la fuente de señal.
