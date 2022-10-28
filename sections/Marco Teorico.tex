@@ -313,3 +313,60 @@ Seguidor
 Su impedancia de entrada es mucho mas alta que su impedancia de salida, de modo que una fuente de señal no tendría que trabajar tan duro.
  Esto puede verse en el hecho de que la corriente de base es del orden de 100 veces menos que la corriente de emisor. 
  La baja impedancia de salida del seguidor emisor se adapta con una carga de baja impedancia y amortigua la fuente de señal.
+
+Snubber
+
+Un circuito snubber o de amortiguación es una red RC que permite eliminar ruido de alta frecuencia que existe en los nodos de los transistores.
+Hasta ahora se ha analizado el convertidor forward sin tener en cuenta los elementos parásitos asociados a cada componente. 
+Algunos ejemplos de estos son la resistencia serie equivalente e inductancia serie equivalente de los capacitores, 
+la capacidad parásita de los transistores o la resistencia e inductancia parásita de las conexiones realizadas. 
+La energía acumulada en las inductancias parásitas mientras los transistores conmutan provoca una resonancia con el capacitor de filtrado en la entrada. 
+Valores pequeños de estos elementos parásitos generan resonancias del orden de los MHz. 
+
+Funcionamiento 
+
+La energía acumulada en las inductancias parásitas mientras los transistores están encendidos se almacena como energía electroestática en el capacitor de la red snubber Csnb. 
+Cuando los transistores conducen, su tensión se eleva hasta Vin, la energía almacenada en el capacitor es: 
+E=0.5*Csnb*Vin^2
+La carga eléctrica del capacitor luego de su carga es:
+Q=Csnb*Vin
+La potencia suministrada por la fuente de entrada en cada ciclo es:
+Vin*Q=Csnb*Vin^2
+Las pérdidas en la resistencia Rsbn resultan:
+Prsnb=Csnb*Vin^2*fsw
+Durante la carga mitad de esta potencia se consume en la resistencia Rsnb por efecto Joule y la otra mitad se almacena en el capacitor Csnb. 
+Cuando los transistores no conducen, su tensión disminuye hasta 0V, toda la energía almacenada se descarga y es consumida en la resistencia de amortiguamiento Rsnb.
+Cuando se descarga, mitad de la energía almacenada se convierte en calor en la resistencia Rsnb. 
+El análisis supone que el tiempo de carga y descarga es mucho más grande que la constante de tiempo RC. 
+
+Procedimiento para el cálculo de los componentes
+
+1) Con el osciloscopio se mide la frecuencia de la oscilación en la tensión del transistor. 
+fr=
+
+2) Se conecta un capacitor entre Drain y Source con una capacidad Cp0 tal que la frecuencia de la oscilación disminuya a la mitad. 
+Cp0=
+
+3) La frecuencia de resonancia en una red LC está dada por 
+w=1/sqrt(LC)
+Con la configuración actual, 
+fr=1/{2*pi*sqrt[Lp*(Cp2+Cp0)]}
+Para lograr que dicha frecuencia disminuya a la mitad se necesita una capacitancia total que sea cuatro veces la capacitancia parásita con la que se comenzó.
+Por lo tanto, la capacidad parásita del circuito resulta un tercio de la capacidad agregada.
+Cp2=Cp0/3
+
+4) Teniendo la capacidad parásita del circuito Cp2 y la frecuencia de la oscilación original se puede calcular la inductancia parásita del circuito:
+Lp=1/{[(2*pi*fr)^2]*Cp2}
+
+5) La impedancia característica de los elementos parásitos resulta:
+Z0=sqrt(Lp/Cp2)
+
+6) El valor óptimo para la Rsnb es aproximadamente igual a la impedancia característica
+R>=Z0
+
+7) Se elige una Csnb que sea igual o hasta 4 veces superior a la capacidad parásita del circuito 
+Cp2<=Csnb<=4Cp2
+
+8) Se calcula la potencia disipada en Rsnb y se utiliza una resistencia cuya potencia máxima sea el doble que la disipada. 
+
+Prsnb=Csnb*Vin^2*fsw
