@@ -249,7 +249,10 @@ El oscilador carga al Ct con una corriente constante determinada por Rt producie
 Icarga=3V/Rt.
 Cuando la tensión sobre el mismo llega a 3V, el circuito se descarga y se reinicia el ciclo. 
 f=1/(Rt*Ct) para single ended 
-% COMPLETAR CON COMPONENTES ELEGIDOS PARA f=125KHz
+Según la hoja de datos, los valores recomendados para Rt y Ct son:
+470pF<=Ct<=10uF
+1.8kΩ<=Rt<=500kΩ
+Para lograr la f=125kHz se eligió un capacitor de 1nF y para lograr la resistencia de 8kΩ se ajustó un potenciómetro de 10kΩ. 
 
 Control de tiempo muerto (DTC)
 Permite controlar el ciclo de trabajo. 
@@ -321,6 +324,7 @@ Hasta ahora se ha analizado el convertidor forward sin tener en cuenta los eleme
 Algunos ejemplos de estos son la resistencia serie equivalente e inductancia serie equivalente de los capacitores, 
 la capacidad parásita de los transistores o la resistencia e inductancia parásita de las conexiones realizadas. 
 La energía acumulada en las inductancias parásitas mientras los transistores conmutan provoca una resonancia con el capacitor de filtrado en la entrada. 
+La red snubber conforma un camino de baja impedancia para el drenaje de esta energía. 
 Valores pequeños de estos elementos parásitos generan resonancias del orden de los MHz. 
 
 Funcionamiento 
@@ -341,7 +345,7 @@ El análisis supone que el tiempo de carga y descarga es mucho más grande que l
 
 Procedimiento para el cálculo de los componentes
 
-1) Con el osciloscopio se mide la frecuencia de la oscilación en la tensión del transistor. 
+1) Con el osciloscopio se mide la frecuencia de la oscilación en la tensión del transistor Vds. 
 fr=
 
 2) Se conecta un capacitor entre Drain y Source con una capacidad Cp0 tal que la frecuencia de la oscilación disminuya a la mitad. 
@@ -363,6 +367,7 @@ Z0=sqrt(Lp/Cp2)
 
 6) El valor óptimo para la Rsnb es aproximadamente igual a la impedancia característica
 R>=Z0
+Un valor muy alto puede permitir un pico propio de la oscilación y un valor más bajo permite una corriente más elevada, resultando en un sobrecalentamiento. 
 
 7) Se elige una Csnb que sea igual o hasta 4 veces superior a la capacidad parásita del circuito 
 Cp2<=Csnb<=4Cp2
@@ -370,3 +375,24 @@ Cp2<=Csnb<=4Cp2
 8) Se calcula la potencia disipada en Rsnb y se utiliza una resistencia cuya potencia máxima sea el doble que la disipada. 
 
 Prsnb=Csnb*Vin^2*fsw
+
+Se agrega un capacitor de Bypass de 0.1uF para amortiguar la inductancia del MOSFET high side.
+
+
+IRF840
+
+MOSFET para switching de alta velocidad. 
+
+Pmáx=125W
+
+Vdsmáx=500V
+
+En base a la tensión rectificada por la etapa de AC-DC, debe soportar 350V. 
+
+Vgsmáx=20V
+ 
+Idmáx=8A
+
+Idrepetitivamáx=32A
+
+

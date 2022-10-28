@@ -1,23 +1,82 @@
 \section{Simulaciones}
 
-CI TL494 
-
-PIN IZQUIERDA 1 AL 8
-PIN DERECHA 16 AL 9
-
-Alimentación: 7-40V con pin 12 VCC y pin 7 GND. 
-Oscilador interno entre pines 5 y 6. 
-
-
-
-OUTPUT CTRL: PIN 13
-Si está a tierra opera en modo single-ended o modo paralelo. 
-Si está a Vref opera en push-pull (REF en PIN 14). 
+TL494
 
 1) Señal PWM
 
-Señal de onda cuadrada. 
-0V-12V dados por la tensión de alimentación del CI TL494
-Frecuencia dada por 1/(Rt*Ct)
-Tiempo de encendido: permite controlar el ciclo de trabajo mediante un potenciómetro 
+Se toma la salida por el colector de los transistores del circuito integrado. 
+Su forma de onda son pulsos rectangulares. 
+Amplitud: 0V a Vdrv dados por la tensión de alimentación.
+Frecuencia de 125kHz dada por el capacitor Ct=1nF y Rt=8kΩ mediante el potenciómetro. 
+Tiempo de encendido: permite controlar el ciclo de trabajo mediante un potenciómetro. 
+Esta señal se mide en 3 condiciones diferentes: 
+A) Sin el convertidor forward conectado
+B) Con el convertidor forward conectado pero sin su alimentación de 36V
+C) Con el convertidor forward conectado y alimentado
 
+2) Diente de Sierra 
+
+Tensión en el capacitor Ct. 
+
+3) Tensión en el puerto DTC 
+
+Etapa de ganancia de corriente
+
+1) Corriente sin la etapa
+
+2) Corriente de entrada y de salida con la etapa 
+
+3) Tensión a la salida sin la etapa
+
+3) Tensión a la salida con la etapa
+
+Driver
+
+1) Tensiones en el transformador de señal 
+
+Forma de onda: Rectangular 
+Amplitud: -Vc a Vdrv-Vc 
+Son iguales dada la relación 1:1 del transformador. 
+
+2) Tensión Gate del MOSFET high side 
+
+Forma de onda: Rectangular 
+Amplitud: -Vd a Vdrv-Vd
+Vd: Tensión en el diodo del secundario
+
+3) Corriente de salida
+
+Compuesta por:
+
+A) Corriente magnetizante
+
+Forma de onda: triangular
+Se mide en la Rc del primario. 
+
+B) Corriente por Rgs
+
+Forma de onda: rectangular
+
+C) Corriente por Gate
+
+Forma de onda: diente de sierra invertida y espejada con tiempo muerto 
+
+Convertidor Forward Doble Switch 
+
+1) Vgs de ambos MOSFETs
+
+2) Vds de ambos MOSFETs
+
+3) Idrain de ambos MOSFETs
+
+4) Tensiones en el E70
+
+5) Corriente en el primario
+
+6) Caída de tensión en los diodos
+
+7) Corriente en el inductor junto con su ripple
+
+8) Corriente de salida junto con su ripple 
+
+9) Tensión de salida junto con su ripple 
