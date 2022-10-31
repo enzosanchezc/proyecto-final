@@ -3,29 +3,31 @@
 Para reducir el tamaño del transformador y cumplir con las especificaciones normalmente se requieren conversiones de etapas múltiples.
 Las fuentes de potencia otorgan una alta densidad de potencia en un tamaño y con un peso reducido.  
 Permiten aislar eléctricamente a la carga de la red de alimentación. 
-Dirección controlada del flujo de potencia. 
-Alta eficiencia de conversión. 
+%Dirección controlada del flujo de potencia. 
+%Alta eficiencia de conversión. 
 Utilizando pequeños filtros es posible tener formas de onda con baja distorsión armónica tanto en la entrada como en la salida. 
-Permiten controlar el factor de potencia si la fuente es de AC. 
+Permiten controlar el factor de potencia si la fuente es de AC. %Que cosa? Los filtros?
 
 En base a la tensión de salida requerida existen fuentes de alimentación AC y fuentes de alimentación DC.
 Las fuentes de alimentación DC se clasifican en:
-1) Conmutación
-Tienen una alta eficiencia y pueden suministrar altas corrientes de carga a una tensión baja.
-Existen 5 topologías comunes: fly-back, forward, push–pull, half-bridge, y full-bridge.
-Por lo general se utilizan 2 etapas de conversión: DC-AC mediante modulación de ancho de pulso (PWM) de la etapa del inversor y de AC-DC.
-La salida del inversor, que varía mediante una técnica PWM, se convierte en un voltaje de DC mediante un rectificador de diodos. 
-Debido a que el inversor puede operar a una frecuencia muy alta, las fluctuaciones en la tensión de salida de DC se pueden filtrar fácilmente con filtros pequeños. 
-2) Resonantes
-Si la variación del voltaje de salida no es amplia se pueden usar inversores de pulso resonante. 
-La frecuencia del inversor, que podría ser la misma que la frecuencia de resonancia, es muy alta y la tensión de salida del inversor es casi sinusoidal 
-Debido a la oscilación resonante, el núcleo del transformador siempre se restablece y no hay problemas de saturación. 
-Los tamaños del transformador y del filtro de salida se reducen debido a la alta frecuencia del inversor.
-3) Bidireccionales 
-Aptas para carga y descarga de baterías donde el flujo de potencia es bidireccional. 
-El flujo de potencia depende de la tensión de entrada, de la tensión de salida y de la relación de vueltas del transformador. 
-Permiten que la corriente inductiva fluya en cualquier dirección y que el flujo de corriente se vuelve continuo.
-Requiere sintetizar las funciones de conmutación para obtener las formas de onda de salida deseadas.
+\begin{description}
+    \item[Conmutación]
+    Tienen una alta eficiencia y pueden suministrar altas corrientes de carga a una tensión baja.
+    Existen 5 topologías comunes: fly-back, forward, push–pull, half-bridge, y full-bridge.
+    Por lo general se utilizan 2 etapas de conversión: DC-AC mediante modulación de ancho de pulso (PWM) de la etapa del inversor y de AC-DC.
+    La salida del inversor, que varía mediante una técnica PWM, se convierte en un voltaje de DC mediante un rectificador de diodos. 
+    Debido a que el inversor puede operar a una frecuencia muy alta, las fluctuaciones en la tensión de salida de DC se pueden filtrar fácilmente con filtros pequeños.
+    \item[Resonantes]
+    Si la variación del voltaje de salida no es amplia se pueden usar inversores de pulso resonante. 
+    La frecuencia del inversor, que podría ser la misma que la frecuencia de resonancia, es muy alta y la tensión de salida del inversor es casi sinusoidal 
+    Debido a la oscilación resonante, el núcleo del transformador siempre se restablece y no hay problemas de saturación. 
+    Los tamaños del transformador y del filtro de salida se reducen debido a la alta frecuencia del inversor.
+    \item[Bidireccionales]
+    Aptas para carga y descarga de baterías donde el flujo de potencia es bidireccional. 
+    El flujo de potencia depende de la tensión de entrada, de la tensión de salida y de la relación de vueltas del transformador. 
+    Permiten que la corriente inductiva fluya en cualquier dirección y que el flujo de corriente se vuelve continuo.
+    Requiere sintetizar las funciones de conmutación para obtener las formas de onda de salida deseadas.
+\end{description}
 
 Especificaciones de la tensión de salida del prototipo: 12.6VDC
 Para seleccionar una topología adecuada para una aplicación, es necesario comprender las ventajas y desventajas de cada topología y los requisitos de la aplicación. 
@@ -246,13 +248,13 @@ Oscilador interno ajustable
 Provee la forma de onda de diente de sierra al tiempo muerto y al comparador PWM. 
 Su frecuencia se programa mediante la selección de una resistencia Rt y un capacitor Ct. 
 El oscilador carga al Ct con una corriente constante determinada por Rt produciendo una rampa de tensión sobre Ct.
-Icarga=3V/Rt.
+$$Icarga=3V/Rt.$$
 Cuando la tensión sobre el mismo llega a 3V, el circuito se descarga y se reinicia el ciclo. 
-f=1/(Rt*Ct) para single ended 
+$f=1/(Rt*Ct)$ para single ended 
 Según la hoja de datos, los valores recomendados para Rt y Ct son:
-470pF<=Ct<=10uF
-1.8kΩ<=Rt<=500kΩ
-Para lograr la f=125kHz se eligió un capacitor de 1nF y para lograr la resistencia de 8kΩ se ajustó un potenciómetro de 10kΩ. 
+$$470pF<=Ct<=10uF$$
+$$1.8k\Omega<=Rt<=500k\Omega$$
+Para lograr la f=125kHz se eligió un capacitor de 1nF y para lograr la resistencia de $8k\Omega$ se ajustó un potenciómetro de $10k\Omega$. 
 
 Control de tiempo muerto (DTC)
 Permite controlar el ciclo de trabajo. 
@@ -331,53 +333,39 @@ Funcionamiento
 
 La energía acumulada en las inductancias parásitas mientras los transistores están encendidos se almacena como energía electroestática en el capacitor de la red snubber Csnb. 
 Cuando los transistores conducen, su tensión se eleva hasta Vin, la energía almacenada en el capacitor es: 
-E=0.5*Csnb*Vin^2
+$$ E=0.5\times C_{snb}V_{in}^{2} $$
 La carga eléctrica del capacitor luego de su carga es:
-Q=Csnb*Vin
+$$ Q=C_{snb}V_{in} $$
 La potencia suministrada por la fuente de entrada en cada ciclo es:
-Vin*Q=Csnb*Vin^2
-Las pérdidas en la resistencia Rsbn resultan:
-Prsnb=Csnb*Vin^2*fsw
+$$ V_{in}Q=C_{snb}V_{in}^{2} $$
+Las pérdidas en la resistencia $R_{sbn}$ resultan:
+$$ P_{R_{snb}}=C_{snb}V_{in}^{2}f_{sw} $$
 Durante la carga mitad de esta potencia se consume en la resistencia Rsnb por efecto Joule y la otra mitad se almacena en el capacitor Csnb. 
-Cuando los transistores no conducen, su tensión disminuye hasta 0V, toda la energía almacenada se descarga y es consumida en la resistencia de amortiguamiento Rsnb.
-Cuando se descarga, mitad de la energía almacenada se convierte en calor en la resistencia Rsnb. 
+Cuando los transistores no conducen, su tensión disminuye hasta 0V, toda la energía almacenada se descarga y es consumida en la resistencia de amortiguamiento $R_{snb}$.
+Cuando se descarga, mitad de la energía almacenada se convierte en calor en la resistencia $R_{snb}$. 
 El análisis supone que el tiempo de carga y descarga es mucho más grande que la constante de tiempo RC. 
 
 Procedimiento para el cálculo de los componentes
 
-1) Con el osciloscopio se mide la frecuencia de la oscilación en la tensión del transistor Vds. 
-fr=
-
-2) Se conecta un capacitor entre Drain y Source con una capacidad Cp0 tal que la frecuencia de la oscilación disminuya a la mitad. 
-Cp0=
-
-3) La frecuencia de resonancia en una red LC está dada por 
-w=1/sqrt(LC)
-Con la configuración actual, 
-fr=1/{2*pi*sqrt[Lp*(Cp2+Cp0)]}
-Para lograr que dicha frecuencia disminuya a la mitad se necesita una capacitancia total que sea cuatro veces la capacitancia parásita con la que se comenzó.
-Por lo tanto, la capacidad parásita del circuito resulta un tercio de la capacidad agregada.
-Cp2=Cp0/3
-
-4) Teniendo la capacidad parásita del circuito Cp2 y la frecuencia de la oscilación original se puede calcular la inductancia parásita del circuito:
-Lp=1/{[(2*pi*fr)^2]*Cp2}
-
-5) La impedancia característica de los elementos parásitos resulta:
-Z0=sqrt(Lp/Cp2)
-
-6) El valor óptimo para la Rsnb es aproximadamente igual a la impedancia característica
-R>=Z0
-Un valor muy alto puede permitir un pico propio de la oscilación y un valor más bajo permite una corriente más elevada, resultando en un sobrecalentamiento. 
-
-7) Se elige una Csnb que sea igual o hasta 4 veces superior a la capacidad parásita del circuito 
-Cp2<=Csnb<=4Cp2
-
-8) Se calcula la potencia disipada en Rsnb y se utiliza una resistencia cuya potencia máxima sea el doble que la disipada. 
-
-Prsnb=Csnb*Vin^2*fsw
-
-Se agrega un capacitor de Bypass de 0.1uF para amortiguar la inductancia del MOSFET high side.
-
+\begin{enumerate}
+    \item Con el osciloscopio se mide la frecuencia de la oscilación en la tensión del transistor Vds. $f_{r}=1.27MHz$ %Era esa?
+    \item Se conecta un capacitor entre Drain y Source con una capacidad $C_{p_{0}}$ tal que la frecuencia de la oscilación disminuya a la mitad. $C_{p_{0}}=$
+    \item La frecuencia de resonancia en una red LC está dada por
+    $$ w=\frac{1}{\sqrt{LC}} $$
+    Con la configuración actual, 
+    $$ f_{r}=\frac{1}{2\pi\sqrt{L_{p}(C_{p_{2}}+C_{p_{0}})}} $$
+    Para lograr que dicha frecuencia disminuya a la mitad se necesita una capacitancia total que sea cuatro veces la capacitancia parásita con la que se comenzó.
+    Por lo tanto, la capacidad parásita del circuito resulta un tercio de la capacidad agregada. $C_{p_{2}} = \frac{C_{p_{0}}}{3}$
+    \item Teniendo la capacidad parásita del circuito Cp2 y la frecuencia de la oscilación original se puede calcular la inductancia parásita del circuito:
+    $$ L_{p}=\frac{1}{(2\pi f_{r})^{2}*C_{p_{2}}} $$
+    \item La impedancia característica de los elementos parásitos resulta:
+    $$ Z_{0}=\sqrt{\frac{L_p}{C_{p_2}}} $$
+    \item El valor óptimo para la $R_{snb}$ es aproximadamente igual a la impedancia característica. Debe ser mayor o igual a esta última. Un valor muy alto puede permitir un pico propio de la oscilación y un valor más bajo permite una corriente más elevada, resultando en un sobrecalentamiento.
+    \item Se elige una Csnb que sea igual o hasta 4 veces superior a la capacidad parásita del circuito. $C_{p_2}\leq C_{snb}\leq 4C_{p_2}$
+    \item Se calcula la potencia disipada en Rsnb y se utiliza una resistencia cuya potencia máxima sea el doble que la disipada.
+    $$ P_{R_{snb}}=C_{snb}V_{in}^2f_{sw} $$
+    \item Se agrega un capacitor de Bypass de 0.1uF para amortiguar la inductancia del MOSFET high side.     
+\end{enumerate}
 
 IRF840
 
