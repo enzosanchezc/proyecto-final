@@ -2,21 +2,21 @@
 
 %Localización física y ubicación de instalaciones:
 
-El proyecto se llevará a cabo en la Facultad de Ingeniería de la Universidad Nacional de La Plata.
-Los ensayos necesarios se realizarán en el Área Técnica de Electrónica e Instrumental (ATEI)
+El proyecto se llevó a cabo en la Facultad de Ingeniería de la Universidad Nacional de La Plata.
+Los ensayos necesarios se realizaron en el Área Técnica de Electrónica e Instrumental (ATEI)
 del Departamento de Electrotecnia de la Facultad de Ingeniería de la UNLP.
-Se realizarán consultas semanales con el tutor para el seguimiento del desarrollo del proyecto y
+Se realizaron consultas semanales con el tutor para el seguimiento del desarrollo del proyecto y
 revisión de las decisiones tomadas por el equipo de trabajo.
 
-Para alcanzar las metas y los objetivos propuestos, se realizarán las siguientes actividades:
+Para alcanzar las metas y los objetivos propuestos, se llevaron a cabo las siguientes actividades:
 
 \subsection{Estudio de bibliografía y diseño} \label{subsection:estudio_bibliografia}
-Con el objetivo de capacitarse, se estudiarán y analizarán aspectos de seguridad, curvas de carga de la batería 
+Con el objetivo de capacitarse, se estudiaron y analizaron aspectos de seguridad, curvas de carga de la batería 
 y topologías de conversores de potencia, de acuerdo con los requerimientos del proyecto. 
-Se evaluarán las diferentes alternativas posibles y, en base a su complejidad y a su costo,
-se elegirá la solución más adecuada para el logro de los objetivos. 
+Se evaluaron las diferentes alternativas posibles y, en base a su complejidad y a su costo,
+se eligió la solución más adecuada para el logro de los objetivos. 
 
-Se realizarán simulaciones en SPICE (programa de simulación con énfasis en circuitos integrados),
+Se realizaron simulaciones en SPICE (programa de simulación con énfasis en circuitos integrados),
 separando el proceso en 4 partes:
 \begin{itemize}
     \item Fuente conmutada: Convierte la tensión alterna de la red doméstica en una tensión continua.
@@ -44,18 +44,19 @@ Modificando el circuito de conversión que controla tanto la corriente como la t
     \label{fig:esquema_cargador}
 \end{figure}
 
-Se realizará un análisis crítico de las primeras simulaciones y, en base a los resultados obtenidos, 
-se corregirán los circuitos propuestos. 
+Se realizó un análisis crítico de las primeras simulaciones y, en base a los resultados obtenidos, 
+se corrigieron los circuitos propuestos. 
 Esta etapa finaliza con la presentación del informe parcial. 
 
 \subsection{Simulaciones}
 El circuito fue diseñado y probado en LTspice \cite{ltspice}, con el fin de verificar el diseño.
-El proceso hasta el día de la fecha podría dividirse en las siguientes etapas:
+El proceso se dividió en las siguientes etapas:
 \begin{enumerate}
     \item Simulación del conversor.
     \item Simulación del rectificador de entrada.
     \item Simulación del circuito de control.
     \item Simulación de distintos modelos de batería.
+    \item Simulación del driver para el MOSFET high-side.
 \end{enumerate}
 
 En las siguientes secciones se detallarán cada una de estas etapas,
@@ -86,55 +87,70 @@ El principal problema que presentó la utilización de este conversor fue que la
 Una vez definido el circuito de conversión DC-DC, se procedió a analizar los requisitos de la tensión de entrada. 
 Los circuitos rectificadores AC-DC permiten convertir una tensión alterna en una tensión continua.
 
-Rectificador de media onda u onda completa
+\paragraph{Rectificador de media onda u onda completa}
 
 Si bien el rectificador de media onda es más simple ya que cuenta con un menor número de diodos, existen muchas ventajas del rectificador de onda completa frente al de media onda. 
-La primera de ellas es que la corriente media del generador de alterna(alimentación) es nula, lo cual beneficia a los transformadores. 
-La segunda se basa en el hecho de que para una misma carga, la tensión de rizado pico a pico para el rectificador de onda completa es aproximadamente la mitad que para el rectificador de media onda. 
-Esto se debe a que en el circuito de onda completa, el tiempo durante el que se descarga el capacitor es menor que en el circuito de media onda debido a la onda sinusoidal rectificada de la segunda mitad de cada período. 
+La primera de ellas es que la corriente media del generador de alterna (alimentación) es nula, lo cual beneficia a los transformadores. 
+La segunda se basa en el hecho de que para una misma carga,
+la tensión de rizado pico a pico para el rectificador de onda completa es
+aproximadamente la mitad que para el rectificador de media onda. 
+Esto se debe a que en el circuito de onda completa,
+el tiempo durante el que se descarga el capacitor es menor que en el circuito de media onda
+debido a la onda sinusoidal rectificada de la segunda mitad de cada período. 
 
 Por todos estos motivos se decidió implementar un rectificador de onda completa.
 
-Rectificador de onda completa en puente o con toma media
+\paragraph{Rectificador de onda completa en puente o con toma media}
 
-En puente
+\paragraph{En puente}
 
 Presenta la caída de tensión de 2 diodos entre el generador y la carga. 
 La tensión máxima en un diodo polarizado en inversa es el valor pico del generador.
 
-Transformador de toma media
+\paragraph{Transformador de toma media}
 
 Sólo presenta la caída de tensión de un diodo entre el generador y la carga. 
-Para una misma potencia entregada por el generador, los diodos consumen potencia y disminuyen la corriente y potencia que absorbe la carga. 
+Para una misma potencia entregada por el generador,
+los diodos consumen potencia y disminuyen la corriente y potencia que absorbe la carga. 
 La tensión máxima en un diodo polarizado en inversa es el doble del valor pico del generador.
 El transformador proporciona aislamiento eléctrico entre el generador y la carga. 
 
-Como la reducción de tensión a la salida no es significativa en esta aplicación, y el puente de diodos se puede implementar con un pequeño integrado, con el objetivo de disminuir el tamaño del circuito se decidió evitar el transformador y utilizar un rectificador de onda completa tipo puente.
+Como la reducción de tensión a la salida no es significativa en esta aplicación
+y el puente de diodos se puede implementar con un pequeño integrado,
+con el objetivo de disminuir el tamaño del circuito se decidió evitar el transformador
+y utilizar un rectificador de onda completa tipo puente.
 
-Filtrado
+\paragraph{Filtrado}
 % ¿No usamos bobina?
-El filtro pasa bajos compuesto por una red LC permite disminuir el rizado, es decir, la componente de alterna de la señal rectificada. 
+El filtro pasa bajos compuesto por una red LC permite disminuir el rizado,
+es decir, la componente de alterna de la señal rectificada. 
 Como resultado se logra una tensión de salida aproximadamente continua.
-El capacitor mantiene la tensión de salida en un nivel constante y la bobina suaviza la corriente del rectificador y reduce la corriente de pico en los diodos. 
+El capacitor mantiene la tensión de salida en un nivel constante y
+la bobina suaviza la corriente del rectificador y reduce la corriente de pico en los diodos. 
 
-Para disminuir el número de componentes se decidió utilizar únicamente un capacitor en paralelo con la capacidad suficiente para obtener una tensión continua.
+Para disminuir el número de componentes se decidió utilizar únicamente
+un capacitor en paralelo con la capacidad suficiente para obtener una tensión continua.
 
-Rectificación controlada
+\paragraph{Rectificación controlada}
 
 Los tiristores son interruptores electrónicos controlados que son activados por una señal externa. 
-Poseen 3 terminales: ánodo, cátodo y puerta. Presentan altos valores nominales de corriente y tensión. Soportan altas corrientes y altas tensiones de bloqueo. 
-Un ejemplo de tiristores con los rectificadores controlados de silicio(SCR). Para que conduzcan se los debe polarizar en directa y deben recibir una corriente de puerta. 
+Poseen 3 terminales: ánodo, cátodo y puerta. Presentan altos valores nominales de corriente y tensión.
+Soportan altas corrientes y altas tensiones de bloqueo. 
+Un ejemplo de tiristores con los rectificadores controlados de silicio(SCR).
+Para que conduzcan se los debe polarizar en directa y deben recibir una corriente de puerta. 
 Al entrar en conducción no es necesaria la señal de puerta para mantener la corriente de ánodo. 
 El SCR continuará conduciendo siempre que la corriente de ánodo sea positiva y esté por arriba de un valor mínimo. 
 Mediante conmutadores controlados como los SCR se controla la tensión de salida en un rango limitado de variación, ajustando el ángulo de disparo de cada SCR. 
 El ángulo de disparo es el intervalo angular entre la polarización directa del SCR y la aplicación de la señal de puerta. 
 Si el ángulo de disparo es 0, el comportamiento es igual al de un rectificador no controlado con diodos. 
 
-Se decidió utilizar rectificación no controlada ya que no se necesita una tensión específica a la salida y el costo de complejizar el diseño con el agregado de SCRs y un circuito dedicado de disparo no aporta ningún beneficio significativo.
+Se decidió utilizar rectificación no controlada ya que no se necesita una tensión específica a la salida
+y el costo de complejizar el diseño con el agregado de SCRs y un circuito dedicado de disparo no aporta ningún beneficio significativo.
 
 \subsubsection{Simulación del circuito de control}
-Esta etapa fue la mas extensa en diseñar debido a su complejidad. Inicialmente solo debía realimentar la tensión de salida
-y generar la señal PWM en base a esta, pero en base a los cambios descritos en la sección \ref{subsection:estudio_bibliografia}
+Esta etapa fue la mas extensa en diseñar debido a su complejidad.
+Inicialmente solo debía realimentar la tensión de salida y generar la señal PWM en base a esta,
+pero en base a los cambios descritos en la sección \ref{subsection:estudio_bibliografia}
 se separó su diseño en tres etapas:
 
 \begin{enumerate}
@@ -184,13 +200,12 @@ la tensión máxima de entrada, frecuencia de switching y sincronización de las
 pero no se logró hallar un controlador adecuado para esta aplicación.
 El principal motivo fue que los controladores convencionales generan señales alternadas mediante el método de bootstrapping \cite{hart},
 lo cual no sirve para la topología elegida. Esto, combinado con el elevado nivel de tensión en la entrada,
-llevó a la búsqueda de otros métodos de control; por eso, se diseñó un controlador propio que se adaptara
-a las necesidades del proyecto, cuyo diagrama puede observarse en la figura \ref{fig:driver}.
+llevó a la búsqueda de otros métodos de control; por eso, se optó por un controlador con transformador aislante para el MOSFET cuyo source no esta a tierra \cite{gatedrivers}. El diagrama de este driver puede observarse en la figura \ref{fig:driver}.
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{images/driver.png}
-    \caption{Esquema del controlador de los MOSFETs}
+    \includegraphics[width=\textwidth]{images/esquema_driver.png}
+    \caption{Esquema del controlador del MOSFET high-side}
     \label{fig:driver}
 \end{figure}
 
@@ -219,24 +234,20 @@ Respecto al segundo modelo se agregan los siguientes componentes:
 La tensión que existe en el circuito secundario ($V_{SOC}$) se normaliza de forma que $V_{SOC}=1V$ equivale al $SOC (100\%)$.
 La resistencia en paralelo modela la autodescarga de la batería.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{images/bateria_3.png}
-    \caption{Tercer y actual modelo de batería utilizado}
-    \label{fig:bateria_3}
-\end{figure}
+\subsection{Implementaciones pendientes}
+Debido a la extensión del proyecto no se llegó a diseñar el circuito en su totalidad,
+por lo que solo se implementó el conversor de tensión continua
+junto con el generador de señal PWM y el driver.
 
-\subsection{Diseños pendientes}
-Habiendo desarrollado el cargador casi en su totalidad, aún queda por diseñar el circuito de protección
-contra cortocircuitos y el LED indicador. Ambos serán desarrollados durante la segunda parte del proyecto,
-debido a su baja complejidad con respecto al resto del circuito.
-
-Inicialmente se planeó implementar un filtro de entrada para evitar (ACA VAS VOS)
+Quedó pendiente por implementar todo el circuito de control,
+junto con las protecciones necesarias para las baterías.
+El rectificador a la entrada del conversor tampoco se llegó a implementar.
 
 \subsection{Implementación}
-Se diseñará un circuito impreso y se construirá un prototipo funcional que cumpla con las especificaciones propuestas. 
+Se diseñó un circuito impreso y se construyó un prototipo funcional para cumplir con las especificaciones propuestas. 
 Debido a que el costo de una batería de litio de las características necesarias es elevado,
-se evaluará la posibilidad de realizarlo a escala con una batería de menor tensión y/o capacidad.
+se redujo la tensión de salida del conversor a un límite de 12.6V,
+tensión que normalmente se utiliza para recargar baterías de computadoras portátiles.
 
 \subsection{Validación}
 Una vez terminado el proceso de diseño e implementación,
