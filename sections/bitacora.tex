@@ -1,7 +1,11 @@
 \section{Problemas afrontados y soluciones}
 
+TL494
+
 Una incorrecta elección de Rt y Ct fuera de los valores recomendados generaba variaciones muy grandes de la frecuencia de switching, 
 lo cual causaba inestabilidad en la tensión de salida. 
+
+MEDICIÓN DE INDUCTANCIA 
 
 Con un medidor de inductancia se obtuvo el valor de la inductancia de magnetización del transformador.
 Con los extremos de un bobinado a circuito abierto, se realizó la conexión del otro bobinado al instrumento y se obtuvo:
@@ -10,3 +14,32 @@ Lm=0.186mH;
 Transformador E70
 Lm=;    
 
+OSCILACIONES
+
+Las oscilaciones de alta frecuencia (superior a 125kHz) observadas en las formas de onda se pueden deber a cualquier tanque LC. 
+
+COMPARADOR
+
+Se realizaron pruebas con un comparador. 
+Salida por colector. Corriente de salida: 6-16mA. Necesita una resistencia de pull-up que fije esta corriente de $2k\Omega$ y $750\Omega$ respectivamente. 
+Las señales de entrada eran la propia señal PWM que se desea mejorar y una referencia cuya amplitud 
+sea la mitad de la primer señal implementada mediante un divisor de tensión. 
+Adicional: Realimentación positiva con schmitt trigger para las transiciones. ¿Se implementó?
+
+CABLES
+
+Para reducir el ruido se utilizó la menor longitud posible para los cables utilizados en las conexiones. 
+
+ESQUEMÁTICO GENERAL 
+
+Sacar de EasyEda. 
+
+IDENTIFICACIÓN DE PUNTOS HOMÓLOGOS UNA VEZ REALIZADOS 
+
+IMPLEMENTACIÓN
+
+Se agregaron puntos de prueba en el circuito para realizar todas las mediciones necesarias. 
+
+DRIVER
+
+Falta completar la sección.  
