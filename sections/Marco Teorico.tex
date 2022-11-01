@@ -143,11 +143,18 @@ La tensión de salida es la integral en el tiempo de la tensión del bobinado se
 La máxima corriente de colector se da durante el encendido del transistor y la máxima tensión de colector durante el apagado:
 
 
+Si la corriente debe anularse antes del comienzo de un nuevo período, 
+t0<T
+
+COMPLETAR CON HART Y MATLAB
+
+CREO QUE ES MÁS COMPLICADO ESTE MÉTODO:
 Igualando la integral en el tiempo de la tensión de entrada cuando el transistor está encendido a la tensión Vr cuando el transistor está apagado nos da el ciclo de trabajo máximo:
 
 
 El ciclo de trabajo debe mantenerse siempre debajo del máximo para evitar la saturación del núcleo del transformador. 
-Además, la corriente debe ser reseteada a 0 al final de cada ciclo de conmutación. 
+Para que el flujo magnético vuelva a 0, la corriente debe anularse
+ al final de cada ciclo de conmutación para restaurar el núcleo del transformador. 
 Si el núcleo está saturado, se puede dañar el transistor. 
 
 Comparación con el conversor flyback:
