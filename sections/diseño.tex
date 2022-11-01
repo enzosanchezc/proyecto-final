@@ -100,3 +100,71 @@ De esta forma en condiciones normales el flujo circula por el material magnétic
 
 Se utiliza para almacenar energía y permitir su transferencia. 
 Por el inductor circula una corriente continua. Si la misma es muy elevada puede saturar el núcleo magnético. 
+
+Requisitos de diseño: 
+
+Inductancia: L=400uH
+Corriente continua: Idc=1A
+
+Procedimiento para el diseño de un inductor con entrehierro:
+
+1) Calculo la energía que debe almacenar el inductor
+
+E=0.5*L*Idc^2=200uHA^2
+
+2) Elegir el tamaño del núcleo.
+
+En base a la disponibilidad, se elige un E30 con material N27. 
+Sus parámetros son:
+
+Longitud efectiva: le=67mm
+Área efectiva: Ae=60mm^2
+Para gap=0mm:
+Al=1800nH y ue=1600
+Para gap=0.1mm:
+Al=630nH y ue=562
+Para gap=0.18mm:
+Al=400nH y ue=353
+Para gap=0.34mm:
+Al=200nH y ue=179
+
+3) Verificar si la energía que puede almacenar el inductor sin entrehierro es suficiente. 
+
+Con Bm=100mT:
+Esingap=(0.5*(Bm^2)*volumen)/(u0*ue)=(0.5*(Bm^2)*Ae*le)/(u0*ue)=10uHA^2
+Con Bm=200mT:
+Esingap=(0.5*(Bm^2)*volumen)/(u0*ue)=(0.5*(Bm^2)*Ae*le)/(u0*ue)=40uHA^2
+
+En ambos casos es menor a la energía que debe almacenar el inductor por lo que se evidencia la necesidad de incluir un entrehierro. 
+
+4) Dimensionar el entrehierro 𝑙0 para almacenar la energía 𝐸 con 𝐵máximo=100mT.
+En caso de ser necesario puede llevarse a Bmáximo=200mT sin problema. 
+
+Con Bm=100mT:
+l0=(2*E*u0)/(Ae*Bm^2)=0.84mm
+Con Bm=200mT:
+l0=(2*E*u0)/(Ae*Bm^2)=0.2mm
+
+Gap necesario con un núcleo tipo E:
+
+Con Bm=100mT:
+g=l0/2=0.42mm
+Con Bm=200mT:
+g=l0/2=0.1mm
+
+5) Dimensionar el número de vueltas N para conseguir la inductancia L requerida.
+
+Con Bm=100mT:
+N=sqrt((L*l0)/(Ae*u0))=67 vueltas
+Con Bm=200mT:
+N=sqrt((L*l0)/(Ae*u0))=34 vueltas
+
+6) Construir el inductor y medir L. Si no verifica el valor deseado corregir
+considerando 𝐿 = 𝐴𝐿𝑁2 (el valor de 𝐴𝐿 que corresponde a 𝑙0 se obtiene con
+el número de vueltas del primer intento).
+
+Mediante la constante de tiempo en un circuito RL con una forma de onda cuadrada a la entrada se estima la inductancia en L=450uH. 
+
+7) Verificar que el valor de L se mantiene con la corriente de DC de trabajo.
+Esto generalmente se realiza sobre el propio convertidor midiendo la
+tensión aplicada sobre el inductor y la pendiente de la corriente.
