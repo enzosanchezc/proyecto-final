@@ -179,3 +179,105 @@ Mediante la constante de tiempo en un circuito RL con una forma de onda cuadrada
 Verificar que el valor de L se mantiene con la corriente de DC de trabajo.
 Esto generalmente se realiza sobre el propio convertidor midiendo la
 tensión aplicada sobre el inductor y la pendiente de la corriente.
+
+DRIVER
+
+1) Tensión de control de puerta: Vdrv
+
+Es la amplitud de la forma de onda PWM:  
+
+Vdrv=8V
+
+2) Frecuencia de control de puerta: fdrv
+
+Es la frecuencia de conmutación: 
+
+fdrv=125kHz;
+
+3) Carga total del terminal Gate: Qc
+
+Una de las principales pérdidas de potencia en los transistores MOSFET son las pérdidas por control de puerta o Gate. 
+El encendido y apagado del MOSFET implica la carga y descarga del capacitor interno, 
+el cual recibirá o entregará carga cuando la tensión en el mismo se modifique. 
+Se requiere de una cierta carga para cambiar la tensión del terminal Gate entre 0 y Vdrv. 
+Su valor se obtiene mediante el gráfico de la hoja de datos del IRF840 con los siguientes datos:
+Rango: 0-63nC
+Vgs=6V
+Vds=100V
+De forma estimada: 
+Qg=26nC
+
+INSERTAR IMÁGEN DE HOJA DE DATOS IRF840: FIGURA 6 Vgs vs Qg
+
+Con este parámetro pueden determinarse la corriente promedio de polarización requerida para controlar el terminal Gate 
+y las pérdidas de potencia de carga de puerta
+
+Ig=Qg*fdrv=3.25mA
+
+Pgate=Vdrv*Qg*fdrv=26mW
+
+4) Delta VC1 y Delta VC2: INSERTAR SÍMBOLOS COMO ANTES
+
+La suma de los ripples en ambos capacitores de acoplamiento aparece en el terminal Gate. 
+Se elige el siguiente criterio:
+DeltaVc=0,1*Vdrv
+deltavc1=deltavc2=deltavc/2;
+
+5) Tensión del diodo de rueda libre del secundario: Vdc2
+
+Se utiliza el mismo diodo que en el convertidor forward, modelo UF4007. 
+La tensión directa máxima se obtiene de la hoja de datos: 
+Vdc2=1.7V;
+
+6) Ciclo de trabajo máximo 
+
+Definido por el conversor forward.
+
+Dmáx=0.5
+
+7) Resistencia entre Gate y Source: Rgs
+
+Su valor se despeja en base a la constante de tiempo deseada en el transitorio de la tensión en el capacitor de acoplamiento.
+
+Tao=50us
+
+INSERTAR CÁLCULO DE RGS
+
+$Rgs=10k\Omega$
+
+8) Inductancia magnetizante: Lm
+
+Medida con el instrumento. 
+
+Lm=186uH;
+
+9) Cdrv: Capacitor de bypass
+
+Provee de la corriente necesaria al encenderse. 
+
+FALTA CÁLCULO
+
+INSERTAR FÓRMULA DE LA ECUACIÓN 18 JUNTO A LA DESCRIPCIÓN DE SUS parámetros
+
+10) Capacitor de acoplamiento Cc1
+
+Cc1(D)=(Qg/deltavc1)+(((Vdrv-Vdc2).*D)/(deltavc1*Rgs*fdrv))+(Vdrv*(D.^2-D.^3))/(deltavc1*4*Lm*fdrv^2);
+
+La capacidad mínima que asegura permanecer por debajo del ripple de tensión máximo en todas las condiciones de operación 
+se puede encontrar determinando el máximo de la expresión anterior:
+
+Cc1=328.3nF
+
+11) Capacitor de acoplamiento Cc2
+
+Cc2=(Qg/deltavc2)+(((Vdrv-Vdc2)*Dmax)/(deltavc2*Rgs*fdrv))
+
+Cc2=71.3nF
+
+12) Resistencia serie del primario de amortiguamiento
+
+$Rcmin=2*sqrt(Lm/Cc1)=47.6\Omega$
+
+Se elige:
+
+Rc=X
