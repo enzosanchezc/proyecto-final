@@ -1,55 +1,49 @@
-\section{PCB}
+\section{Elaboración del circuito impreso}
 
 A continuación se detallan todos los criterios aplicados para cada componente en base a las recomendaciones 
-proporcionadas por la cátedra, los integrantes del ATEI y las especificadas en las hojas de datos de los circuitos integrados.  
-
-ORIFICIOS
-
-Orificios de 0.7mm/0.8mm, independiente del componente. En caso de necesitar uno más grande se lo hace con mecha.
-Por ejemplo, para jumpers, potenciómetros y conectores macho el orificio es de 1mm. 
-
-PISTAS
-
-Con corrientes más altas se necesitan pistas más anchas. 
-Por ello, las pistas de potencia se hacen lo más cortas, directas y gruesas posibles mediante la siguiente regla: 0.381 mm x Ampere.
-Pistas finas de 1mm y pistas gruesas de 2mm. 
-La separación entre las pistas y el plano de tierra o cualquier otra pista es de 0,4 mm/0.5mm. 
-Se evitó que las pistas tengan ángulos de 90°. 
-Si en el planchado se trabaja con una temperatura excesiva las pistas se ensanchan. 
-Para evitar contactos entre pines, las pistas ingresan a los circuitos integrados de forma paralela. 
-
-PADS
-
-Se les dio forma de ... COMPLETAR!
-Los pads de al menos 2mm.
-En los casos donde las pistas están muy cerca de los pads, se achican un poco a costa de perder área para soldadura.  
-
-TIERRA 
-
-Con el fin de mantener la aislación provista por el transformador principal, 
-el plano de tierra se dividió en dos: una parte para el lado primario y la otra para su secundario. 
-Su forma es cuadrada para que visualmente sean fáciles de encontrar.
-
-TORNILLOS
-
-En cada extremo de la placa se realizaron orificios para los tornillos de 6mm de diámetro,
- que es la medida de la cabeza de tornillo típica. 
-
-PUNTOS DE PRUEBA
-
-Se colocaron puntos se prueba para poder conectar los dos transformadores a la placa. 
-
-RESISTENCIAS DE BAJO VALOR 
-
-Se colocaron resistencias de bajo valor en serie con cada componente o lugar
- en el que se desea medir corriente para contrastar con los resultados obtenidos por simulación. 
-
-OTROS COMPONENTES 
-
-Resistencias 2.5mm
-Puentes de 3mm
-Led de 1.8mm 
-Mosfet y resistencia de potencia de 3.5mm
+proporcionadas por la cátedra, los integrantes del ATEI y las especificadas en las hojas de datos de los circuitos integrados.
 
 Se comprobó que todos los componente elegidos en el software tengan la misma distribución de pines que en su versión física. 
 Se imprimió una primera versión y se realizaron correcciones en base a los resultados obtenidos al probar los componentes. 
+
+\paragraph{Orificios}
+
+Los orificios se hicieron de 0.8mm, independiente del componente. En caso de necesitar uno más grande se lo ensanchó con mecha.
+Por ejemplo, para jumpers, potenciómetros y conectores macho el orificio es de 1mm. 
+
+\paragraph{Pads}
+
+Se les dio forma circular para facilitar la soldadura, excepto para la red de tierra, que se hizo con pads cuadrados.
+Se les dió un tamaño de 2mm de diámetro para los circulares, y 2mm de lado para los cuadrados.
+En los casos donde las pistas están muy cerca de los pads y no fuera posible reubicarlas,
+se modificó la forma o el tamaño del pad para cumplir con la distancia especificada entre pistas.  
+
+\paragraph{Pistas}
+
+Con corrientes más altas se necesitan pistas más anchas. 
+Por ello, las pistas de potencia se hacen lo más cortas, directas y gruesas posibles mediante la siguiente regla:
+pistas finas de 1mm y pistas gruesas de 2mm. 
+La separación entre las pistas y el plano de tierra o cualquier otra pista es de 0.7mm. 
+Se evitó que las pistas tengan ángulos de 90°. 
+Si en el planchado se trabaja con una temperatura excesiva las pistas se ensanchan, por lo tanto,
+para evitar contactos entre pines, las pistas ingresan a los circuitos integrados de forma paralela. 
+
+\paragraph{Tierra} 
+
+Con el fin de mantener la aislación provista por el transformador principal, 
+el plano de tierra se dividió en dos: una parte para el lado primario y la otra para su secundario.
+
+\paragraph{Tornillos}
+
+En cada extremo de la placa se realizaron orificios para los tornillos de 6mm de diámetro,
+que es la medida de la cabeza de tornillo típica. 
+
+\paragraph{Puntos de prueba}
+
+Se colocaron puntos se prueba para poder medir tensiones en distintos puntos de la placa.
+
+\paragraph{Medición de corriente} 
+
+Se colocaron resistencias de bajo valor en serie con cada componente o lugar
+en el que se desea medir corriente para contrastar con los resultados obtenidos por simulación.
+Una vez realizadas las mediciones, dichos espacios se conectaron con jumpers.

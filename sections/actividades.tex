@@ -62,7 +62,8 @@ El proceso se dividió en las siguientes etapas:
 En las siguientes secciones se detallarán cada una de estas etapas,
 enumerando los problemas encontrados y las soluciones propuestas.
 
-\subsubsection{Simulación del conversor}
+\subsubsection{Diseño del conversor}
+\marginpar{(Pendiente)}
 El primer paso de diseño fue la elección de una topología de conversión DC-DC.
 Esta etapa introduce aislación a partir de un transformador de alta frecuencia,
 disminuyendo el coste, tamaño y peso respecto a uno de baja frecuencia en base al núcleo magnético necesario.
@@ -212,7 +213,8 @@ llevó a la búsqueda de otros métodos de control; por eso, se optó por un con
 \subsubsection{Simulación de distintos modelos de batería}
 Para que las simulaciones permitan obtener resultados fiables se buscó un modelo apropiado para la batería.
 El primer modelo consta de una resistencia variable a partir de los datos obtenidos de los ensayos. 
-Este componente representa la resistencia interna de la batería, que es responsable de la caída de tensión instantánea que se produce ante un escalón en la intensidad demandada.
+Este componente representa la resistencia equivalente que presenta la batería,
+que es responsable de la caída de tensión instantánea que se produce ante un escalón en la intensidad demandada.
 
 El siguiente modelo propuesto añade un capacitor de muy alto valor en serie con la resistencia variable,
 el cual representa la capacidad de almacenar carga de la batería.
@@ -220,21 +222,33 @@ El modelo actual es un modelo dinámico donde los valores de los componentes no 
 sino que dependen de las condiciones de funcionamiento de la batería: estado de carga y funcionamiento en carga o descarga.
 
 El circuito de la izquierda modela la resistencia interna de la batería y el comportamiento transitorio ante distintas cargas.
-Por otro lado, el circuito de la derecha modela la capacidad de almacenamiento de energía de la batería y la carga almacenada durante los procesos de carga o descarga \cite{bateria}.
+Por otro lado, el circuito de la derecha modela la capacidad de almacenamiento de energía de la batería y la carga almacenada durante los procesos de carga o descarga \cite{modelo_bateria_1}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{images/modelo_bateria.png}
+    \caption{Modelo final de batería utilizado}
+    \label{fig:bateria_3}
+\end{figure}
 
 Respecto al segundo modelo se agregan los siguientes componentes:
 \begin{itemize}
     \item Los bloques compuestos por una resistencia y un capacitor en paralelo, que modelan la capacidad en los electrodos de las celdas y
     la resistencia no lineal entre electrodos y electrolito.
-    En conjunto modelan las constantes de tiempo corta y larga de la respuesta transitoria de la tensión en la batería\cite{bateria_espanol}.
+    En conjunto modelan las constantes de tiempo (corta y larga) de la respuesta transitoria de la tensión en la batería \cite{modelo_bateria_2}.
     \item La fuente de tensión controlada por tensión, que representa la dependencia no lineal entre el estado de carga ($SOC$)
     y la tensión de circuito abierto($V_{OC}$) dependiente del $SOC$.
-    \item La fuente de corriente controlada por corriente, representando la corriente de carga que modifica el $SOC$.
+    \item La fuente de corriente controlada por corriente, representa la corriente de carga que modifica el $SOC$.
 \end{itemize}
 La tensión que existe en el circuito secundario ($V_{SOC}$) se normaliza de forma que $V_{SOC}=1V$ equivale al $SOC (100\%)$.
 La resistencia en paralelo modela la autodescarga de la batería.
 
-\subsection{Implementaciones pendientes}
+\subsection{Implementación}
+Se diseñó un circuito impreso y se construyó un prototipo funcional para cumplir con las especificaciones propuestas. 
+Debido a que el costo de una batería de litio de las características necesarias es elevado,
+se redujo la tensión de salida del conversor a un límite de 12.6V,
+tensión que normalmente se utiliza para recargar baterías de computadoras portátiles.
+
 Debido a la extensión del proyecto no se llegó a diseñar el circuito en su totalidad,
 por lo que solo se implementó el conversor de tensión continua
 junto con el generador de señal PWM y el driver.
@@ -242,12 +256,6 @@ junto con el generador de señal PWM y el driver.
 Quedó pendiente por implementar todo el circuito de control,
 junto con las protecciones necesarias para las baterías.
 El rectificador a la entrada del conversor tampoco se llegó a implementar.
-
-\subsection{Implementación}
-Se diseñó un circuito impreso y se construyó un prototipo funcional para cumplir con las especificaciones propuestas. 
-Debido a que el costo de una batería de litio de las características necesarias es elevado,
-se redujo la tensión de salida del conversor a un límite de 12.6V,
-tensión que normalmente se utiliza para recargar baterías de computadoras portátiles.
 
 \subsection{Validación}
 Una vez terminado el proceso de diseño e implementación,

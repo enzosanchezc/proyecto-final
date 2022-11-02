@@ -1,4 +1,5 @@
 \section{Diseño}
+\marginpar{(Pendiente)}
 
 \subsection{Transformador}
 
@@ -17,7 +18,7 @@ El flujo se relaciona con el área de la sección transversal de la trayectoria 
 
 $$ \Phi=BA $$
 
-Densidad de corriente:
+La densidad de corriente es:
 
 $$ J=K_{j} A_{p}^{x} $$
 
@@ -27,13 +28,13 @@ INSERTAR TABLA!
 
 El factor $A_{p}$ se puede calcular como: 
 
-$$ A_{p}=\left[\frac{P_{t} \times 10^{4}}{K_{t} f B_{m} K_{u} K_{j}}\right]^{\frac{1}{1+x}} [{cm}^{4}] $$
+$$ A_{p}=\left(\frac{P_{t} \cdot 10^{4}}{K_{t} f B_{m} K_{u} K_{j}}\right)^{\frac{1}{1+x}} {cm}^{4} $$
 
-donde Ku es el factor de relleno que varía entre 0.4 y 0.6 y Bm es la densidad de flujo máxima.
+donde $K_u$ es el factor de relleno que varía entre 0.4 y 0.6 y $B_m$ es la densidad de flujo máxima.
 
 La cantidad de alambre de cobre y la cantidad de material del núcleo (por lo general ferrita de hierro) determinan la capacidad de potencia del transformador. 
-Existen distintos tipos de núcleo como Toridal core, Pot core, Power core, E-laminated core, EI-core, C-core, Single-coil, Tape-wound core, etc. 
-En este proyecto se trabajará con los núcleos disponibles provistos por la cátedra: E70, E30 y E25.  
+Existen distintos tipos de núcleo como toroidal, pot, power, E-laminated, EI, C, single-coil, tape-wound, etc. 
+En este proyecto se trabajará con los núcleos disponibles provistos por la cátedra: EC70, E30 y E25. 
 
 Especificaciones obtenidas por simulación:
 \begin{itemize}
@@ -50,11 +51,11 @@ INSERTAR IMÁGEN DE SIMULACIÓN V1MAX!
 
 Potencia de salida:
 
-$$ P_{o}=V_{o}*I_{o}=12.6V*1.6A=20.16W $$
+$$ P_{o}=V_{o}\cdot I_{o}=12.6V\cdot 1.6A=20.16W $$
 
 Potencia aparente: 
 
-$$Pt=Po+Pi=Po*\left(1+\frac{1}{n}\right)=20.16W*\left(1+\frac{1}{0.95}\right)=41.38W  $$
+$$P_t=P_o+P_i=P_o\cdot\left(1+\frac{1}{n}\right)=20.16W\cdot\left(1+\frac{1}{0.95}\right)=41.38W  $$
 
 INSERTAR IMÁGEN B-H DE KIKE!
 
@@ -70,22 +71,22 @@ $$ A_{e}=279{mm}^{2} $$
 
 Número de vueltas del primario:
 
-$$ N_{1}=\frac{V_{1_{max}}}{K_{t}*f*B_{m}*A_{a}}=\frac{350V}{4*125KHz*100mT*0.000279}=25.09\simeq 25 $$
+$$ N_{1}=\frac{V_{1_{max}}}{K_{t}\cdot f\cdot B_{m}\cdot A_{a}}=\frac{350V}{4\cdot 125kHz\cdot 100mT\cdot 0.000279}=25.09\simeq 25 $$
 
 Número de vueltas del secundario: 
 
-$$ N_{2}=N_{1}*\frac{V_{2}}{V_{1}} $$
+$$ N_{2}=N_{1}\cdot\frac{V_{2}}{V_{1}} $$
 
 Como no se requiere ni desea elevar o reducir la tensión del secundario, se elige una relación de vueltas 1:1. 
 Por lo tanto, el número de vueltas del bobinado secundario es igual al del primario. 
 
 $$ N_{2}=25 $$
 
-$$ A_{p}=\left[\frac{41.38\times 10^{4}}{4*125kHz*100mT*0.4*366}\right]^{\frac{1}{1-0.14}} [cm^4] $$
+$$ A_{p}=\left(\frac{41.38\cdot 10^{4}}{4\cdot 125kHz\cdot 100mT\cdot 0.4\cdot 366}\right)^{\frac{1}{1-0.14}} {cm}^4 $$
 
-$$ J=366\times X^{-0.14} [A/cm^2] $$
+$$ J=366\cdot X^{-0.14} A/{cm}^2 $$
 
-$$ J=584 $$
+$$ J=584 A/{cm}^2 $$
 
 \paragraph{Saturación magnética}
 
@@ -103,68 +104,78 @@ Por el inductor circula una corriente continua. Si la misma es muy elevada puede
 
 Requisitos de diseño: 
 
-Inductancia: L=400uH
-Corriente continua: Idc=1A
+\begin{itemize}
+    \item Inductancia: $L=400\mu H$
+    \item Corriente continua: $I_{dc}=1A$
+\end{itemize}
 
 Procedimiento para el diseño de un inductor con entrehierro:
 
-1) Calculo la energía que debe almacenar el inductor
-
-E=0.5*L*Idc^2=200uHA^2
-
-2) Elegir el tamaño del núcleo.
-
+\paragraph{Calculo la energía que debe almacenar el inductor}
+$$ E=0.5\cdot L\cdot I_{dc}^2=200\mu HA^2 $$
+\paragraph{Elección el tamaño del núcleo}
 En base a la disponibilidad, se elige un E30 con material N27. 
 Sus parámetros son:
+\begin{itemize}
+    \item Longitud efectiva: $l_e=67mm$
+    \item Área efectiva: $A_e=60{mm}^2$
+    \item $A_l=1800nH$ y $u_e=1600$ ($gap=0mm$)
+    \item $A_l=630nH$ y $u_e=562$ ($gap=0.1mm$)
+    \item $A_l=400nH$ y $u_e=353$ ($gap=0.18mm$)
+    \item $A_l=200nH$ y $u_e=179$ ($gap=0.34mm$)
+\end{itemize}
 
-Longitud efectiva: le=67mm
-Área efectiva: Ae=60mm^2
-Para gap=0mm:
-Al=1800nH y ue=1600
-Para gap=0.1mm:
-Al=630nH y ue=562
-Para gap=0.18mm:
-Al=400nH y ue=353
-Para gap=0.34mm:
-Al=200nH y ue=179
+\paragraph{Verificar energía almacenada}
 
-3) Verificar si la energía que puede almacenar el inductor sin entrehierro es suficiente. 
+Se debe corroborar que la energía que puede almacenar el inductor sin entrehierro sea suficiente
 
-Con Bm=100mT:
-Esingap=(0.5*(Bm^2)*volumen)/(u0*ue)=(0.5*(Bm^2)*Ae*le)/(u0*ue)=10uHA^2
-Con Bm=200mT:
-Esingap=(0.5*(Bm^2)*volumen)/(u0*ue)=(0.5*(Bm^2)*Ae*le)/(u0*ue)=40uHA^2
+Con $B_m=100mT$:
+$$ E_{singap}=\frac{0.5\cdot B_m^2\cdot {volumen}}{u_0\cdot u_e}=\frac{0.5\cdot B_m^2\cdot A_e\cdot l_e}{u_0\cdot u_e}=10\mu HA^2 $$
+
+Con $B_m=200mT$:
+$$ E_{singap}=\frac{0.5\cdot B_m^2\cdot {volumen}}{u_0\cdot u_e}=\frac{0.5\cdot B_m^2\cdot A_e\cdot l_e}{u_0\cdot u_e}=40\mu HA^2 $$
 
 En ambos casos es menor a la energía que debe almacenar el inductor por lo que se evidencia la necesidad de incluir un entrehierro. 
 
-4) Dimensionar el entrehierro 𝑙0 para almacenar la energía 𝐸 con 𝐵máximo=100mT.
-En caso de ser necesario puede llevarse a Bmáximo=200mT sin problema. 
+\paragraph{Dimensionar el entrehierro}
 
-Con Bm=100mT:
-l0=(2*E*u0)/(Ae*Bm^2)=0.84mm
-Con Bm=200mT:
-l0=(2*E*u0)/(Ae*Bm^2)=0.2mm
+El entrehierro $l_0$ debe almacenar la energía $E$ con $B_{max}=100mT$.
+En caso de ser necesario puede llevarse a $B_{max}=200mT$ sin problema. 
+
+Con $B_m=100mT$:
+$$ l_0=\frac{2\cdot E\cdot u_0}{A_e\cdot B_m^2}=0.84mm $$
+
+Con $B_m=200mT$:
+$$ l_0=\frac{2\cdot E\cdot u_0}{A_e\cdot B_m^2}=0.2mm $$
 
 Gap necesario con un núcleo tipo E:
 
-Con Bm=100mT:
-g=l0/2=0.42mm
-Con Bm=200mT:
-g=l0/2=0.1mm
+Con $B_m=100mT$:
+$$ g=\frac{l_0}{2}=0.42mm $$
 
-5) Dimensionar el número de vueltas N para conseguir la inductancia L requerida.
+Con $B_m=200mT$:
+$$ g=\frac{l_0}{2}=0.1mm $$
 
-Con Bm=100mT:
-N=sqrt((L*l0)/(Ae*u0))=67 vueltas
-Con Bm=200mT:
-N=sqrt((L*l0)/(Ae*u0))=34 vueltas
+\paragraph{Dimensionar el número de vueltas}
 
-6) Construir el inductor y medir L. Si no verifica el valor deseado corregir
-considerando 𝐿 = 𝐴𝐿𝑁2 (el valor de 𝐴𝐿 que corresponde a 𝑙0 se obtiene con
+Elección de N para conseguir la inductancia L requerida.
+
+Con $B_m=100mT$:
+$$ N=\sqrt{\frac{L\cdot l_0}{A_e\cdot u_0}}=67\ vueltas$$
+
+Con $B_m=200mT$:
+$$ N=\sqrt{\frac{L\cdot l_0}{A_e\cdot u_0}}=34\ vueltas $$
+
+\paragraph{Construcción}
+
+Bobinar el inductor y medir L. Si no verifica el valor deseado corregir
+considerando $L = A_LN^2$ (el valor de $A_L$ que corresponde a $l_0$ se obtiene con
 el número de vueltas del primer intento).
 
-Mediante la constante de tiempo en un circuito RL con una forma de onda cuadrada a la entrada se estima la inductancia en L=450uH. 
+Mediante la constante de tiempo en un circuito RL con una forma de onda cuadrada a la entrada se estima la inductancia en $L=450\mu H$. 
 
-7) Verificar que el valor de L se mantiene con la corriente de DC de trabajo.
+\paragraph{Validación}
+
+Verificar que el valor de L se mantiene con la corriente de DC de trabajo.
 Esto generalmente se realiza sobre el propio convertidor midiendo la
 tensión aplicada sobre el inductor y la pendiente de la corriente.
