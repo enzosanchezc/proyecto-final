@@ -5,26 +5,21 @@ TL494
 Una incorrecta elección de Rt y Ct fuera de los valores recomendados generaba variaciones muy grandes de la frecuencia de switching, 
 lo cual causaba inestabilidad en la tensión de salida. 
 
-MEDICIÓN DE INDUCTANCIA 
+MEDIDOR DE CAPACITANCIA E INDUCTANCIA DM6243L
 
-Con un medidor de inductancia se obtuvo el valor de la inductancia de magnetización del transformador.
-Con los extremos de un bobinado a circuito abierto, se realizó la conexión del otro bobinado al instrumento y se obtuvo:
+Con este instrumento se obtuvo el valor de inductancia del inductor de la salida y de la inductancia de magnetización del transformador. 
+Para el transformador, con los extremos de un bobinado a circuito abierto, se realizó la conexión del instrumento al otro bobinado y se obtuvo:
 Transformador de señal E25:
 Lm=0.186mH; 
 Transformador E70
-Lm=;    
+Lm=73uH; AMARILLO 
+Lm=84uH; NEGRO
+Inductor de salida:
+L=340uH;
 
 OSCILACIONES
 
 Las oscilaciones de alta frecuencia (superior a 125kHz) observadas en las formas de onda se pueden deber a cualquier tanque LC. 
-
-COMPARADOR
-
-Se realizaron pruebas con un comparador. 
-Salida por colector. Corriente de salida: 6-16mA. Necesita una resistencia de pull-up que fije esta corriente de $2k\Omega$ y $750\Omega$ respectivamente. 
-Las señales de entrada eran la propia señal PWM que se desea mejorar y una referencia cuya amplitud 
-sea la mitad de la primer señal implementada mediante un divisor de tensión. 
-Adicional: Realimentación positiva con schmitt trigger para las transiciones. ¿Se implementó?
 
 CABLES
 
@@ -36,10 +31,59 @@ Sacar de EasyEda.
 
 IDENTIFICACIÓN DE PUNTOS HOMÓLOGOS UNA VEZ REALIZADOS 
 
+Texto.
+
 IMPLEMENTACIÓN
 
 Se agregaron puntos de prueba en el circuito para realizar todas las mediciones necesarias. 
 
+CONSUMO DE CORRIENTE DE COMPONENTES 
+
+En base a la corriente medida en las resistencias de bajo valor y el display de las fuentes de tensión utilizadas. 
+
+CÁLCULO DEL CICLO DE TRABAJO UTILIZADO 
+
+D=TonPWM/Tswitching=125kHz*TonPWM
+
+Destacar la estabilidad de la frecuencia de conmutación y la variación de la amplitud de la forma de onda PWM con la variación del ciclo de trabajo. 
+
+POSIBILIDAD DE UTILIZAR DISIPADOR PARA MOSFET
+
+PRIMERAS PRUEBAS
+
+Al conectar la señal de salida PWM del TL494 al convertidor forward, debido a la carga vista, su amplitud disminuye de 12V a menos de 0.1V. 
+Actualmente con la etapa de ganancia de corriente, la señal PWM disminuye a una amplitud de XV y presenta una leve deformación.
+
+¿BUFFERS YA NO ESTÁN MÁS?
+Prueba con LM324N
+Producto Ganancia por Ancho de Banda: 1.3MHz y Slew Rate: 0.4V/us. 
+Alimentación 12V. Los amplificadores operacionales que componen al circuito integrado no son rápidos ya que no pueden seguir a la tensión en su entrada. 
+ADJUNTAR IMÁGEN!
+Presenta tiempos de subida y de bajada muy lentos. En base a la medición realizada se necesita aproximadamente 1V/us de slew rate. 
+Dado que el problema es el slew rate se busca un comparador en lugar de un amplificador operacional. 
+DUDOSO:
+La principal diferencia entre un amplificador operacional y un comparador es que el comparador
+ no tiene el capacitor en su estructura interna que es el que limita el slew rate en el amplificador operacional. 
+
+COMPARADOR LM339
+
+Rango de alimentación: 2-36V
+COMPLETAR
+Velocidad: 1.3us
+
+Se realizaron pruebas con un comparador. 
+Salida por colector. Corriente de salida: 6-16mA. Necesita una resistencia de pull-up que fije esta corriente de $2k\Omega$ y $750\Omega$ respectivamente. 
+Las señales de entrada eran la propia señal PWM que se desea mejorar y una referencia cuya amplitud 
+sea la mitad de la primer señal implementada mediante un divisor de tensión. 
+Adicional: Realimentación positiva con schmitt trigger para las transiciones. ¿Se implementó?+
+
+NO ES NECESARIO LA ETAPA DE GANANCIA 2 Y BUFFER ¿Por qué ya no es necesaria?
+
+Dado que la corriente máxima por colector del TL494 es 250mA, el integrado puede comandar directamente al driver del MOSFET high side. 
+
 DRIVER
 
-Falta completar la sección.  
+Los capacitores de desacople actúan como un cortocircuito en la frecuencia de operación. 
+Diodo evita la parte negativa. 
+Analizar la Vg para no superar la máxima. 
+El transformador sin componentes adicionales consumía demasiada corriente porque se lo alimentaba con corriente continua. 
