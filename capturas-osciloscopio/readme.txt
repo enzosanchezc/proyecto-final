@@ -1,0 +1,1 @@
+- Todas las mediciones fueron tomadas con una frecuencia de 125kHz y ciclo de trabajo al mínimo
