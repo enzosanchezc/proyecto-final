@@ -1,5 +1,18 @@
 \section{Implementación}
 
+Se diseñó un circuito impreso y se construyó un prototipo funcional para cumplir con las especificaciones propuestas. 
+Debido a que el costo de una batería de litio de las características necesarias es elevado,
+se redujo la tensión de salida del conversor a un límite de 12.6V,
+tensión que normalmente se utiliza para recargar baterías de computadoras portátiles.
+
+Debido a la extensión del proyecto no se llegó a diseñar el circuito en su totalidad,
+por lo que solo se implementó el conversor de tensión continua
+junto con el generador de señal PWM y el driver.
+
 Las primeras pruebas se realizaron en una placa de cobre perforada. 
 Para una mayor seguridad se optó por reemplazar la primera etapa de conversión AC-DC por una fuente regulable cuya tensión de entrada sea de 36V.
 Esta fuente tiene una corriente máxima de 1 A y por lo tanto es capaz de proveer la corriente necesaria que consume el circuito, con ciertas limitaciones.
+
+Quedó pendiente por implementar todo el circuito de control,
+junto con las protecciones necesarias para las baterías.
+El rectificador a la entrada del conversor tampoco se llegó a implementar.
