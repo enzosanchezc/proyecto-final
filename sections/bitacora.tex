@@ -17,6 +17,11 @@ Lm=84uH; NEGRO
 Inductor de salida:
 L=340uH;
 
+Precisión: +-(2\% del FE+Número de dígitos)
+FE=2mH
+Número de dígitos=5
+COMPLETAR CÁLCULO 
+
 OSCILACIONES
 
 Las oscilaciones de alta frecuencia (superior a 125kHz) observadas en las formas de onda se pueden deber a cualquier tanque LC. 
@@ -87,3 +92,67 @@ Los capacitores de desacople actúan como un cortocircuito en la frecuencia de o
 Diodo evita la parte negativa. 
 Analizar la Vg para no superar la máxima. 
 El transformador sin componentes adicionales consumía demasiada corriente porque se lo alimentaba con corriente continua. 
+
+TRANSFORMADOR DE POTENCIA
+
+Núcleo: E70
+Con el instrumento:
+Primario(cables amarillos): Lm=81uH
+Secundario(cables negros): Lm=76uH
+
+INDUCTOR
+
+Núcleo: E42
+Número de vueltas: N=36
+Gap: 0.2mm
+
+Con un circuito RL serie y un generador de funciones se mide la inductancia en la frecuencia de interés.
+Para una resistencia de $R=200\Omega$ y una onda rectangular como excitación de 125kHz de 1.5V de amplitud, se obtiene:
+tao=2.34us=L/R
+L=R*tao=$200\Omega$*2.34us=468uH
+
+Con el instrumento se mide 323uH. El mismo no aclara la frecuencia de medición en su hoja de datos. 
+L=Al*N^2 => Al=249.22nH
+Este valor de Al no se corresponde con el gap introducido ya que el núcleo presenta un gap superior en su centro. 
+
+La medición a partir de Vl=L*dil/dt, sobre el propio convertidor midiendo la tensión aplicada sobre el inductor y la pendiente de la corriente, 
+no se pudo realizar en la placa de pruebas ya que las formas de onda están deformadas. 
+La resistencia serie que se puso para medir la corriente fue de 12Ohms. 
+
+TRANSFORMADOR DE SEÑAL 
+
+Núcleo: E30
+Con el instrumento:
+Primario: Lm=187uH
+Secundario: Lm=186uH
+Respecto a la hoja de datos, tiene el doble de espesor. 
+Por lo tanto, el área efectiva se duplica. 
+
+RECOMENDACIONES
+
+Se podría haber implementado el transformador del driver con un núcleo toroidal. 
+
+INDUCTANCIA MAGNETIZANTE
+
+Medir Lm mediante constante de tiempo de la tensión del capacitor de acoplamiento del driver.
+
+0\% -240mV
+100\% 760mV
+DeltaV=1V
+10\% -140mV
+90\% 660mV
+Con esto:
+Tao=150ns. 
+
+DIODO SCHOTTKY
+
+Queda pendiente la prueba. 
+
+CAPACITOR DE SALIDA 
+
+Medir ESR del capacitor utilizado
+No se hizo. 
+
+RECALCULAR INDUCTOR CON MATLAB
+
+CHEQUEAR EFICIENCIA DE LA META ESTABLECIDA 
