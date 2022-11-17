@@ -156,3 +156,32 @@ No se hizo.
 RECALCULAR INDUCTOR CON MATLAB
 
 CHEQUEAR EFICIENCIA DE LA META ESTABLECIDA 
+
+15/11
+
+Problemas:
+
+1) La fuente de tensión de potencia eleva notablemente su corriente entregada al circuito 
+cuando se conecta la tierra de la punta del osciloscopio en ciertos puntos de la PCB. 
+Además disminuye la tensión entregada por la fuente de 12V. 
+Ejemplo: arriba de la Rgs.
+
+2) Al utilizar resistencias de $1\Omega$ y potencia nominal 2Watts para medir corrientes en el circuito, 
+se detectaron oscilaciones con una frecuencia de 1.1MHz. Ejemplo: Id1 cuando debería ser constante, 
+Id2 cuando debería ser constante y en la rampa. 
+
+Solución: 
+
+Se quitaron las resistencias y se soldaron cables con un largo tal que se pueda medir la corriente a través de los mismos 
+utilizando unas puntas de corriente para el osciloscopio. Al realizar las mismas mediciones no se detectaron las oscilaciones,
+con lo cual se concluye que a la frecuencia de trabajo las resistencias dejan de comportarse como tales y presentan una alta componente inductiva. 
+
+Condiciones experimentales:
+
+Ciclo de trabajo: D=0.4 (t=3.2us/8us)
+Resistencia de carga: $138\Omega$
+
+Estado estacionario: 
+Fuente 1: 11.9V-0.05A
+Fuente 2: 36V-0.12A
+Carga: 7.67V-0.05A
