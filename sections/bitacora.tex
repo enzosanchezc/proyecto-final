@@ -185,3 +185,24 @@ Estado estacionario:
 Fuente 1: 11.9V-0.05A
 Fuente 2: 36V-0.12A
 Carga: 7.67V-0.05A
+
+16/11
+
+Problema con las tierras.
+
+Puntas TEKTRONIX modelo P6021 con 2mA/mV o 10mA/mV. Se deben bloquear para realizar las mediciones.
+Están conformadas por un transformador de corriente. 
+El primario consta de una única vuelta ya que es el cable que se introduce y el secundario está adentro de la misma. 
+Las formas de onda que presentan continua deben ajustarse teniendo en cuenta que las mismas sólo miden alterna. 
+
+Capacitor electrolítico de 200uF se reemplaza por uno de tantalio de 10uF. Los mismos presentan bajo ESR. 
+
+Al quitar las resistencias se incrementa levemente la tensión de salida y la eficiencia. 
+
+En ocasiones tiene lugar un transitorio con mayor demanda de corriente de la fuente de potencia. 
+
+Existen oscilaciones en muchas partes del circuito:
+
+Tensión en el inductor: 1.72MHz
+Primario del E70: 1.32MHz
+Secundario del E70: 3.14MHz
