@@ -42,148 +42,255 @@ La elección del convertidor depende del requisito de potencia de salida y de la
 
 Es un convertidor CC-CC acoplado magnéticamente. El transistor funciona como interruptor, estará cerrado un tiempo $DT$ y abierto el resto del tiempo,
 $(1 - D)T$, siendo $T$ el periodo de conmutación. 
-Para el análisis del circuito se supondrá funcionamiento 
-en régimen permanente y que la corriente en la inductancia $L_x$ es permanente.
-
 El transformador posee tres devanados: los devanados 1 y 2 transfieren la energía de la
 fuente a la carga cuando el interruptor está cerrado; el devanado 3 se usa para proporcionar un
 camino a la corriente magnetizante cuando el interruptor está abierto y reducirla a cero antes del
 inicio de cada periodo de conmutación. El transformador se modela como tres devanados ideales
-con una inductancia magnetizante $L_m$ conectada en paralelo con el devanado 1. En este modelo
-de transformador simplificado, no se incluyen las pérdidas ni las inductancias de dispersión.
+con una inductancia magnetizante $L_m$ conectada en paralelo con el devanado 1. En este modelo simplificado no se incluyen las pérdidas ni las inductancias de dispersión.
+En el convertidor forward, $L_m$ es un parámetro no incluido en la relación entrada-salida y se suele adoptar un valor grande.
 
-En el convertidor forward, la energía del generador se transfiere a la carga cuando el interruptor
-está cerrado. En el convertidor flyback, la energía se almacena en $L_m$ cuando el conmutador
-esta cerrado y es transferida a la carga cuando esta abierto. En el convertidor directo, $L_m$
-es un parámetro no incluido en la relación entrada-salida, y se suele adoptar un valor grande.
+A diferencia del convertidor flyback, la energía del generador se transfiere a la carga cuando el interruptor
+está cerrado. En el convertidor flyback, la energía se almacena en el primario cuando el conmutador
+está cerrado y se transfiere a la carga cuando está abierto. 
+La eficiencia se incrementa reestableciendo el núcleo del transformador, 
+donde la energía almacenada en el mismo es devuelta a la fuente de entrada del convertidor a partir del tercer bobinado. 
+Además, sólo se opera en el modo de conducción continua por la mayor dificultad del control en base al doble polo existente en el filtro de salida. 
 
-\subsubsection{Análisis con el interruptor cerrado}
+% REVISAR NOMENCLATURA EN BASE A LAS IMÁGENES A UTILIZAR DE LOS LIBROS
+Asumiendo modo de conducción continua, operación en estado estacionario, ripple de salida nulo 
+y que la corriente en la inductancia del filtro de salida $L_x$ es permanente, existen 2 modos de operación del transistor:
+
+% RASHID EN INGLÉS
+
+\paragraph{Cuando el transistor se encuentra encendido}
+
 En la Figura $X$ se muestra el circuito equivalente del convertidor forward cuando el interruptor
-está cerrado. Al cerrarse el interruptor se establece una tensión en el devanado 1 del transformador, por lo que
+está cerrado. Al cerrarse el interruptor se establece una tensión en el primer devanado del transformador,
+lo cual induce tensiones en el segundo y tercer devanado:
+
+% HART INGLÉS PÁGINA 279 DEL LIBRO 
+$$ v_1=V_s $$
+$$ v_2=v_1\left(\frac{N_2}{N_1}\right)=V_s\left(\frac{N_2}{N_1}\right) $$
+$$ v_3=v_1\left(\frac{N_3}{N_1}\right)=V_s\left(\frac{N_3}{N_1}\right) $$
+
+La tensión v2 positiva polariza en directa a D1 y en reversa a D2. El diodo D3 no conduce ya que su tensión es negativa:
+
+$$ V_{D_3}=-V_s-v_3<0 $$
+
+La tensión en la bobina es:
+% vlx
+$$ v_{L_x}=v_2-V_0=V_s\left(\frac{N_2}{N_1}\right)-V_o=L_x\frac{di_{L_x}}{dt} $$
+
+Reorganizando los términos obtenemos:
+% ecuación de abajo
+$$ \frac{di_{L_x}}{dt}=\frac{V_s(N_2/N_1)-V_o}{L_x}=\frac{\Delta i_{L_x}}{\Delta t}=\frac{\Delta i_{L_x}}{DT} $$
+
+Como la derivada de la corriente es una constante positiva, la corriente aumenta linealmente. 
+La variación de corriente cuando el interruptor está cerrado se calcula modificando la ecuación anterior:
+% ecuación de abajo 7-22
+$$ (\Delta i_{L_x})_{closed}=\left[V_s\left(\frac{N_2}{N_1}\right)-V_o\right]\frac{DT}{L_x} $$
+
+La tensión en la inductancia magnetizante es igual a la tensión en el primario del transformador, por lo cual:
+% ecuación 7-23
+$$ \Delta i_{L_m}=\frac{V_sDT}{L_m} $$
+
+La corriente que circula por el transistor está compuesta por:
+% ecuación 7-24
+$$ i_{sw}=i_1+i_{L_m} $$
+
+% FIN HART INGLÉS PÁGINA 279 DEL LIBRO
+
+La corriente que circula por el primario comienza a incrementarse,
+se transfiere energía del primario al secundario y de aquí al filtro de salida y la carga por medio del diodo D2 polarizado en directa. 
+Debido a esta corriente se induce una corriente en el secundario dada por:
+% RASHID INGLÉS PÁGINA 666 DEL LIBRO 
+$$ i_p=\frac{N_s}{N_p}i_{se} $$
+
+Por lo tanto, 
+% ESCRIBIR iprimario=f(isecundario)  (al reves que antes)
+$$ i_p=f(i_{se}) $$
+
+La corriente magnetizante se incrementa linealmente con el tiempo:
+
+$$ i_{mag}=\frac{V_s}{L_m}t $$
+
+La corriente total que circula por el primario resulta:
+
+$$ i_p'=i_p+i_{mag}=\frac{N_s}{N_p}i_{se}+\frac{V_s}{L_m}t $$
+
+Cuando finaliza el tiempo de conducción del transistor en un tiempo $t=DT$, esta corriente llega a un valor máximo dado por:
+
+$$ I_{p_{max}}'=I_{p_{max}}+\frac{V_sDT}{L_m} $$
+
+donde $I_{p_{max}}$ es la corriente pico reflejada a la salida del inductor $L_1$ y está dada por:
+
+$$ I_{p_{max}}=\frac{N_p}{N_s}I_{L_{1_{max}}} $$
+
+Debido a la tensión $V_{se}-V_o$ existente en bornes del inductor de salida, su corriente se incrementa linealmente:
+
+$$ \frac{di_{L_1}}{dt}=\frac{V_s-V_o}{L_1} $$
+
+Esta misma también tendrá su valor máximo en $t=DT$:
+
+$$ I_{L_{1_{max}}}=I_{L_1}(0)+\frac{(V_s-V_o)DT}{L_1} $$
+
+\paragraph{Cuando el transistor se encuentra apagado}
+En la figura $X$ se muestra el circuito equivalente del convertidor forward cuando el interruptor está abierto. 
+Las tensiones de todos los bobinados del transformador toman polaridad negativa, lo cual apaga al diodo D1 y enciende a los diodos D2 y D3. 
+La corriente magnetizante y la corriente en el inductor del filtro de salida no pueden cambiar instantáneamente cuando el transistor se apaga. 
+La continuidad de $i_{L_m}$ establece: 
+% SACAR DEL TEXTO INICIAL
+$ $
+
+
+
+La corriente que sale del terminal con punto homólogo del primer bobinado quiere establecer una corriente que ingresa al terminal 
+con punto homólogo del segundo bobinado, pero el diodo D1 no permite la circulación de la corriente en esa dirección. 
+Además, la corriente que sale del terminal con punto homólogo del primer bobinado induce una corriente que ingresa al terminal 
+con punto homólogo del tercer bobinado. Esto polariza en directa al diodo $D_3$, a la vez que 
+se le provee a la corriente magnetizante de un camino a través del tercer bobinado de regreso a la fuente de entrada. 
+
+Con D3 encendido, la tensión en el tercer bobinado resulta:
+% HART EN INGLES PÁGINA 280 DEL LIBRO 
+$$ $$
+
+Esto induce las siguientes tensiones en los otros bobinados:
+% ECUACIÓN 7.25
+$$ $$
+$$ $$
+
+Con D1 apagado y corriente positiva en el inductor de salida, D2 se polariza en directa. 
+Mientras conduce D2, la energía es entregada a la carga a través del inductor de salida. 
+La tensión sobre la misma resulta:
+% ECUACIÓN 7.26
+$$ $$
+
+Reorganizando los términos obtenemos:
+
+$$ $$
+
+Como la derivada de la corriente es una constante negativa, la corriente disminuye linealmente. 
+La variación de corriente cuando el interruptor está abierto se calcula modificando la ecuación anterior:
+
+$$ $$
+
+La corriente por el inductor y el diodo D2 es la misma y decrece linealmente con el tiempo:
+%% RASHID (13.19)
+$$  $$
+
+Lo cual nos da el valor de $I_L(t=0)$:
+%% RASHID POST (13.19)
+$$  $$
+
+En estado estacionario el cambio neto en la corriente del inductor durante un período debe ser cero:
+% ECUACIÓNES PRE 7.27
+$$  $$
 
 $$  $$
 
-La corriente en $L_m$ deberá anularse antes del inicio del siguiente período, para desmagnetizar
-el núcleo del transformador. Cuando se abre el interruptor, la Ecuación $X$ indica que la corriente
-$i_L$ decrece linealmente. Como $D_3$ impide que la corriente iL se haga negativa, la Ecuación
-$X$ será válida siempre que iL sea positiva. Utilizando la Ecuación $X$ obtenemos
-
+Resolviendo se obtiene la tensión de salida:
+% ECUACIÓN 7.27
 $$  $$
 
-Para que la corriente $i_L$ se anule una vez abierto el interruptor, la disminución de corriente
-debe ser igual al incremento de la corriente indicado en la Ecuación $X$. Si el tiempo necesario
-para que la corriente $i_L$ de pico se anule es $\Delta T_x$, 
+$$ V_{o}=V_{s}D\left(\frac{N_{2}}{N_{1}}\right) $$
 
+La tensión en la inductancia magnetizante es igual a la tensión en el primario del transformador, la cual decrece linealmente con el tiempo:
+% ECUACIÓN 7.28 Y 7.29
+$$ $$
+
+$$ $$
+
+$$ $$ 
+
+Se puede observar que el diodo $D_3$ impide que la corriente $i_{L_m}$ se haga negativa. 
+
+% VER DONDE PONER ESTAS 2 ECUACIONES
+%% RASHID (13.21) Y (13.22)
+La máxima corriente de colector se da durante el encendido del transistor y la máxima tensión de colector durante el apagado:
+
+$$  $$
+$$  $$
+
+Para que el flujo magnético vuelva a 0, la corriente magnetizante debe anularse al final de cada ciclo de conmutación, desmagnetizando el núcleo del transformador.
+Para lograrlo, el decrecimiento de la corriente debe ser igual a su incremento dado por la variación de corriente cuando el interruptor está cerrado. 
+Si el tiempo necesario para que la corriente $i_{L_m}$ se anule desde su valor máximo es $\Delta T_x$, 
+% ECUACIÓN 7.30
 $$  $$
 
 Resolviendo para obtener $\Delta T_x$,
+% ECUACIÓN 7.31
+$$  $$
 
-$$ \Delta T_x=\Delta T_x $$
-
-El instante $t_0$ en el que se anula la corriente es
-
+El instante $t_0$ en el que se anula la corriente es:
+% ECUACIÓN 7.32
 $$  $$
 
 Teniendo en cuenta que la corriente debe anularse antes del inicio del siguiente periodo,
+% ECUACIÓN 7.33
+$t_0<T$
 
 $$  $$
 
-Por ejemplo, si la relación $N_3/N_1 = 1$, el ciclo de trabajo $D$ deberá ser menor que $0.5$. La tensión
-en el interruptor abierto es $V_s-v_1$, por lo que
-
 $$  $$
+
+Para evitar la saturación del núcleo del transformador, el ciclo de trabajo debe mantenerse siempre por debajo del máximo.
+El transistor puede dañarse si el núcleo se satura.
+
+La tensión en el interruptor abierto es $V_s-v_1$, por lo que
+% ECUACIÓN 7.34
+$$  $$
+$$  $$
+
+% FIN HART EN ESPAÑOL PÁG 272
+
+% HART EN ESPAÑOL PÁG 208
 
 La configuración del circuito a la salida del convertidor forward es la misma que la del convertidor
 reductor, por lo que el rizado de la tensión de salida también será el mismo:
 
 $$  $$
 
-Cuando el interruptor está cerrado, la fuente entrega energía a la carga a través del transformador.
-La tensión en el secundario del transformador es una forma de onda pulsante y la salida se
-analiza de la misma manera que la del convertidor CC-CC reductor. La energía almacenada en
-la inductancia magnetizante cuando el interruptor está cerrado puede ser devuelta a la fuente de
+Rizado de la tensión de salida
+
+En el análisis anterior hemos supuesto ripple de salida nulo, es decir, que el capacitor de salida era muy grande para que la tensión
+de salida fuese constante. En la práctica no será posible mantener perfectamente constante la
+tensión de salida con una capacidad finita. La variación periódica de la tensión de salida, o rizado,
+se calcula a partir de la relación entre la tensión y la corriente del capacitor. 
+La corriente en el capacitor es:
+
+$$  $$
+
+Dicha corriente se muestra en la Figura X. El capacitor se cargará mientras sea positiva la corriente en el mismo. Aplicando la definición
+de capacidad,
+
+$$  $$
+
+$$  $$
+
+$$  $$
+
+La variación de la carga, DELTAQ, es el área del triángulo situado por encima del eje de tiempos:
+
+$$  $$
+
+Reemplazando:
+
+$$  $$
+
+Sustituyendo el valor de la variación de corriente en la bobina cuando el interruptor está abierto, 
+se obtiene la tensión de rizado pico a pico en la salida, mostrada en la Figura X.
+
+$$  $$
+
+Si el rizado no es muy grande, la suposición de que la salida es constante es razonable, y el
+análisis anterior será válido.
+
+% FIN HART EN ESPAÑOL PÁG 209
+
+En resumen, cuando el interruptor está cerrado, la fuente entrega energía a la carga a través del transformador.
+La tensión en el secundario del transformador es una forma de onda pulsante. La energía almacenada en
+la inductancia magnetizante cuando el interruptor está cerrado es devuelta a la fuente de
 entrada a través de un tercer devanado del transformador cuando el interruptor está abierto.
-
-\subsubsection{Restablecimiento del núcleo del transformador}
-La energía almacenada en el núcleo del transformador es devuelta a la fuente regulable y se incrementa la eficiencia. 
-
-A diferencia del convertidor flyback, la energía no se almacena en el primario y sólo se opera 
-en el modo de conducción continua por la mayor dificultad del control en base al doble polo existente en el filtro de salida. 
-Asumiendo modo de conducción continua, operación en estado estacionario y ripple de salida nulo, 
-existen 2 modos de operación del transistor:
-
-\paragraph{Cuando el transistor se encuentra encendido}
-La tensión en el bobinado primario es $V_s$. La corriente que circula por el mismo comienza a incrementarse,
-se transfiere energía del primario al secundario y de aquí al filtro de salida y la carga por medio del diodo D2. 
-Debido a esta corriente se induce una corriente en el secundario dada por:
-
-$$  $$
-
-La corriente magnetizante se incrementa linealmente con el tiempo:
-
-$$  $$
-
-La corriente total que circula por el primario resulta:
-
-$$  $$
-
-Cuando finaliza el tiempo de conducción del transistor en un tiempo $t=DT$, esta corriente total llega a un valor máximo dado por:
-
-$$  $$
-
-donde $X$ es la corriente pico reflejada del inductor de salida del secundario y está dada por:
-
-$$  $$
-
-La tensión inducida en el secundario es:
-
-$$  $$
-
-Debido a la tensión $V_{secundario}-V_o$ existente en bornes del inductor, su corriente se incrementa linealmente:
-
-$$  $$
-
-Esta misma también tendrá su valor máximo en $t=DT$:
-
-$$  $$
-
-\paragraph{Cuando el transistor se encuentre apagado}
-La tensión del transformador toma polaridad negativa, lo cual apaga al diodo D2 y enciende a los diodos D1 y D3. 
-Mientras conduce D3, la energía es entregada a la carga a través del inductor de salida. 
-La corriente por ambos dispositivos es la misma y decrece linealmente con el tiempo:
-
-$$  $$
-
-Lo cual nos da el valor de $I_1(t=0)$:
-
-$$  $$
-
-El diodo $D_1$ y el tercer bobinado del transformador le proporcionan un camino 
-a la corriente magnetizante para que regrese a la fuente de entrada. 
-La tensión de salida es la integral en el tiempo de la tensión del bobinado secundario:
-
-$$  $$
-
-La máxima corriente de colector se da durante el encendido del transistor y la máxima tensión de colector durante el apagado:
-
-$$  $$
-
-Si la corriente debe anularse antes del comienzo de un nuevo período, 
-$t_0<T$
-
-$$  $$
-
-%COMPLETAR CON HART Y MATLAB
-
-%CREO QUE ES MÁS COMPLICADO ESTE MÉTODO:
-Igualando la integral en el tiempo de la tensión de entrada cuando el transistor está encendido a la tensión $V_r$ cuando el transistor está apagado nos da el ciclo de trabajo máximo:
-
-$$  $$
-
-El ciclo de trabajo debe mantenerse siempre debajo del máximo para evitar la saturación del núcleo del transformador. 
-Para que el flujo magnético vuelva a 0, la corriente debe anularse
- al final de cada ciclo de conmutación para restaurar el núcleo del transformador. 
-Si el núcleo está saturado, se puede dañar el transistor. 
 
 \subsection{Comparación con el convertidor flyback}
 
@@ -191,35 +298,32 @@ El convertidor forward requiere de una carga mínima para evitar un exceso en la
 Como el transformador no almacena energía, para un mismo nivel de potencia de salida, 
 el tamaño del mismo es menor en el convertidor forward que en el flyback. 
 La corriente de salida es aproximadamente constante ya que el ripple disminuye notablemente 
-debido al agregado del inductor en la salida y al diodo de rueda libre D3.
+debido al agregado del inductor en la salida y al diodo de rueda libre D1.
 Por esto mismo, el capacitor de salida puede ser más pequeño. 
-
 
 \subsection{Convertidor Forward Doble Switch}
 
 El convertidor forward se utiliza para potencias de salida de hasta 200W ya que se encuentra limitado 
-por los esfuerzos de tensión y de corriente durante su funcionamiento. 
-El convertidor forward de doble switch permite ser utilizado con potencias de hasta 750 W debido a la 
-reducción de la tensión en los transistores cuando los mismos se encuentran apagados. 
-Esto permite su uso en aplicaciones de alta tensión mediante transistores de menores prestaciones en tensión. 
+por los esfuerzos de tensión y corriente a los que se somete el transistor de potencia durante su funcionamiento. 
+El convertidor forward de doble switch puede ser utilizado con potencias de hasta 750W. 
+A partir de los diodos D3 y D4 en el primario, se reduce la tensión de colector en los transistores cuando los mismos 
+se encuentran apagados, lo cual permite utilizar transistores de menores prestaciones.
 
 \subsubsection{Funcionamiento}
 
 Los transistores se encienden y se apagan de forma simultánea, lo cual los diferencia de las topologías bridge. 
 Cuando los transistores están encendidos, la tensión en el primario del transformador es igual a la tensión de entrada $V_s$. 
-Como la relación del mismo es 1:1, la misma tensión se establece en su secundario y la energía se transfiere a la carga. 
-Además se incrementa la corriente que circula por la inductancia magnetizante. 
+En consecuencia, la tensión en el devanado secundario es positiva y la energía se transfiere a la carga. 
+Además la corriente que circula por la inductancia magnetizante se incrementa con el tiempo. 
 
 Cuando los transistores se apagan, el diodo D1 evita que la corriente magnetizante circule por el secundario 
-(y por lo tanto también en el primario) del transformador, forzando su camino por los diodos D3 y D4 de regreso a la fuente regulable.  
+(y por lo tanto también en el primario) del transformador, forzando su camino por los diodos D3 y D4 de regreso a la fuente de entrada.  
 Con esto se elimina la necesidad del tercer devanado de desmagnetización. 
-La tensión en el primario del transformador es $-V_s$, causando un decremento de la corriente magnetizante. 
-Si la relación de trabajo de los transistores es menor a 0.5, en cada ciclo el núcleo del transformador se restablece, 
-haciendo que el flujo magnético regrese a 0. 
-La tensión en los transistores cuando los mismos se encuentran apagados es $V_s$ y no $V_s\left(1+\frac{N_1}{N_3}\right)$.
-
-La tensión de salida resulta:
-$$ V_{o}=V_{s}D\left(\frac{N_{2}}{N_{1}}\right) $$
+La tensión en el primario del transformador es $-V_s$, causando un decremento en el tiempo de la corriente magnetizante. 
+Si la relación de trabajo de los transistores es menor a 0.5, en cada ciclo el núcleo del transformador se restablece.
+La tensión de salida es la misma que la del convertidor forward con un interruptor descrito anteriormente.
+La principal ventaja de esta topología es que la tensión de colector en los transistores cuando los mismos se encuentran apagados 
+es $V_s$ y no $V_s\left(1+\frac{N_1}{N_3}\right)$ como en el forward de un único switch.
 
 \subsection{Circuitos de control}
 
@@ -262,13 +366,13 @@ La dinámica de retroalimentación está determinada por el circuito amplificado
 Consiste en un lazo interno que muestrea el valor de la corriente primaria y apaga los interruptores tan pronto como la corriente alcanza cierto valor establecido por el lazo de voltaje externo. 
 De esta manera, el control de corriente logra una respuesta más rápida que el modo de voltaje. 
 La forma de onda de corriente primaria actúa como onda de diente de sierra. 
-El voltaje análogo a la corriente puede ser proporcionado por una pequeña resistencia o por un transformador de corriente. 
+la tensión análoga a la corriente puede ser proporcionada por una pequeña resistencia o por un transformador de corriente. 
 La figura 13.19a muestra un convertidor flyback controlado por modo de corriente, donde la corriente del interruptor isw se usa como señal portadora. 
 La corriente del interruptor isw produce un voltaje a través de Rs, que se retroalimenta al comparador. 
 El encendido está sincronizado con el pulso del reloj y el apagado está determinado por el instante en que la corriente de entrada es igual al voltaje de error.
 Debido a su capacidad inherente de limitación de corriente máxima, el control de modo de corriente puede mejorar la confiabilidad de los interruptores de alimentación. El rendimiento dinámico se mejora debido al uso de la información actual adicional. El control de modo de corriente reduce efectivamente el sistema a primer orden al obligar a que la corriente del inductor se relacione con el voltaje de salida, logrando así una respuesta más rápida. Las figuras 13.18b–e muestran las formas de onda.
 
-COMPLETAR CON JUSTIFICACIÓN DE POR QUÉ NO ELEGIMOS CONTROL POR CORRIENTE QUE PARECERÍA SER MEJOR. 
+% COMPLETAR CON JUSTIFICACIÓN DE POR QUÉ NO ELEGIMOS CONTROL POR CORRIENTE QUE PARECERÍA SER MEJOR. 
 
 \subsubsection{TL494}
 
@@ -285,7 +389,7 @@ Feedback: sin conexión ya que se trabaja a lazo abierto
 
 Regulador interno de 5V con precisión del 5\%. 
 
-Oscilador interno ajustable 
+Oscilador interno ajustable:
 Provee la forma de onda de diente de sierra al tiempo muerto y al comparador PWM. 
 Su frecuencia se programa mediante la selección de una resistencia Rt y un capacitor Ct. 
 El oscilador carga al Ct con una corriente constante determinada por Rt produciendo una rampa de tensión sobre Ct.
@@ -297,7 +401,7 @@ $$470pF\leq C_t\leq 10\mu F$$
 $$1.8k\Omega\leq R_t\leq 500k\Omega$$
 Para lograr la $f=125kHz$ se eligió un capacitor de $1nF$ y para lograr la resistencia de $8k\Omega$ se ajustó un potenciómetro de $10k\Omega$. 
 
-Control de tiempo muerto (DTC)
+Control de tiempo muerto (DTC):
 Permite controlar el ciclo de trabajo. 
 Es una entrada de alta impedancia. 
 Controla el tiempo de apagado mínimo. Con DTC a tierra es del 3\%.
@@ -305,38 +409,39 @@ Si se aplica tensión en este puerto se le puede adicionar.
 El tiempo muerto o de apagado se controla linealmente desde su mínimo de 3\% hasta su máximo de 100\%, 
 variando su tensión de entrada entre 0 y 3.3V respectivamente. 
 
-Comparador 
+Comparador:
 Alimentado por el regulador interno. 
 Tiempo de respuesta de $400ns$. 
 Modula el ancho de pulso de la salida. Para esto se compara la rampa de tensión sobre el capacitor $C_t$ con la señal de control
 presente en la salida de los amplificadores de error. 
 
-2 amplificadores de error 
-Alta ganancia
-Se alimentan mediante su entrada $V_i$. 
+Dos amplificadores de error:
+Presentan alta ganancia y se alimentan mediante su entrada $V_i$. 
 Tensión de MC de entrada: -0.3V a $V_{cc}-2V$
 
-Output-Control Input
-Determinan el modo de operación de la salida de los transistores. 
+Output-Control Input:
+Determina el modo de operación de la salida de los transistores. 
 Si está a tierra opera en modo single-ended o modo paralelo donde los pulsos vistos en la salida del DTC son transmitidos por ambos transistores de salida en paralelo.
 Si está a Vref opera en push-pull donde cada transistor de salida está habilitado alternativamente por el flip-flop de dirección de pulsos.
 
-Transistores de salida
+Transistores de salida:
 El integrado incluye 2 transistores que tienen la posibilidad de ser emisor común o seguidor por emisor. 
 Son capaces de generar hasta $200mA$ de salida. 
 
+% REVISAR SI ES DEL TL494 O ES UNA NOTA AL TUN TUN
+% Transformador: permite que no circule corriente continua por su secundario. 
 
-Transformador: permite que no circule corriente continua por su secundario. 
+\subsubsection{Amplificador Clase B con transistores complementarios}
 
-Amplificadores de potencia
+Sin esta etapa de amplificación, dado que la carga que generaba el circuito sobre el TL494 era muy alta, 
+la forma de onda PWM se distorsionaba y disminuía su amplitud notablemente, lo que causaba que los MOSFETs no se saturaran y aumentaran demasiado su temperatura.
+Los resultados obtenidos con la inclusión de esta etapa fueron un incremento notorio en la amplitud y una mejora en la forma de onda de la señal PWM.
 
-Amplificador Clase B con transistores complementarios
+La etapa permite acoplar la carga en continua. 
+Los transistores utilizados son de potencia y no de señal. 
+Cada dispositivo de amplificación conduce durante medio ciclo de la señal de entrada, 
+excitándolos mediante el ingreso de corriente por su base.
 
-Permite acoplar la carga en continua. 
-El dispositivo de amplificación conduce durante medio ciclo de la señal de entrada. 
-El transistor sólo puede reproducir medio ciclo de la señal de entrada. 
-Se excita al transistor inyectándole corriente por su base.
-Los transistores son de potencia y no de señal. 
 Se compone de un transistor NPN y otro PNP que se alimentan de forma inversa.
 El transistor NPN requiere de una tensión positiva en su colector y 
 el transistor PNP requiere de una tensión negativa en su colector.
@@ -344,6 +449,10 @@ Ambos funcionan como seguidor por emisor o colector común, con su tensión de a
 Su ganancia de tensión es aproximadamente 1. 
 La topología seguidor por emisor tiene ganancia de corriente hfe. 
 La corriente que se entrega por la base es hfe veces menor que la que se le entrega a la carga. 
+El seguidor presenta una impedancia de entrada es mucho mas alta que su impedancia de salida, de modo que una fuente de señal no tendría que trabajar tan duro.
+ Esto puede verse en el hecho de que la corriente de base es del orden de 100 veces menos que la corriente de emisor. 
+ La baja impedancia de salida del seguidor emisor se adapta con una carga de baja impedancia y amortigua la fuente de señal.
+
 Los transistores conducen en base a la tensión Vbe en sus junturas ya que entra base y emisor existe una juntura PN similar a un diodo. 
 Si no se polariza de forma correcta, no circula corriente por su base y en consecuencia tampoco por su colector. 
 El transistor NPN conduce corriente en su emisor cuando $V_{be}>0$. 
@@ -352,13 +461,7 @@ En el semiciclo positivo de la señal conduce el NPN y el PNP se corta y en el s
 Los transistores conducen de forma alternativa. 
 Cuando la tensión de entrada en la base de ambos transistores es 0 no conduce ningún transistor. 
 Esto implica que no existe consumo de corriente ni de potencia. 
-Vce de ambos transistores va de $V_{cc}$ a 0.
-
-Seguidor
-
-Su impedancia de entrada es mucho mas alta que su impedancia de salida, de modo que una fuente de señal no tendría que trabajar tan duro.
- Esto puede verse en el hecho de que la corriente de base es del orden de 100 veces menos que la corriente de emisor. 
- La baja impedancia de salida del seguidor emisor se adapta con una carga de baja impedancia y amortigua la fuente de señal.
+La Vce de ambos transistores va de $V_{cc}$ a 0.
 
 \subsection{Snubber}
 
@@ -408,6 +511,8 @@ El análisis supone que el tiempo de carga y descarga es mucho más grande que l
     \item Se agrega un capacitor de Bypass de 0.1uF para amortiguar la inductancia del MOSFET high side.     
 \end{enumerate}
 
+% NECESITA REUBICARSE ESTO. POSIBLEMENTE AL MOMENTO DE ELEGIR COMPONENTES EN EL PROTOTIPO
+
 \subsection{IRF840}
 
 MOSFET para switching de alta velocidad. 
@@ -423,5 +528,3 @@ Vgsmáx=20V
 Idmáx=8A
 
 Idrepetitivamáx=32A
-
-

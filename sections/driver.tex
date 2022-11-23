@@ -2,7 +2,7 @@
 
 Los MOSFET se encargan de conectar la alimentación con la carga. El IRF840 es un MOSFET de canal N. 
 Para encenderlo se debe aplicar una tensión positiva entre Gate y Source. 
-Se requiere un driver ya que la tensión sobre la carga es superior a la tensión de señal. 
+Debido a la configuración de convertidor elegida, se requiere un driver para controlar el MOSFET cuyo terminal de \textit{source} no está a tierra. Se optó por un driver con transformador acoplador ya que provee aislación galvánica entre el circuito de control y el circuito de potencia \cite{gatedrivers}.
 
 Existen 2 posibles configuraciones para un transistor según su posición en el circuito:
 
@@ -13,7 +13,7 @@ Mientras está encendido le otorga a la carga el camino hacia la tierra y cuando
 High Side: utiliza comúnmente el MOSFET de canal P. 
 El terminal Drain se encuentra conectado a la alimentación y el terminal Source a la carga. 
 
-INSERTAR FIGURA DE GOOGLE!
+% INSERTAR FIGURA DE GOOGLE!
 
 Para controlar high side MOSFETs se puede utilizar un circuito integrado o un transformador. 
 Los circuitos integrados, si bien son más pequeños y ocupan menor espacio en las placas, 

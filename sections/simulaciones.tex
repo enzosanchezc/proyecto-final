@@ -70,11 +70,6 @@ En las figuras \ref{fig:ct_v} y \ref{fig:dtc_v} se muestran las tensiones en el 
 
 \subsection{Etapa de ganancia de corriente}
 
-Esta etapa se encarga de aumentar la corriente de salida del TL494 para alimentar las compuertas de los MOSFETs del convertidor.
-Fue agregada para mejorar la forma de onda de la señal PWM, ya que la carga que generaba el circuito sobre el TL494 era muy alta y, a demas de distorsionarse la forma de onda, la tensión caía demasiado, lo que causaba que los MOSFETs no se saturaran, y por ende aumentara demasiado la temperatura de los mismos.
-
-Consta de dos transistores BJT % COMO SE LLAMA ESTA CONFIGURACION???? No encuentro nada 
-
 En las figuras \ref{fig:pwm_iout_sin_bjt} y \ref{fig:pwm_iout_con_bjt} puede observarse la corriente de salida del TL494 antes y después de agregar la etapa de ganancia de corriente, respectivamente.
 
 \begin{figure}[H]
@@ -116,8 +111,6 @@ La funcion más importante de esta etapa es la de mejorar la forma de onda de la
 % Hay que ver eso de las oscilaciones en la corriente
 
 \subsection{Driver}
-
-Debido a la configuración de conversor elegida, se requiere un driver para controlar el MOSFET cuyo terminal de \textit{source} no está a tierra. Se optó por un driver con transformador acoplador ya que provee aislación galvánica entre el circuito de control y el circuito de potencia \cite{gatedrivers}.
 
 En las figuras \ref{fig:driver_vout_connected} y \ref{fig:driver_vout_disconnected} se muestra la salida del driver con y sin el convertidor energizado, respectivamente.
 Se puede ver que también están presentes las oscilaciones de alta frecuencia que se observan en la salida del TL494.
