@@ -122,27 +122,31 @@ Cuando finaliza el tiempo de conducción del transistor en un tiempo $t=DT$, est
 
 $$ I_{p_{max}}'=I_{p_{max}}+\frac{V_sDT}{L_m} $$
 
-donde $I_{p_{max}}$ es la corriente pico reflejada a la salida del inductor $L_1$ y está dada por:
+donde $I_{p_{max}}$ es la corriente pico reflejada a la salida del inductor $L_x$ y está dada por:
 
 $$ I_{p_{max}}=\frac{N_p}{N_s}I_{L_{1_{max}}} $$
 
 Debido a la tensión $V_{se}-V_o$ existente en bornes del inductor de salida, su corriente se incrementa linealmente:
 
-$$ \frac{di_{L_1}}{dt}=\frac{V_s-V_o}{L_1} $$
+$$ \frac{di_{L_x}}{dt}=\frac{V_s-V_o}{L_x} $$
 
 Esta misma también tendrá su valor máximo en $t=DT$:
 
-$$ I_{L_{1_{max}}}=I_{L_1}(0)+\frac{(V_s-V_o)DT}{L_1} $$
+$$ I_{L_{1_{max}}}=I_{L_x}(0)+\frac{(V_s-V_o)DT}{L_x} $$
 
 \paragraph{Cuando el transistor se encuentra apagado}
-En la figura $X$ se muestra el circuito equivalente del convertidor forward cuando el interruptor está abierto. 
-Las tensiones de todos los bobinados del transformador toman polaridad negativa, lo cual apaga al diodo D1 y enciende a los diodos D2 y D3. 
+En la figura \ref{fig:forward_switch_open} se muestra el circuito equivalente del convertidor forward cuando el interruptor está abierto. 
+Las tensiones de todos los bobinados del transformador toman polaridad negativa, lo cual apaga al diodo $D_1$ y enciende a los diodos $D_2$ y $D_3$. 
 La corriente magnetizante y la corriente en el inductor del filtro de salida no pueden cambiar instantáneamente cuando el transistor se apaga. 
-La continuidad de $i_{L_m}$ establece: 
+La continuidad de $i_{L_m}$ establece $ i_1=-i_{L_m} $
 % SACAR DEL TEXTO INICIAL
-$ $
 
-
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../images/hart/forward_switch_open.png}
+    \caption{}
+    \label{fig:forward_switch_open}
+\end{figure}
 
 La corriente que sale del terminal con punto homólogo del primer bobinado quiere establecer una corriente que ingresa al terminal 
 con punto homólogo del segundo bobinado, pero el diodo D1 no permite la circulación de la corriente en esa dirección. 
@@ -152,55 +156,51 @@ se le provee a la corriente magnetizante de un camino a través del tercer bobin
 
 Con D3 encendido, la tensión en el tercer bobinado resulta:
 % HART EN INGLES PÁGINA 280 DEL LIBRO 
-$$ $$
+$$ v_3=-V_s $$
 
 Esto induce las siguientes tensiones en los otros bobinados:
 % ECUACIÓN 7.25
-$$ $$
-$$ $$
+$$ v_1=v_3\left(\frac{N_1}{N_3}\right)=-V_s\left(\frac{N_1}{N_3}\right) $$
+$$ v_2=v_3\left(\frac{N_2}{N_3}\right)=-V_s\left(\frac{N_2}{N_3}\right) $$
 
-Con D1 apagado y corriente positiva en el inductor de salida, D2 se polariza en directa. 
-Mientras conduce D2, la energía es entregada a la carga a través del inductor de salida. 
+Con $D_1$ apagado y corriente positiva en el inductor de salida, $D_2$ se polariza en directa. 
+Mientras conduce $D_2$, la energía es entregada a la carga a través del inductor de salida. 
 La tensión sobre la misma resulta:
 % ECUACIÓN 7.26
-$$ $$
+$$ v_{L_x}=-V_o=L_x\frac{di_{L_x}}{dt} $$
 
 Reorganizando los términos obtenemos:
 
-$$ $$
+$$ \frac{di_{L_x}}{dt}=\frac{V_o}{L} $$
 
 Como la derivada de la corriente es una constante negativa, la corriente disminuye linealmente. 
 La variación de corriente cuando el interruptor está abierto se calcula modificando la ecuación anterior:
 
-$$ $$
+$$ (\Delta i_{L_x})_{open}=\frac{-V_o(1-D)T}{L_x} $$
 
-La corriente por el inductor y el diodo D2 es la misma y decrece linealmente con el tiempo:
+La corriente por el inductor y el diodo $D_2$ es la misma y decrece linealmente con el tiempo:
 %% RASHID (13.19)
-$$  $$
+$$ i_{L_x}=i_{D_3}=I_{L_{x_{max}}}-\frac{V_o}{L_x}t,\ 0<t\leq (1-k)T $$
 
-Lo cual nos da el valor de $I_L(t=0)$:
+Lo cual nos da el valor de $I_L(t=0)=i_{L_x}(t=(1-k)T)=I_{L_{x_{max}}}-V_o(1-k)T/L_x$
 %% RASHID POST (13.19)
-$$  $$
 
 En estado estacionario el cambio neto en la corriente del inductor durante un período debe ser cero:
 % ECUACIÓNES PRE 7.27
-$$  $$
-
-$$  $$
+$$ (\Delta i_{L_x})_{closed}+(\Delta i_{L_x})_{open}=0 $$
+$$ \left[V_s\left(\frac{N_2}{N_1}\right)-V_o\right]\frac{DT}{L_x}-\frac{V_o(1-D)T}{L_x}=0 $$
 
 Resolviendo se obtiene la tensión de salida:
 % ECUACIÓN 7.27
-$$  $$
-
-$$ V_{o}=V_{s}D\left(\frac{N_{2}}{N_{1}}\right) $$
+$$ V_o=V_sD\left(\frac{N_2}{N_1}\right) $$
 
 La tensión en la inductancia magnetizante es igual a la tensión en el primario del transformador, la cual decrece linealmente con el tiempo:
 % ECUACIÓN 7.28 Y 7.29
-$$ $$
+$$ v_{L_m}=v_1=-V_s\left(\frac{N_1}{N_3}\right)=L_m\frac{di_{L_m}}{dt} $$
 
-$$ $$
+$$ \frac{di_{L_m}}{dt}=-\frac{V_s}{L_m}\left(\frac{N_1}{N_3}\right) $$
 
-$$ $$ 
+$$ \frac{\Delta i_{L_m}}{\Delta t}?-\frac{V_s}{L_m}\left(\frac{N_1}{N_3}\right) $$ 
 
 Se puede observar que el diodo $D_3$ impide que la corriente $i_{L_m}$ se haga negativa. 
 
@@ -208,38 +208,43 @@ Se puede observar que el diodo $D_3$ impide que la corriente $i_{L_m}$ se haga n
 %% RASHID (13.21) Y (13.22)
 La máxima corriente de colector se da durante el encendido del transistor y la máxima tensión de colector durante el apagado:
 
-$$  $$
-$$  $$
+$$ I_{C_{max}}=I_{p_{max}}'=\left(\frac{N_p}{N_s}\right)I_{L_{x_{max}}}+\frac{V_sDT}{L_m} $$
+$$ V_{Q_{1_{max}}}=V_{s_{max}}+V_{r_{max}}=V_{s_{max}}\left(1+\frac{N_p}{N_r}\right) $$
 
 Para que el flujo magnético vuelva a 0, la corriente magnetizante debe anularse al final de cada ciclo de conmutación, desmagnetizando el núcleo del transformador.
 Para lograrlo, el decrecimiento de la corriente debe ser igual a su incremento dado por la variación de corriente cuando el interruptor está cerrado. 
 Si el tiempo necesario para que la corriente $i_{L_m}$ se anule desde su valor máximo es $\Delta T_x$, 
 % ECUACIÓN 7.30
-$$  $$
+$$ \frac{\Delta i_{L_m}}{\Delta T_x}=-\frac{V_sDT}{L_m}=-\frac{V_s}{L_m}\left(\frac{N_1}{N_3}\right) $$
 
 Resolviendo para obtener $\Delta T_x$,
 % ECUACIÓN 7.31
-$$  $$
+$$ \Delta T_x=DT\left(\frac{N_3}{N_1}\right) $$
 
 El instante $t_0$ en el que se anula la corriente es:
 % ECUACIÓN 7.32
-$$  $$
+$$ t_0=DT+\Delta T_x=DT+DT\left(\frac{N_3}{N_1}\right)=DT\left(1+\frac{N_3}{N_1}\right) $$
 
 Teniendo en cuenta que la corriente debe anularse antes del inicio del siguiente periodo,
 % ECUACIÓN 7.33
 $t_0<T$
 
-$$  $$
+$$ sDT\left(1+\frac{N_3}{N_1}\right)<T $$
 
-$$  $$
+$$ D\left(1+\frac{N_3}{N_1}\right)<1 $$
 
 Para evitar la saturación del núcleo del transformador, el ciclo de trabajo debe mantenerse siempre por debajo del máximo.
 El transistor puede dañarse si el núcleo se satura.
 
 La tensión en el interruptor abierto es $V_s-v_1$, por lo que
 % ECUACIÓN 7.34
-$$  $$
-$$  $$
+$$
+v_{sw}=
+\begin{cases}
+    V_s-v_1=V_s-\left(-V_s\frac{N_1}{N_3}\right)=V_s\left(1+\frac{N_1}{N_3}\right) & \text{para $DT<t<t_0$}\\
+    V_s & \text{para $t_0<t<T$}
+\end{cases}
+$$
 
 % FIN HART EN ESPAÑOL PÁG 272
 
