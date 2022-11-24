@@ -431,3 +431,57 @@ llevó a la búsqueda de otros métodos de control; por eso, se optó por un con
     \caption{Esquema del controlador del MOSFET high-side}
     \label{fig:driver}
 \end{figure}
+
+\subsection{Convertidor Forward}
+
+Las especificaciones del prototipo son las siguientes:
+
+Tensión de entrada: Vs=36V
+Tensión de salida: Vo=12.6V
+Ciclo de trabajo mínimo: Dmín=0
+Ciclo de trabajo máximo: Dmáx=0.5
+Frecuencia de conmutación: f=125kHz
+Corriente media en la carga: Iprom=1A
+
+Se desea obtener:
+
+Variación en la corriente del inductor: deltaiL=25\%
+Ripple de tensión de la salida: deltav=0.2\%
+
+En consecuencia:
+
+DeltaiL=Iprom*(deltai[\%]/100)=1A*(25/100)=0.25A
+DeltaVo=Voprom*(deltav[\%]/100)=12.6V*(0.2/100)=0.025V
+
+En principio se dimensiona el filtro de salida compuesto por el inductor y el capacitor. 
+En base a la variación de la corriente en el inductor se calcula la inductancia.
+Para el ciclo de trabajo mínimo se obtiene la inductancia máxima:
+
+L=[Vo*(1-D)]/(f*DeltaiL)=[12.6V*(1-0)]/(125kHz*0.25A)=400uH
+$$ $$
+
+En base a la ecuación de la tensión de rizado pico a pico en la salida se calcula la capacidad.
+Para el ciclo de trabajo mínimo se obtiene la capacidad máxima:
+
+C=[(1-D)*Vo]/(8*L*DeltaVo*f^2)=[(1-0)*12.6V]/[8*400uH*0.025V*(125kHz)^2]=10uF
+$$ $$
+
+Los dispositivos semiconductores fueron elegidos en base a su disponibilidad en el ATEI,
+comprobando que puedan ser utilizados en el prototipo con los parámetros otorgados en su hoja de datos.  
+
+Diodos rectificadores ultra rápidos para alta frecuencia modelo UF4007. 
+Presenta tiempo de recuperación inversa ultra rápido, una baja caída de tensión directa, alta capacidad de sobretensión, bajas pérdidas de conmutación y alta eficiencia.
+Sus características principales son: 
+Máxima corriente rectificada directa promedio: If=1A
+Voltaje inverso pico repetitivo máximo: Vrrm=1000V
+Tiempo máximo de recuperación inversa: trr=75ns
+Tensión directa instantánea máxima: Vf=1.7V
+
+Para los transistores se eligieron MOSFETs para switching de alta velocidad modelo IRF840. 
+Sus características principales son: 
+Pmáx=125W
+Vdsmáx=500V
+En base a la tensión rectificada por la etapa de AC-DC, debe soportar 350V. 
+Vgsmáx=20V
+Idmáx=8A
+Idrepetitivamáx=32A
