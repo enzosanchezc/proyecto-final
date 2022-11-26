@@ -24,7 +24,7 @@ Ripple de tensión de la salida: deltav=0.2\%
 
 En consecuencia:
 
-DeltaiL=Iprom*(deltai[\%]/100)=1A*(25/100)=0.25A
+$$ \Delta i_L=I_{prom}\frac{\delta i[\%]}{100}=1A\cdot\frac{25}{100}=0.25A $$
 
 DeltaVo=Voprom*(deltav[\%]/100)=12.6V*(0.2/100)=0.025V
 
@@ -32,14 +32,14 @@ En principio se dimensiona el filtro de salida compuesto por el inductor y el ca
 En base a la variación de la corriente en el inductor se calcula la inductancia.
 Para el ciclo de trabajo mínimo se obtiene la inductancia máxima:
 
-L=[Vo*(1-D)]/(f*DeltaiL)=[12.6V*(1-0)]/(125kHz*0.25A)=400uH
-$$ $$
+
+$$ L=\frac{V_o(1-D)}{f\Delta i_L}=\frac{12.6V\cdot(1-0)}{125kHz\cdot0.25A}=400uH $$
 
 En base a la ecuación de la tensión de rizado pico a pico en la salida se calcula la capacidad.
 Para el ciclo de trabajo mínimo se obtiene la capacidad máxima:
 
-C=[(1-D)*Vo]/(8*L*DeltaVo*f^2)=[(1-0)*12.6V]/[8*400uH*0.025V*(125kHz)^2]=10uF
-$$ $$
+
+$$ C=\frac{(1-D)V_o}{8\cdot L\cdot\Delta V_o\cdot f^2}=\frac{(1-0)\cdot12.6V}{8\cdot400uH\cdot0.025V\cdot(125kHz)^2}=10uF $$
 
 Los dispositivos semiconductores fueron elegidos en base a su disponibilidad en el ATEI,
 comprobando que puedan ser utilizados en el prototipo con los parámetros especificados en sus hojas de datos.  
@@ -352,151 +352,3 @@ $Rcmin=2*sqrt(Lm/Cc1)=47.6\Omega$
 Se elige:
 
 Rc=X
-
-\subsubsection{Diseño del conversor}
-
-El primer paso de diseño fue la elección de una topología de conversión DC-DC.
-Esta etapa introduce aislación a partir de un transformador de alta frecuencia,
-disminuyendo el coste, tamaño y peso respecto a uno de baja frecuencia en base al núcleo magnético necesario.
-Como se requiere una única tensión de salida se evita utilizar múltiples devanados.
-El conversor debe alcanzar una potencia máxima de 300W y debe ser lo más sencillo posible para evitar un costo elevado. 
-
-La topología flyback es de baja complejidad al estar integrada por muy pocos componentes. 
-Como desventajas, el tamaño del núcleo del transformador se incrementa con la potencia requerida y en bornes del
-interruptor presenta una tensión igual al doble de la tensión máxima de entrada.
-En aplicaciones típicas se alcanzar valores de hasta 150W.
-
-La topología forward con un solo switch disminuye el tamaño del núcleo del transformador ya que la energía no necesita almacenarse en el entrehierro.
-Como desventajas, al igual que el flyback presenta alta tensión en bornes del interruptor y se eleva el costo debido al agregado de la bobina de filtrado.
-La topología forward con dos switches reduce la tensión en bornes del interruptor a la mitad respecto a la de un solo switch (y con ello la disipación de potencia por switch), 
-pero el circuito de excitación de uno de los transistores queda flotante respecto a masa. 
-La topología con un solo switch admite una potencia de salida entre 150-250W y con 2 switches se eleva a 500W \cite{mohan}\cite{hart}. 
-En base a los criterios definidos inicialmente se eligió el conversor forward con dos switches como topología de conversión DC-DC. 
-
-El principal problema que presentó la utilización de este conversor fue que las señales que controlan a los switches son poco convencionales.
-
-\subsubsection{Simulación del rectificador de entrada AC-DC}
-Una vez definido el circuito de conversión DC-DC, se procedió a analizar los requisitos de la tensión de entrada. 
-Los circuitos rectificadores AC-DC permiten convertir una tensión alterna en una tensión continua.
-
-\paragraph{Rectificador de media onda u onda completa}
-
-Si bien el rectificador de media onda es más simple ya que cuenta con un menor número de diodos, existen muchas ventajas del rectificador de onda completa frente al de media onda. 
-La primera de ellas es que la corriente media del generador de alterna (alimentación) es nula, lo cual beneficia a los transformadores. 
-La segunda se basa en el hecho de que para una misma carga,
-la tensión de rizado pico a pico para el rectificador de onda completa es
-aproximadamente la mitad que para el rectificador de media onda. 
-Esto se debe a que en el circuito de onda completa,
-el tiempo durante el que se descarga el capacitor es menor que en el circuito de media onda
-debido a la onda sinusoidal rectificada de la segunda mitad de cada período. 
-
-Por todos estos motivos se decidió implementar un rectificador de onda completa.
-
-\paragraph{Rectificador de onda completa en puente o con toma media}
-
-\paragraph{En puente}
-
-Presenta la caída de tensión de 2 diodos entre el generador y la carga. 
-La tensión máxima en un diodo polarizado en inversa es el valor pico del generador.
-
-\paragraph{Transformador de toma media}
-
-Sólo presenta la caída de tensión de un diodo entre el generador y la carga. 
-Para una misma potencia entregada por el generador,
-los diodos consumen potencia y disminuyen la corriente y potencia que absorbe la carga. 
-La tensión máxima en un diodo polarizado en inversa es el doble del valor pico del generador.
-El transformador proporciona aislamiento eléctrico entre el generador y la carga. 
-
-Como la reducción de tensión a la salida no es significativa en esta aplicación
-y el puente de diodos se puede implementar con un pequeño integrado,
-con el objetivo de disminuir el tamaño del circuito se decidió evitar el transformador
-y utilizar un rectificador de onda completa tipo puente.
-
-\paragraph{Filtrado}
-% ¿No usamos bobina?
-El filtro pasa bajos compuesto por una red LC permite disminuir el rizado,
-es decir, la componente de alterna de la señal rectificada. 
-Como resultado se logra una tensión de salida aproximadamente continua.
-El capacitor mantiene la tensión de salida en un nivel constante y
-la bobina suaviza la corriente del rectificador y reduce la corriente de pico en los diodos. 
-
-Para disminuir el número de componentes se decidió utilizar únicamente
-un capacitor en paralelo con la capacidad suficiente para obtener una tensión continua.
-
-\paragraph{Rectificación controlada}
-
-Los tiristores son interruptores electrónicos controlados que son activados por una señal externa. 
-Poseen 3 terminales: ánodo, cátodo y puerta. Presentan altos valores nominales de corriente y tensión.
-Soportan altas corrientes y altas tensiones de bloqueo. 
-Un ejemplo de tiristores con los rectificadores controlados de silicio(SCR).
-Para que conduzcan se los debe polarizar en directa y deben recibir una corriente de puerta. 
-Al entrar en conducción no es necesaria la señal de puerta para mantener la corriente de ánodo. 
-El SCR continuará conduciendo siempre que la corriente de ánodo sea positiva y esté por arriba de un valor mínimo. 
-Mediante conmutadores controlados como los SCR se controla la tensión de salida en un rango limitado de variación, ajustando el ángulo de disparo de cada SCR. 
-El ángulo de disparo es el intervalo angular entre la polarización directa del SCR y la aplicación de la señal de puerta. 
-Si el ángulo de disparo es 0, el comportamiento es igual al de un rectificador no controlado con diodos. 
-
-Se decidió utilizar rectificación no controlada ya que no se necesita una tensión específica a la salida
-y el costo de complejizar el diseño con el agregado de SCRs y un circuito dedicado de disparo no aporta ningún beneficio significativo.
-
-\subsubsection{Circuito de control}
-Esta etapa fue la mas extensa en diseñar debido a su complejidad.
-Inicialmente solo debía realimentar la tensión de salida y generar la señal PWM en base a esta,
-pero en base a los cambios descritos en la sección \ref{subsection:estudio_bibliografia}
-se separó su diseño en tres etapas:
-
-\begin{enumerate}
-    \item Compensador y generador PWM
-    \item Selector de modo de funcionamiento
-    \item Controlador para los switches
-\end{enumerate}
-
-La primer etapa se implementó en base a las topologías descritas en \cite{mohan}. Se puede observar,
-en la figura \ref{fig:esquema_compensador}, un modelo simplificado del circuito.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{images/compensador.png}
-    \caption{Esquema del compensador y el generador de señal PWM}
-    \label{fig:esquema_compensador}
-\end{figure}
-
-Los parámetros del bloque proporcional-integrador (PI) fueron definidos a partir de valores típicos obtenidos de \cite{mohan}
-y posteriormente ajustados para que el circuito funcione en las condiciones de la aplicación.
-La frecuencia de switching es definida por la frecuencia de la señal de diente de sierra y también se tomó un valor típico.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{images/selector.png}
-    \caption{Esquema del selector de modo}
-    \label{fig:esquema_selector}
-\end{figure}
-
-Una vez diseñado el compensador, se procedió a diseñar el circuito de cambio de modo (Precarga, tensión constante y corriente constante).
-En la figura \ref{fig:esquema_selector} se puede observar el esquema de este circuito.
-
-Las señales de tensión y corriente están normalizadas con respecto a sus valores nominales.
-Un amplificador de ganancia variable actúa como selector de corriente de salida,
-modificando la amplitud de la señal de control de dicha variable.
-La selección entre el modo de precarga y el modo de corriente constante se hace comparando el nivel de tensión de la batería
-con una señal de referencia, siendo el segundo modo activado una vez que la tensión supera los 30V.
-El bloque de ganancia 10 tiene como objetivo amplificar la señal de control, ya que la corriente de salida para el modo
-de precarga es 10 veces mas chica que la de corriente constante.
-
-La normalización de las señales nombrada anteriormente permite que la selección de la señal del último multiplexor
-se haga en base a cual es la mayor de las dos. Esto, visto desde una perspectiva general, permite establecer un límite
-tanto de tensión como de corriente de salida, lo cual es importante porque representa la base del método de carga.
-
-Finalmente, para la selección de un controlador para los MOSFETs se tuvieron en cuenta algunos parámetros como
-la tensión máxima de entrada, frecuencia de switching y sincronización de las señales,
-pero no se logró hallar un controlador adecuado para esta aplicación.
-El principal motivo fue que los controladores convencionales generan señales alternadas mediante el método de bootstrapping \cite{hart},
-lo cual no sirve para la topología elegida. Esto, combinado con el elevado nivel de tensión en la entrada,
-llevó a la búsqueda de otros métodos de control; por eso, se optó por un controlador con transformador aislante para el MOSFET cuyo source no esta a tierra \cite{gatedrivers}. El diagrama de este driver puede observarse en la figura \ref{fig:driver}.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{images/esquema_driver.png}
-    \caption{Esquema del controlador del MOSFET high-side}
-    \label{fig:driver}
-\end{figure}

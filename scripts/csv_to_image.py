@@ -13,9 +13,17 @@ with open(sys.argv[1], 'r') as csvfile:
     # skip first two lines
     next(plots)
     next(plots)
+    next(plots)
+    next(plots)
+    next(plots)
+    next(plots)
+    next(plots)
+    next(plots)
+    next(plots)
+    next(plots)
     for row in plots:
-        x.append(float(row[0]))
-        y.append(float(row[1]))
+        x.append(float(row[3]))
+        y.append(float(row[4]))
 
 # Use latex fonts
 plt.rc('text', usetex=True)
