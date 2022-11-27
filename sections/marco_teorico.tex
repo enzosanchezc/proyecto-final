@@ -136,7 +136,7 @@ En base a los criterios definidos inicialmente se eligió el conversor forward c
 
 El principal problema que presentó la utilización de este conversor fue que las señales que controlan a los switches son poco convencionales.
 
-\subsection{Convertidor Forward}
+\subsubsection{Convertidor Forward}
 
 Es un convertidor CC-CC acoplado magnéticamente. El transistor funciona como interruptor, estará cerrado un tiempo $DT$ y abierto el resto del tiempo,
 $(1 - D)T$, siendo $T$ el periodo de conmutación. 
@@ -186,7 +186,7 @@ $$ v_3=v_1\left(\frac{N_3}{N_1}\right)=V_s\left(\frac{N_3}{N_1}\right) $$
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.8\textwidth]{../images/hart/forward_switch_closed.png}
-    \caption{}
+    \caption{Convertidor forward cuando el interruptor está cerrado}
     \label{fig:forward_switch_closed}
 \end{figure}
 
@@ -261,7 +261,7 @@ La continuidad de $i_{L_m}$ establece $ i_1=-i_{L_m} $
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.8\textwidth]{../images/hart/forward_switch_open.png}
-    \caption{}
+    \caption{Convertidor forward cuando el interruptor está abierto}
     \label{fig:forward_switch_open}
 \end{figure}
 
@@ -387,7 +387,7 @@ $$ \Delta V_o=\frac{\Delta Q}{C} $$
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.8\textwidth]{../images/hart/buck_converter_capacitor_current.png}
-    \caption{}
+    \caption{Corriente por el capacitor de salida}
     \label{fig:buck_converter_capacitor_current}
 \end{figure}
 
@@ -407,7 +407,7 @@ $$ \Delta V_o=\frac{T}{8C}\frac{V_o}{L}(1-D)T=\frac{V_o(1-D)}{8LCf^2} $$
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.8\textwidth]{../images/hart/buck_converter_capacitor_ripple_voltage.png}
-    \caption{}
+    \caption{Tensión de rizado pico a pico a la salida}
     \label{fig:buck_converter_capacitor_ripple_voltage}
 \end{figure}
 
@@ -428,11 +428,11 @@ Además, la corriente de salida es aproximadamente constante ya que el ripple di
 debido al agregado del inductor en la salida y al diodo de rueda libre $D_1$.
 Por esto mismo, el capacitor de salida puede ser más pequeño. 
 
-\subsection{Convertidor Forward Doble Switch}
+\subsubsection{Convertidor Forward Doble Switch}
 
 El convertidor forward se utiliza para potencias de salida de hasta 200W ya que se encuentra limitado 
 por los esfuerzos de tensión y corriente a los que se somete el transistor de potencia durante su funcionamiento. 
-El convertidor forward de doble switch puede ser utilizado con potencias de hasta 750W.
+El convertidor forward de doble switch puede ser utilizado con potencias de hasta 750W \cite{mohan}.
 En la figura \ref{fig:forward_doble_switch} se muestra el esquema de éste último.
 A partir de los diodos $D_3$ y $D_4$ en el primario, se reduce la tensión de colector en los transistores cuando los mismos 
 se encuentran apagados, lo cual permite utilizar transistores de menores prestaciones.
@@ -576,7 +576,7 @@ que pueden trabajar tanto en emisor común como en colector común. La corriente
 % REVISAR SI ES DEL TL494 O ES UNA NOTA AL TUN TUN
 % Transformador: permite que no circule corriente continua por su secundario. 
 
-\subsection{Diseño del circuito de control}
+\subsubsection{Diseño del circuito de control}
 El diseño se realizó en bloques según la figura \ref{fig:marco_teorico:control} y puede ser dividido en tres partes:
 
 \begin{enumerate}
@@ -585,8 +585,8 @@ El diseño se realizó en bloques según la figura \ref{fig:marco_teorico:contro
     \item Controlador para los switches
 \end{enumerate}
 
-La primer etapa se implementó en base a las topologías descritas en \cite{mohan}.
-Los parámetros del bloque proporcional-integrador (PI) fueron definidos a partir de valores típicos obtenidos de \cite{mohan}
+La primer etapa se implementó en base a las topologías estudiadas durante la etapa de investigación \cite{mohan}.
+Los parámetros del bloque proporcional-integrador (PI) fueron definidos a partir de valores típicos
 y posteriormente ajustados para que el circuito funcione en las condiciones de la aplicación.
 La frecuencia de switching es definida por la frecuencia de la señal de diente de sierra y también se tomó un valor típico.
 
