@@ -41,28 +41,28 @@ Si el ángulo de disparo es 0, el comportamiento es igual al de un rectificador 
 Se decidió utilizar rectificación no controlada ya que no se necesita una tensión específica a la salida
 y el costo de complejizar el diseño con el agregado de SCRs y un circuito dedicado de disparo no aporta ningún beneficio significativo.
 
-% \paragraph{Rectificador de onda completa en puente o con toma media} <<< Esto sería solo si tuvieramos un trafo en la entrada, pero al ser switching no hay trafo con toma media
+\paragraph{Rectificador de onda completa en puente o con toma media}
 
-% \paragraph{En puente}
+\paragraph{En puente}
 
-% Presenta la caída de tensión de 2 diodos entre el generador y la carga. 
-% La tensión máxima en un diodo polarizado en inversa es el valor pico del generador.
+Presenta la caída de tensión de 2 diodos entre el generador y la carga. 
+La tensión máxima en un diodo polarizado en inversa es el valor pico del generador.
 
-% \paragraph{Transformador de toma media}
+\paragraph{Transformador de toma media}
 
-% Sólo presenta la caída de tensión de un diodo entre el generador y la carga. 
-% Para una misma potencia entregada por el generador,
-% los diodos consumen potencia y disminuyen la corriente y potencia que absorbe la carga. 
-% La tensión máxima en un diodo polarizado en inversa es el doble del valor pico del generador.
-% El transformador proporciona aislamiento eléctrico entre el generador y la carga. 
+Sólo presenta la caída de tensión de un diodo entre el generador y la carga. 
+Para una misma potencia entregada por el generador,
+los diodos consumen potencia y disminuyen la corriente y potencia que absorbe la carga. 
+La tensión máxima en un diodo polarizado en inversa es el doble del valor pico del generador.
+El transformador proporciona aislamiento eléctrico entre el generador y la carga. 
 
-% Como la reducción de tensión a la salida no es significativa en esta aplicación
-% y el puente de diodos se puede implementar con un pequeño integrado,
-% con el objetivo de disminuir el tamaño del circuito se decidió evitar el transformador
-% y utilizar un rectificador de onda completa tipo puente.
+Como la reducción de tensión a la salida no es significativa en esta aplicación
+y el puente de diodos se puede implementar con un pequeño integrado,
+con el objetivo de disminuir el tamaño del circuito se decidió evitar el transformador
+y utilizar un rectificador de onda completa tipo puente.
 
 \subsubsection{Filtrado}
-% ¿No usamos bobina?
+
 El filtro pasa bajos compuesto por una red LC permite disminuir el rizado,
 es decir, la componente de alterna de la señal rectificada. 
 Como resultado se logra una tensión de salida aproximadamente continua.
@@ -74,17 +74,12 @@ un capacitor en paralelo con la capacidad suficiente para obtener una tensión c
 
 \subsection{Fuentes de alimentación}
 
-Para poder utilizar un transformador pequeño y cumplir con las especificaciones normalmente se requieren conversiones de etapas múltiples.
-Las fuentes de potencia otorgan una alta densidad de potencia en un tamaño y con un peso reducido.  
-Además, permiten aislar eléctricamente a la carga de la red de alimentación. 
-%Dirección controlada del flujo de potencia. 
-%Alta eficiencia de conversión. 
+Las fuentes de alimentación otorgan una alta densidad de potencia en un tamaño mediano y con un peso reducido.  
+Permiten aislar eléctricamente a la carga de la red de alimentación con una alta eficiencia de conversión.
 Utilizando filtros simples es posible tener formas de onda con baja distorsión armónica tanto en la entrada como en la salida. 
-%Permiten controlar el factor de potencia si la fuente es de AC. %Que cosa? Los filtros?
-
+Para poder utilizar un transformador pequeño y cumplir con las especificaciones normalmente se requieren múltiples etapas de conversión. 
 En base a la tensión de salida requerida existen fuentes de alimentación AC y fuentes de alimentación DC.
-Con el objetivo principal de disminuir el tamaño de los transformadores y aumentar la eficiencia de conversión, se optó por utilizar fuentes de alimentación DC,
-las cuales se clasifican en:
+Dado el requisito de tensión de salida de continua, se debe diseñar una fuente de alimentación DC, las cuales se clasifican en:
 
 \paragraph{Conmutadas}
 Tienen una alta eficiencia y pueden suministrar altas corrientes de carga a una tensión baja.
@@ -105,40 +100,39 @@ Este último depende de la tensión de entrada, de la tensión de salida y de la
 Permiten que la corriente inductiva fluya en cualquier dirección y que el flujo de corriente se vuelva continuo.
 Requiere sintetizar las funciones de conmutación para obtener las formas de onda de salida deseadas.\\
 
-% Especificaciones de la tensión de salida del prototipo: 12.6VDC
-Para seleccionar una topología adecuada para una aplicación, es necesario comprender las ventajas y desventajas de cada topología y los requisitos de la aplicación. 
-Existen diversas topologías, pero solo se hará un analisis de la utilizada para el proyecto.
-Aquellas topologías que fueron descartadas serán mencionadas brevemente, asi como los motivos de su descarte.
-
-Aunque la mayoría de los convertidores se pueden utilizar para cumplir con los requerimientos de salida, 
-los valores nominales del dispositivo de conmutación y el tamaño del transformador limitan sus aplicaciones a una potencia de salida específica. 
-La elección del convertidor depende del requisito de potencia de salida y de la complejidad que se desea afrontar.
+Dado que no se requiere de un flujo de potencia bidireccional en la carga de las baterías y la mayor complejidad de las fuentes resonantes, 
+se optó por desarrollar una fuente de alimentación conmutada. 
 
 \subsection{Elección del convertidor}
 
 El primer paso de diseño fue la elección de una topología de conversión DC-DC.
-Esta etapa introduce aislación a partir de un transformador de alta frecuencia,
+Para seleccionar una topología adecuada es necesario analizar los requisitos de la aplicación y las ventajas y desventajas de cada topología.  
+Sólo se describe de forma completa la topología utilizada en el proyecto. En cuanto a las restantes, se detallarán los motivos que llevaron a su exclusión.  
+
+El convertidor introduce aislación a partir de un transformador de alta frecuencia,
 disminuyendo el coste, tamaño y peso respecto a uno de baja frecuencia en base al núcleo magnético necesario.
-Como se requiere una única tensión de salida se evita utilizar múltiples devanados.
-El conversor debe alcanzar una potencia máxima de 300W y debe ser lo más sencillo posible para evitar un costo elevado. 
+Como se requiere una única tensión de salida no se utilizan múltiples devanados.
+
+Aunque la mayor parte de los convertidores se pueden utilizar para cumplir con los requerimientos de salida, 
+los valores nominales del dispositivo de conmutación y el tamaño del transformador limitan sus aplicaciones a una potencia de salida específica. 
+Por lo tanto, la elección del convertidor depende del requisito de potencia de salida y de la complejidad que se desea afrontar.
+Para el cargador de baterías, el convertidor debe alcanzar una potencia máxima de 300W y debe ser lo más sencillo posible para evitar un costo elevado. 
 
 La topología flyback es de baja complejidad al estar integrada por muy pocos componentes. 
 Como desventajas, el tamaño del núcleo del transformador se incrementa con la potencia requerida y en bornes del
 interruptor presenta una tensión igual al doble de la tensión máxima de entrada.
-En aplicaciones típicas se alcanzar valores de hasta 150W.
+En aplicaciones típicas se alcanzan valores de hasta 150W.
 
 La topología forward con un solo switch disminuye el tamaño del núcleo del transformador ya que la energía no necesita almacenarse en el entrehierro.
 Como desventajas, al igual que el flyback presenta alta tensión en bornes del interruptor y se eleva el costo debido al agregado de la bobina de filtrado.
 La topología forward con dos switches reduce la tensión en bornes del interruptor a la mitad respecto a la de un solo switch (y con ello la disipación de potencia por switch), 
 pero el circuito de excitación de uno de los transistores queda flotante respecto a masa. 
 La topología con un solo switch admite una potencia de salida entre 150-250W y con 2 switches se eleva a 750W \cite{mohan}\cite{hart}. 
-En base a los criterios definidos inicialmente se eligió el conversor forward con dos switches como topología de conversión DC-DC. 
-
-El principal problema que presentó la utilización de este conversor fue que las señales que controlan a los switches son poco convencionales.
+Por lo tanto, en base a los criterios definidos inicialmente se eligió al convertidor forward con dos switches como topología de conversión DC-DC. 
 
 \subsubsection{Convertidor Forward}
 
-Es un convertidor CC-CC acoplado magnéticamente. El transistor funciona como interruptor, estará cerrado un tiempo $DT$ y abierto el resto del tiempo,
+Es un convertidor DC-DC acoplado magnéticamente. El transistor funciona como interruptor, estará cerrado un tiempo $DT$ y abierto el resto del tiempo,
 $(1 - D)T$, siendo $T$ el periodo de conmutación. 
 El transformador posee tres devanados: los devanados 1 y 2 transfieren la energía de la
 fuente a la carga cuando el interruptor está cerrado; el devanado 3 se usa para proporcionar un
@@ -627,43 +621,37 @@ llevó a la búsqueda de otros métodos de control; por eso, se optó por un con
     \label{fig:driver}
 \end{figure}
 
-\subsection{Amplificador Clase B con transistores complementarios}
+\subsection{Amplificador clase B con transistores complementarios}
 
-Sin esta etapa de amplificación, dado que la carga que generaba el circuito sobre el TL494 era muy alta, 
-la forma de onda PWM se distorsionaba y disminuía su amplitud notablemente, lo que causaba que los MOSFETs no se saturaran y aumentaran demasiado su temperatura.
+Dado que la carga que genera el circuito sobre el TL494 es muy alta, sin esta etapa de amplificación, la forma de onda PWM disminuía su amplitud notablemente y se distorsionaba, lo que causaba que los MOSFETs no se saturaran y aumentaran demasiado su temperatura.
 Los resultados obtenidos con la inclusión de esta etapa fueron un incremento notorio en la amplitud y una mejora en la forma de onda de la señal PWM.
 
 La etapa permite acoplar la carga en continua. 
 Los transistores utilizados son de potencia y no de señal. 
 Cada dispositivo de amplificación conduce durante medio ciclo de la señal de entrada, 
 excitándolos mediante el ingreso de corriente por su base.
-
 Se compone de un transistor NPN y otro PNP que se alimentan de forma inversa.
 El transistor NPN requiere de una tensión positiva en su colector y 
 el transistor PNP requiere de una tensión negativa en su colector.
+
 Ambos funcionan como seguidor por emisor o colector común, con su tensión de alimentación en colector, la señal de excitación en la base y la carga conectada el emisor. 
 Su ganancia de tensión es aproximadamente 1.
-
 La topología seguidor por emisor tiene ganancia de corriente $hfe$. 
 La corriente que se entrega por la base es $hfe$ veces menor que la que se le entrega a la carga. 
 El seguidor presenta una impedancia de entrada es mucho mas alta que su impedancia de salida, de modo que una fuente de señal no tendría que trabajar tan duro.
 Esto puede verse en el hecho de que la corriente de base es del orden de 100 veces menos que la corriente de emisor. 
 La baja impedancia de salida del seguidor emisor se adapta con una carga de baja impedancia y amortigua la fuente de señal.
 
-Los transistores conducen en base a la tensión $V_{be}$ en sus junturas ya que entra base y emisor existe una juntura PN similar a un diodo. 
+Los transistores conducen en base a la tensión $V_{be}$ en sus junturas ya que entre base y emisor existe una juntura PN similar a un diodo. 
 Si no se polariza de forma correcta, no circula corriente por su base y en consecuencia tampoco por su colector. 
-El transistor NPN conduce corriente en su emisor cuando $V_{be}>0$. 
-El transistor PNP conduce corriente en su emisor cuando $V_{be}<0$ o $V_{eb}>0$.
-En el semiciclo positivo de la señal conduce el NPN y el PNP se corta y en el semiciclo negativo conduce el PNP y el NPN se corta. 
-Los transistores conducen de forma alternativa.
-Cuando la tensión de entrada en la base de ambos transistores es 0 no conduce ningún transistor. 
-Esto implica que no existe consumo de corriente ni de potencia. 
+El transistor NPN conduce corriente en su emisor cuando $V_{be}>0$ mientras que el transistor PNP conduce corriente en su emisor cuando $V_{be}<0$ o $V_{eb}>0$.
+Los transistores conducen de forma alternativa: en el semiciclo positivo de la señal conduce el NPN y el PNP se corta y en el semiciclo negativo conduce el PNP y el NPN se corta. 
+Cuando la tensión de entrada en la base de ambos transistores es 0 no conduce ningún transistor, es decir, no existe consumo de corriente ni de potencia. 
 La $V_{ce}$ de ambos transistores va de $V_{cc}$ a 0.
 % Hay muchas frases sueltas en este último parrafo, habría que reordenarlas y unirlas.
 
-\subsection{Diseño del conversor?}
+\subsection{Driver}
 
-% Por que estaba como titulo "Driver" acá? ^^^
 Los MOSFET se encargan de conectar la alimentación con la carga. El IRF840 es un MOSFET de canal N.
 Para encenderlo se debe aplicar una tensión positiva entre \textit{gate} y \textit{source}. 
 Debido a la configuración de convertidor elegida, se requiere un driver para controlar el MOSFET cuyo terminal de \textit{source} no está a tierra. Se optó por un driver con transformador acoplador ya que provee aislación galvánica entre el circuito de control y el circuito de potencia \cite{gatedrivers}.
@@ -769,7 +757,7 @@ El mismo puede evitarse aumentando la componente de corriente resistiva para con
 \paragraph{Capacitor de acoplamiento $C_{C_2}$}
 
 Se agrega un segundo capacitor de acoplamiento que permite restaurar a los niveles originales de tensión. 
-El agregado opcional de un diodo zener en serie permite incremetar aún más la tensión negativa durante el apagado. 
+El agregado opcional de un diodo zener en serie permite incrementar aún más la tensión negativa durante el apagado. 
 
 En base al máximo ripple de tensión permitido y la carga que atraviesa a los capacitores de acoplamiento en estado estacionario:
 
