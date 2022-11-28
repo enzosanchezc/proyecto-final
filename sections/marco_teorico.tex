@@ -22,6 +22,22 @@ debido a la onda sinusoidal rectificada de la segunda mitad de cada período.
 
 Por todos estos motivos se decidió implementar un rectificador de onda completa.
 
+\subsubsection{Rectificador de onda completa en puente o con toma media}
+
+El rectificador en puente presenta la caída de tensión de 2 diodos entre el generador y la carga. 
+La tensión máxima en un diodo polarizado en inversa es el valor pico del generador.
+
+La variante con transformador de toma media sólo presenta la caída de tensión de un diodo entre el generador y la carga. 
+Para una misma potencia entregada por el generador,
+los diodos consumen potencia y disminuyen la corriente y potencia que absorbe la carga. 
+La tensión máxima en un diodo polarizado en inversa es el doble del valor pico del generador.
+El transformador proporciona aislamiento eléctrico entre el generador y la carga. 
+
+Como la reducción de tensión a la salida no es significativa en esta aplicación
+y el puente de diodos se puede implementar con un pequeño integrado,
+con el objetivo de disminuir el tamaño del circuito se decidió evitar el transformador
+y utilizar un rectificador de onda completa tipo puente.
+
 \subsubsection{Rectificación controlada}
 
 La rectificación controlada es un método que utiliza tiristores y permite controlar el ángulo de conmutación de la tensión de salida.
@@ -40,26 +56,6 @@ Si el ángulo de disparo es 0, el comportamiento es igual al de un rectificador 
 
 Se decidió utilizar rectificación no controlada ya que no se necesita una tensión específica a la salida
 y el costo de complejizar el diseño con el agregado de SCRs y un circuito dedicado de disparo no aporta ningún beneficio significativo.
-
-\paragraph{Rectificador de onda completa en puente o con toma media}
-
-\paragraph{En puente}
-
-Presenta la caída de tensión de 2 diodos entre el generador y la carga. 
-La tensión máxima en un diodo polarizado en inversa es el valor pico del generador.
-
-\paragraph{Transformador de toma media}
-
-Sólo presenta la caída de tensión de un diodo entre el generador y la carga. 
-Para una misma potencia entregada por el generador,
-los diodos consumen potencia y disminuyen la corriente y potencia que absorbe la carga. 
-La tensión máxima en un diodo polarizado en inversa es el doble del valor pico del generador.
-El transformador proporciona aislamiento eléctrico entre el generador y la carga. 
-
-Como la reducción de tensión a la salida no es significativa en esta aplicación
-y el puente de diodos se puede implementar con un pequeño integrado,
-con el objetivo de disminuir el tamaño del circuito se decidió evitar el transformador
-y utilizar un rectificador de onda completa tipo puente.
 
 \subsubsection{Filtrado}
 
