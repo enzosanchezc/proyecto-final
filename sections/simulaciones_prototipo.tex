@@ -1,7 +1,7 @@
 \section{Simulacion del prototipo}
 
 % 1) Tensión de salida en el colector del TL494
-% 2) Tensión en el capacitor Ct
+% 2) Tensión en el capacitor Ct <<< N/A
 % 3) Tensión de salida de la etapa de ganancia de corriente
 % 4) Tensión en el primario del transformador del driver
 % 5) Tensión en el secundario del transformador del driver
@@ -29,7 +29,7 @@
 % 27) Tensión cátodo ánodo en el diodo D4
 % 28) Corriente en el secundario del transformador de potencia
 
-En esta sección se comparan las formas de onda obtenidas con el circuito una vez implementado, con las simulaciones realizadas para el diseño del cargador de baterías.
+En esta sección se comparan las formas de onda obtenidas con el circuito una vez implementado, con las simulaciones realizadas para el prototipo.
 
 \subsection{Generador de señal PWM}
 
@@ -46,27 +46,36 @@ Esta debería ser una señal PWM con un período de $8\mu s$ y un ancho de pulso
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/capturas-osciloscopio/TL494/pwm_vout_disconnected.png}
-    \caption{Tensión a la salida del TL494 después de la etapa de ganancia de corriente con la fuente de 36V desconectada. Se puede observar que la señal cumple con los requisitos de frecuencia y ancho de pulso}
+    \caption{Tensión a la salida de la etapa de ganancia de corriente con la fuente de 36V desconectada. Se puede observar que la señal cumple con los requisitos de frecuencia y ancho de pulso}
     \label{fig:osc_pwm_vout_disconnected}
 \end{figure}
 
-Se puede observar una tensión de continua de aproximadamente $1.5V$ durante la etapa de apagado del PWM, la cual se debe al capacitor de desacople del circuito primario del driver.
+%Se puede observar una tensión de continua de aproximadamente $1.5V$ durante la etapa de apagado del PWM, la cual se debe al capacitor de desacople del circuito primario del driver.
 
-Si se compara la figura \ref{fig:osc_pwm_vout_disconnected} con la \ref{fig:osc_pwm_vout_connected}, la cual muestra la misma forma de onda pero con la fuente de tensión de 36V conectada, se puede observar que la forma de onda es similar, pero se presenta una oscilación de alta frecuencia durante el ciclo de apagado de la señal PWM. Esta oscilación será tratada en la sección %\ref{subsec:oscilaciones}.
+Si se compara la figura \ref{fig:osc_pwm_vout_disconnected} con la \ref{fig:osc_pwm_vout_connected}, la cual muestra la misma forma de onda pero con la fuente de tensión de 36V conectada, se puede observar que la forma de onda es similar, pero se presenta una oscilación de alta frecuencia durante el ciclo de apagado de la señal PWM. Esta oscilación es tratada en la sección \ref{subsec:oscilaciones}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/capturas-osciloscopio/TL494/pwm_vout_connected.png}
-    \caption{Tensión a la salida del TL494 después de la etapa de ganancia de corriente con la fuente de 36V conectada}
+    \caption{Tensión a la salida de la etapa de ganancia de corriente con la fuente de 36V conectada}
     \label{fig:osc_pwm_vout_connected}
+\end{figure}
+
+En la figura \ref{fig:sim:osc_pwm_vout} se muestra la misma forma de onda simulada en LTspice.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/3.pdf}
+    \caption{Simulación de la tensión a la salida de la etapa de ganancia de corriente}
+    \label{fig:sim:osc_pwm_vout}
 \end{figure}
 
 En las figuras \ref{fig:ct_v} y \ref{fig:dtc_v} se muestran las tensiones en el capacitor $C_t$ y el terminal DTC del TL494 respectivamente.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{images/capturas-osciloscopio/TL494/Ct_v.png}
-    \caption{} %COMPLETAR
+    \includegraphics[width=\textwidth]{images/capturas-osciloscopio/17-11-2022/5.png}
+    \caption{Tensión en el capacitor $C_t$} %COMPLETAR
     \label{fig:ct_v}
 \end{figure}
 
@@ -75,7 +84,7 @@ En las figuras \ref{fig:ct_v} y \ref{fig:dtc_v} se muestran las tensiones en el 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/capturas-osciloscopio/TL494/DTC_v.png}
-    \caption{} %COMPLETAR
+    \caption{Tensión a la salida del pin DTC del TL494} %COMPLETAR
     \label{fig:dtc_v}
 \end{figure}
 
@@ -146,7 +155,7 @@ Se puede ver que también están presentes las oscilaciones de alta frecuencia q
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{images/capturas-osciloscopio/DRIVER/driver_vout_connected.png}
+    \includegraphics[width=\textwidth]{images/capturas-osciloscopio/DRIVER/driver_vout_connected.png} %Acá tuve que dejar la simulación vieja, porque la nueva está desfasada y esta hecha con otro D, queda mal
     \caption{Tensión a la salida del driver con la fuente de 36V conectada}
     \label{fig:driver_vout_connected}
 \end{figure}
@@ -162,17 +171,45 @@ En la figura \ref{fig:driver_expected_waveforms} se muestran algunas formas de o
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{images/driver_expected_waveforms.png}
+    \includegraphics[width=0.9\textwidth]{images/driver_expected_waveforms.png}
     \caption{Formas de onda esperadas de distintas señales del driver \cite{gatedrivers}}
     \label{fig:driver_expected_waveforms}
 \end{figure}
 
-%Falto medir la mayoría de esto?
+A continuación se presentan formas de ondas variadas del driver, comaprandolas con las simulaciones para verificar su funcionamiento.
 % 1) Tensiones en el transformador de señal 
 
     % Forma de onda: Rectangular 
     % Amplitud: -Vc a Vdrv-Vc 
     % Son iguales dada la relación 1:1 del transformador. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/capturas-osciloscopio/17-11-2022/7.png}
+    \caption{Tensión en el primario del transformador del driver}
+    \label{fig:osc:7}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/4.pdf}
+    \caption{Simulación de la tensión en el primario del transformador del driver}
+    \label{fig:sim:4}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/capturas-osciloscopio/17-11-2022/9.png}
+    \caption{Tensión en el secundario del transformador del driver}
+    \label{fig:osc:9}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/5.pdf}
+    \caption{Simulación de la tensión en el secundario del transformador del driver}
+    \label{fig:sim:5}
+\end{figure}
 
 % 2) Tensión Gate del MOSFET high side % Sería vout del driver?
 % DONE
@@ -207,28 +244,35 @@ En la figura \ref{fig:driver_expected_waveforms} se muestran algunas formas de o
 % 2) Vds de ambos MOSFETs
 
 En las figuras \ref{fig:vds_high} y \ref{fig:vds_low} se muestran las tensiones en los terminales \textit{drain} y \textit{source} de los MOSFETs del convertidor forward doble switch.
-Para comparar, se muestra en la figura \ref{fig:vds_simulation} la tensión $V_{DS}$ del MOSFET low side simulada en LTSpice. Idealmente, las formas de onda en ambos transistores son iguales.
+Para comparar, se muestra en las figuras \ref{fig:vds_simulation_high} y \ref{fig:vds_simulation_low} las tensiones $V_{DS}$ de los MOSFETs simulados en LTSpice. 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{images/capturas-osciloscopio/MOSFET/vds-high.png}
-    \caption{Tensión $V_{DS}$ en el MOSFET high side}
+    \includegraphics[width=0.9\textwidth]{images/capturas-osciloscopio/17-11-2022/33.png}
+    \caption{Tensión $V_{DS}$ en el MOSFET de lado alto}
     \label{fig:vds_high}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{images/capturas-osciloscopio/MOSFET/vds-low.png}
-    \caption{Tensión $V_{DS}$ en el MOSFET low side}
+    \includegraphics[width=\textwidth]{images/sim/16.pdf}
+    \caption{Tensión $V_{DS}$ en el MOSFET de lado alto simulado en LTspice}
+    \label{fig:vds_simulation_high}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/capturas-osciloscopio/17-11-2022/36.png}
+    \caption{Tensión $V_{DS}$ en el MOSFET de lado bajo}
     \label{fig:vds_low}
 \end{figure}
 
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.7\textwidth]{images/vds_sim.png}
-%     \caption{Tensión $V_{DS}$ en el MOSFET low side simulado en LTspice}
-%     \label{fig:vds_low}
-% \end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/18.pdf}
+    \caption{Tensión $V_{DS}$ en el MOSFET de lado bajo side simulado en LTspice}
+    \label{fig:vds_simulation_low}
+\end{figure}
 
 % 3) Idrain de ambos MOSFETs
 
