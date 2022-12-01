@@ -1,9 +1,6 @@
 \section{Elaboración del circuito impreso}
 
-A continuación se detallan todos los criterios aplicados para cada componente en base a las recomendaciones 
-proporcionadas por la cátedra, los integrantes del ATEI y las especificadas en las hojas de datos de los circuitos integrados.
-
-Se comprobó que todos los componente elegidos en el software tengan la misma distribución de pines que en su versión física. 
+Se comprobó que todos los componente elegidos en el software tuvieran la misma distribución de pines que en su versión física. 
 Se imprimió una primera versión y se realizaron correcciones en base a los resultados obtenidos al probar los componentes. 
 
 \paragraph{Orificios}
@@ -13,15 +10,14 @@ Por ejemplo, para jumpers, potenciómetros y conectores macho el orificio es de 
 
 \paragraph{Pads}
 
-Se les dio forma circular para facilitar la soldadura, excepto para la red de tierra, que se hizo con pads cuadrados.
-Se les dió un tamaño de 2mm de diámetro para los circulares, y 2mm de lado para los cuadrados.
-En los casos donde las pistas están muy cerca de los pads y no fuera posible reubicarlas,
+Con forma circular para facilitar la soldadura, excepto para la red de tierra con pads cuadrados.
+Su tamaño es de 2mm de diámetro para los circulares y 2mm de lado para los cuadrados.
+En los casos donde las pistas están muy cerca de los pads y no fue posible reubicarlas,
 se modificó la forma o el tamaño del pad para cumplir con la distancia especificada entre pistas.  
 
 \paragraph{Pistas}
 
-Con corrientes más altas se necesitan pistas más anchas. 
-Por ello, las pistas de potencia se hacen lo más cortas, directas y gruesas posibles mediante la siguiente regla:
+Dado que para corrientes más altas se necesitan pistas más anchas, las pistas de potencia son lo más cortas, directas y gruesas posibles mediante la siguiente regla:
 pistas finas de 1mm y pistas gruesas de 2mm. 
 La separación entre las pistas y el plano de tierra o cualquier otra pista es de 0.7mm. 
 Se evitó que las pistas tengan ángulos de 90°. 
@@ -30,13 +26,12 @@ para evitar contactos entre pines, las pistas ingresan a los circuitos integrado
 
 \paragraph{Tierra} 
 
-Con el fin de mantener la aislación provista por el transformador principal, 
+Con el fin de mantener la aislación provista por el transformador de potencia, 
 el plano de tierra se dividió en dos: una parte para el lado primario y la otra para su secundario.
 
 \paragraph{Tornillos}
 
-En cada extremo de la placa se realizaron orificios para los tornillos de 6mm de diámetro,
-que es la medida de la cabeza de tornillo típica. 
+En cada extremo de la placa se realizaron orificios para los tornillos de 6mm de diámetro (medida de la cabeza de tornillo típica). 
 
 \paragraph{Puntos de prueba}
 
@@ -44,6 +39,7 @@ Se colocaron puntos se prueba para poder medir tensiones en distintos puntos de 
 
 \paragraph{Medición de corriente} 
 
-Se colocaron resistencias de bajo valor en serie con cada componente o lugar
+Se colocaron jumpers en serie con cada componente o lugar
 en el que se desea medir corriente para contrastar con los resultados obtenidos por simulación.
-Una vez realizadas las mediciones, dichos espacios se conectaron con jumpers.
+Para realizar las mediciones, se reemplazaron los jumpers por cables,
+para poder utilizar las puntas de corriente del osciloscopio.

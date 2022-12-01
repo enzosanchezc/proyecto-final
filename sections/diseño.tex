@@ -2,86 +2,72 @@
 
 \subsection{Convertidor Forward}
 
-Las especificaciones del prototipo son las siguientes:
+Se listan a continuación las especificaciones acordadas con la cátedra para el prototipo.
 
-Tensión de entrada: Vs=36V
+\begin{itemize}
+    \item Tensión de entrada: $V_s=36V$
+    \item Tensión de salida: $V_o=12.6V$
+    \item Ciclo de trabajo mínimo: $D_{min}=0$
+    \item Ciclo de trabajo máximo: $D_{max}=0.5$
+    \item Frecuencia de conmutación: $f=125kHz$
+    \item Corriente media en la carga: $I_{med}=1A$
+\end{itemize}
 
-Tensión de salida: Vo=12.6V
-
-Ciclo de trabajo mínimo: Dmín=0
-
-Ciclo de trabajo máximo: Dmáx=0.5
-
-Frecuencia de conmutación: f=125kHz
-
-Corriente media en la carga: Iprom=1A
-
-Se desea obtener:
-
-Variación en la corriente del inductor: deltaiL=25\%
-
-Ripple de tensión de la salida: deltav=0.2\%
-
+Se desea obtener una variación en la corriente del inductor $\Delta i_L=25\%$ y un ripple de tensión en la salida $\Delta v=0.2\%$.
 En consecuencia:
 
-$$ \Delta i_L=I_{prom}\frac{\delta i[\%]}{100}=1A\cdot\frac{25}{100}=0.25A $$
+$$ \Delta i_L=I_{med}\frac{\delta i[\%]}{100}=1A\cdot\frac{25}{100}=0.25A $$
 
-DeltaVo=Voprom*(deltav[\%]/100)=12.6V*(0.2/100)=0.025V
+$$ \Delta V_o=V_{o_{med}}\cdot\frac{\Delta v[\%]}{100}=12.6V\cdot\frac{0.2}{100}=0.025V $$
 
 En principio se dimensiona el filtro de salida compuesto por el inductor y el capacitor. 
 En base a la variación de la corriente en el inductor se calcula la inductancia.
 Para el ciclo de trabajo mínimo se obtiene la inductancia máxima:
-
 
 $$ L=\frac{V_o(1-D)}{f\Delta i_L}=\frac{12.6V\cdot(1-0)}{125kHz\cdot0.25A}=400uH $$
 
 En base a la ecuación de la tensión de rizado pico a pico en la salida se calcula la capacidad.
 Para el ciclo de trabajo mínimo se obtiene la capacidad máxima:
 
-
 $$ C=\frac{(1-D)V_o}{8\cdot L\cdot\Delta V_o\cdot f^2}=\frac{(1-0)\cdot12.6V}{8\cdot400uH\cdot0.025V\cdot(125kHz)^2}=10uF $$
 
 Los dispositivos semiconductores fueron elegidos en base a su disponibilidad en el ATEI,
 comprobando que puedan ser utilizados en el prototipo con los parámetros especificados en sus hojas de datos.  
 
-Se eligieron diodos rectificadores ultra rápidos para alta frecuencia modelo UF4007. 
+Se eligieron diodos rectificadores para alta frecuencia modelo UF4007. 
 Presenta tiempo de recuperación inversa ultra rápido, una baja caída de tensión directa, alta capacidad de sobretensión, bajas pérdidas de conmutación y alta eficiencia.
 Sus características principales son: 
 
-Máxima corriente rectificada directa promedio: If=1A
-
-Voltaje inverso pico repetitivo máximo: Vrrm=1000V
-
-Tiempo máximo de recuperación inversa: trr=75ns
-
-Tensión directa instantánea máxima: Vf=1.7V
+\begin{itemize}
+    \item Máxima corriente rectificada directa promedio: $I_f=1A$
+    \item Voltaje inverso pico repetitivo máximo: $V_{rrm}=1000V$
+    \item Tiempo máximo de recuperación inversa: $t_{rr}=75ns$
+    \item Tensión directa instantánea máxima: $V_f=1.7V$
+\end{itemize}
 
 Para los transistores se eligieron MOSFETs para switching de alta velocidad modelo IRF840. 
-En base a la tensión rectificada por la etapa de AC-DC, debe soportar 350V.
 Sus características principales son: 
 
-Pmáx=125W
-
-Vdsmáx=500V
- 
-Vgsmáx=20V
-
-Idmáx=8A
-
-Idrepetitivamáx=32A
+\begin{itemize}
+    \item $P_{max}=125W$
+    \item $V_{ds_{max}}=500V$
+    \item $V_{gs_{max}}=20V$
+    \item $I_{d_{max}}=8A$
+    \item $I_{d_{repetitiva max}}=32A$
+\end{itemize}
 
 \subsection{Transformador}
 
 La potencia aparente del transformador es la suma de la potencia de entrada y la potencia de salida:
 
-$$ P_{t}=P_{i}+P_{o}=\frac{P_{o}}{\eta}+P_{o}=(1+\frac{1}{\eta})P_{o} $$
+$$ P_{t}=P_{i}+P_{o}=\frac{P_{o}}{\eta}+P_{o}=\left(1+\frac{1}{\eta}\right)P_{o} $$
 
 La tensión en el bobinado primario está dada por: 
 
 $$ V_{1}=K_{t} f N_{1} \phi_{m} $$
 
 donde $f$ es la frecuencia de conmutación de la señal de entrada y 
-$K_t$ es un factor que vale 4.44 si la forma de onda es sinusoidal o 4 si es rectangular.
+$K_t$ es un factor que vale $4.44$ si la forma de onda es sinusoidal o $4$ si es rectangular \cite{rashid}.
 
 El flujo se relaciona con el área de la sección transversal de la trayectoria del flujo $A_{c}$ y la densidad de flujo $B$ de la siguiente manera:
 
@@ -89,12 +75,25 @@ $$ \Phi=BA $$
 
 La densidad de corriente es:
 
-$$ J=K_{j} A_{p}^{x} $$
+$$ J=K_jA_p^x $$
 
-donde $K_{j}$ y $x$ son constantes que dependen del núcleo magnético dadas por la siguiente tabla:
+donde $K_j$ y $x$ son constantes que dependen del núcleo magnético dadas por la tabla \ref{tabla:Kj}:
 
 % De que libro es esto? Asi voy pasando las tablas
-INSERTAR TABLA!
+\begin{table}[]
+    \begin{tabular}{lcccc}
+        \hline
+        Tipo de núcleo   & $K_j @ 25^{\circ} C$ & $K_j @ 50^{\circ} C$ & $x$   & Pérdidas en el núcleo \\ \hline
+        Pot core         & 433                  & 632                  & -0.17 & $P_{cu}=P_{fe}$       \\
+        Power core       & 403                  & 590                  & -0.12 & $P_{cu}\gg P_{fe}$    \\
+        E-laminated core & 366                  & 534                  & -0.14 & $P_{cu}=P_{fe}$       \\
+        C-core           & 323                  & 468                  & -0.14 & $P_{cu}=P_{fe}$       \\
+        Single-coil      & 395                  & 569                  & -0.14 & $P_{cu}\gg P_{fe}$    \\
+        Tape-wound core  & 250                  & 365                  & -0.13 & $P_{cu}=P_{fe}$       \\ \hline
+    \end{tabular}
+    \caption{Valores de $K_j$ y $x$ para distintos tipos de núcleo}
+    \label{tabla:Kj}
+\end{table}
 
 El factor $A_{p}$ se puede calcular como: 
 
@@ -104,9 +103,9 @@ donde $K_u$ es el factor de relleno que varía entre 0.4 y 0.6 y $B_m$ es la den
 
 La cantidad de alambre de cobre y la cantidad de material del núcleo (por lo general ferrita de hierro) determinan la capacidad de potencia del transformador. 
 Existen distintos tipos de núcleo como toroidal, pot, power, E-laminated, EI, C, single-coil, tape-wound, etc. 
-En este proyecto se trabajará con los núcleos disponibles provistos por la cátedra: EC70, E42 y E30. 
+En este proyecto se trabajará con los núcleos disponibles provistos por la cátedra: E70, E42 y E30. 
 
-Especificaciones obtenidas por simulación:
+Las especificaciones obtenidas por simulación son las siguientes:
 \begin{itemize}
     \item Frecuencia de la forma de onda rectangular: $f=125kHz$
     \item Tensión máxima aplicada a la bobina del primario: $V_{1_{max}}=350V$
@@ -115,9 +114,7 @@ Especificaciones obtenidas por simulación:
     \item Eficiencia: $n=95\%$
 \end{itemize}
 
-INSERTAR IMÁGEN DE SIMULACIÓN V1MAX!
-
-\paragraph{Cálculos}
+\subsubsection{Cálculos}
 
 Potencia de salida:
 
@@ -128,12 +125,18 @@ Potencia aparente:
 $$P_t=P_o+P_i=P_o\cdot\left(1+\frac{1}{n}\right)=20.16W\cdot\left(1+\frac{1}{0.95}\right)=41.38W  $$
 
 % Estoy buscando una decente
-INSERTAR IMÁGEN B-H DE KIKE!
+%INSERTAR IMÁGEN B-H DE KIKE!
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/diseno-trafos-kike/tabla_bh_kike.png}
+    \caption{Gráfica B vs. H para núcleos N27}
+    \label{fig:grafica-b-h}
+\end{figure}
 
 En base a las curvas de magnetización se observa como las ferrites no soportan tanto flujo como el hierro y como disminuye la permeabilidad para campos mayores.  
-Presenta el ciclo de histéresis y comienza a saturar en B=300mT. 
+Presenta el ciclo de histéresis y comienza a saturar en $B=300mT$. 
 La saturación implica mayor circulación de corriente que conlleva a que el núcleo deje de responder. 
-La saturación se da en campos menores si la temperatura aumenta con el funcionamiento del dispositivo. 
+Esta se da en campos menores si la temperatura aumenta con el funcionamiento del dispositivo. 
 Por lo tanto se elige una inducción magnética máxima de $B_{m}=100mT$ para estar lejos del codo y asegurarnos tener la permeabilidad especificada en las hojas de datos. 
 
 Para el núcleo E70, el área efectiva es: 
@@ -155,9 +158,9 @@ $$ N_{2}=25 $$
 
 $$ A_{p}=\left(\frac{41.38\cdot 10^{4}}{4\cdot 125kHz\cdot 100mT\cdot 0.4\cdot 366}\right)^{\frac{1}{1-0.14}} {cm}^4 $$
 
-$$ J=366\cdot X^{-0.14} A/{cm}^2 $$
+$$ J=366\cdot x^{-0.14} \frac{A}{cm^2} $$
 
-$$ J=584 A/{cm}^2 $$
+$$ J=584 \frac{A}{cm^2} $$
 
 \paragraph{Saturación magnética}
 
@@ -170,22 +173,22 @@ De esta forma en condiciones normales el flujo circula por el material magnétic
 
 \subsection{Inductor}
 
-Se utiliza para almacenar energía y permitir su transferencia. 
-Por el inductor circula una corriente continua. Si la misma es muy elevada puede saturar el núcleo magnético. 
+Se utiliza para almacenar energía y permitir su transferencia hacia la carga. 
+Por el inductor circula una corriente continua la cual no puede ser muy elevada para evitar saturar al núcleo magnético. 
 
-Requisitos de diseño: 
+Especificaciones: 
 
 \begin{itemize}
     \item Inductancia: $L=400\mu H$
     \item Corriente continua: $I_{dc}=1A$
 \end{itemize}
 
-Procedimiento para el diseño de un inductor con entrehierro:
+Procedimiento de diseño:
 
-\paragraph{Calculo la energía que debe almacenar el inductor}
+\paragraph{Cálculo de la energía que debe almacenar el inductor}
 $$ E=0.5\cdot L\cdot I_{dc}^2=200\mu HA^2 $$
-\paragraph{Elección el tamaño del núcleo}
-En base a la disponibilidad, se elige un E30 con material N27. 
+\paragraph{Elección del tamaño del núcleo}
+En base a la disponibilidad, se elige un E42 con material N27. 
 Sus parámetros son:
 \begin{itemize}
     \item Longitud efectiva: $l_e=67mm$
@@ -253,102 +256,146 @@ tensión aplicada sobre el inductor y la pendiente de la corriente.
 
 \subsection{Driver}
 
-1) Tensión de control de puerta: Vdrv
+La tensión a la salida del generador PWM es uno de los parámetros de diseño del driver.
 
-Es la amplitud de la forma de onda PWM:  
+$$ V_{drv}=8V $$
 
-Vdrv=8V
+La frecuencia de conmutación es: 
 
-2) Frecuencia de control de puerta: fdrv
+$$ f_{drv}=125kHz $$
 
-Es la frecuencia de conmutación: 
+%3) Carga total del terminal \textit{gate}: Qc
 
-fdrv=125kHz;
-
-3) Carga total del terminal Gate: Qc
-
-Una de las principales pérdidas de potencia en los transistores MOSFET son las pérdidas por control de puerta o Gate. 
+Una de las principales pérdidas de potencia en los transistores MOSFET son las pérdidas por control de puerta o \textit{gate}. 
 El encendido y apagado del MOSFET implica la carga y descarga del capacitor interno, 
 el cual recibirá o entregará carga cuando la tensión en el mismo se modifique. 
-Se requiere de una cierta carga para cambiar la tensión del terminal Gate entre 0 y Vdrv. 
+Se requiere de una cierta carga para cambiar la tensión del terminal \textit{gate} entre $0$ y $V_{drv}$. 
 Su valor se obtiene mediante el gráfico de la hoja de datos del IRF840 con los siguientes datos:
-Rango: 0-63nC
-Vgs=6V
-Vds=100V
+
+\begin{itemize}
+    \item Rango: $0-63nC$
+    \item $V_{gs}=6V$
+    \item $V_{ds}=100V$
+\end{itemize}
+
 De forma estimada: 
-Qg=26nC
 
-INSERTAR IMÁGEN DE HOJA DE DATOS IRF840: FIGURA 6 Vgs vs Qg
+$$ Q_g=26nC $$
 
-Con este parámetro pueden determinarse la corriente promedio de polarización requerida para controlar el terminal Gate 
+%INSERTAR IMÁGEN DE HOJA DE DATOS IRF840: FIGURA 6 Vgs vs Qg
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/irf840/vgs-vs-qg.png}
+    \caption{Curva típica de tensión entre gate y source vs. carga del terminal gate}
+    \label{fig:vgs-vs-qg}
+\end{figure}
+
+Con este parámetro pueden determinarse la corriente promedio de polarización requerida para controlar el terminal \textit{gate} 
 y las pérdidas de potencia de carga de puerta
 
-Ig=Qg*fdrv=3.25mA
+$$ I_g=Q_g\cdot f_{drv}=3.25mA $$
 
-Pgate=Vdrv*Qg*fdrv=26mW
+$$ P_{gate}=V_{drv}\cdot Q_g\cdot f_{drv}=26mW $$
 
-4) Delta VC1 y Delta VC2: INSERTAR SÍMBOLOS COMO ANTES
+% 4) Delta VC1 y Delta VC2: INSERTAR SÍMBOLOS COMO ANTES
 
-La suma de los ripples en ambos capacitores de acoplamiento aparece en el terminal Gate. 
-Se elige el siguiente criterio:
-DeltaVc=0,1*Vdrv
-deltavc1=deltavc2=deltavc/2;
+La suma de los ripples en ambos capacitores de acoplamiento aparece en el terminal \textit{gate},
+por lo que se elige:
 
-5) Tensión del diodo de rueda libre del secundario: Vdc2
+$$ \Delta V_c=0.1\cdot V_{drv} $$
 
-Se utiliza el mismo diodo que en el convertidor forward, modelo UF4007. 
+$$ \Delta V_{c_1}=\Delta V_{c_2}=\frac{\Delta V_c}{2} $$
+
+Para el diodo de rueda libre del secundario se utiliza el mismo diodo que en el convertidor forward, modelo UF4007. 
 La tensión directa máxima se obtiene de la hoja de datos: 
-Vdc2=1.7V;
 
-6) Ciclo de trabajo máximo 
+$$ V_{dc_2}=1.7V $$.
 
-Definido por el conversor forward.
+El ciclo de trabajo máximo está definido por el conversor forward, 
 
-Dmáx=0.5
+$$ D_{max}=0.5 $$.
 
-7) Resistencia entre Gate y Source: Rgs
+El valor de la resistencia entre \textit{gate} y \textit{source} se despeja en base a la constante de tiempo deseada en el transitorio de la tensión en el capacitor de acoplamiento.
 
-Su valor se despeja en base a la constante de tiempo deseada en el transitorio de la tensión en el capacitor de acoplamiento.
+$$ \tau=50us $$
 
-Tao=50us
+%INSERTAR CÁLCULO DE RGS
 
-INSERTAR CÁLCULO DE RGS
+$$ R_{gs}=\frac{\tau}{C_{C_2}} $$
 
-$Rgs=10k\Omega$
+$$ R_{gs}=10k\Omega $$
 
-8) Inductancia magnetizante: Lm
+La inductancia magnetizante $L_m$ se mide con un medidor de inductancias para poder simular el circuito.
 
-Medida con el instrumento. 
+$$ L_m=186uH $$
 
-Lm=186uH;
+% 9) Cdrv: Capacitor de bypass
 
-9) Cdrv: Capacitor de bypass
+% Provee de la corriente necesaria al encenderse. 
 
-Provee de la corriente necesaria al encenderse. 
+% FALTA CÁLCULO
+Se agrega un capacitor de bypass entre la alimentación y la tierra del generador PWM para proveer la corriente necesaria en los picos de consumo.
 
-FALTA CÁLCULO
+%INSERTAR FÓRMULA DE LA ECUACIÓN 18 JUNTO A LA DESCRIPCIÓN DE SUS parámetros
 
-INSERTAR FÓRMULA DE LA ECUACIÓN 18 JUNTO A LA DESCRIPCIÓN DE SUS parámetros
+$$ C_{bypass}=\frac{I_{Q,HI}\frac{D_{max}}{f_{drv}}+Q_G}{\Delta V} $$
 
-10) Capacitor de acoplamiento Cc1
+Siendo
 
-$$ C_{C_1}(D)=\frac{Q_g}{\Delta V_{C_1}}+\frac{(V_{drv}-V_{{dc}_2})\times D}{\Delta V_{C_1}\times R_{gs}\times f_{drv}}+\frac{V_{drv}\times (D^2-D^3)}{\Delta V_{C1}\times 4\times L_m\times f_{drv}^2} $$
+\begin{itemize}
+    \item $I_{Q,HI}$ la corriente de polarización del driver cuando la salida está en alto
+    \item $D_{max}$ el ciclo de trabajo máximo
+    \item $f_{drv}$ la frecuencia de conmutación
+    \item $Q_G$ la carga en el terminal \textit{gate}
+\end{itemize}
+
+El capacitor de acoplamiento $C_{C_1}$ se calcula como:
+
+$$ C_{C_1}(D)=\frac{Q_g}{\Delta V_{C_1}}+\frac{(V_{drv}-V_{{dc}_2})\cdot D}{\Delta V_{C_1}\cdot R_{gs}\cdot f_{drv}}+\frac{V_{drv}\cdot (D^2-D^3)}{\Delta V_{C1}\cdot 4\cdot L_m\cdot f_{drv}^2} $$
 
 La capacidad mínima que asegura permanecer por debajo del ripple de tensión máximo en todas las condiciones de operación 
 se puede encontrar determinando el máximo de la expresión anterior:
 
-Cc1=328.3nF
+$$ C_{C_1}=328.3nF $$
 
-11) Capacitor de acoplamiento Cc2
+Para el capacitor de acoplamiento $C_{C_2}$ se utiliza la siguiente expresión:
 
-Cc2=(Qg/deltavc2)+(((Vdrv-Vdc2)*Dmax)/(deltavc2*Rgs*fdrv))
+$$ C_{C_2}=\frac{Q_g}{\Delta V_{C_2}}+\frac{(V_{drv}-V_{dc_2})D_{max}}{\Delta V_{C_2}R_{gs}f_{drv}} $$
 
-Cc2=71.3nF
+$$ C_{C_2}=71.3nF $$
 
-12) Resistencia serie del primario de amortiguamiento
+Finalmente se calcula la resistencia de amortiguamiento en el primario
 
-$Rcmin=2*sqrt(Lm/Cc1)=47.6\Omega$
+$$ R_{c_{min}}=2\sqrt{\frac{L_m}{C_{C_1}}}=47.6\Omega $$
 
 Se elige:
 
-Rc=X
+$$ R_c=50\Omega $$
+
+\subsection{Red Snubber}
+
+A continuación se describe el procedimiento para el cálculo de los componentes. 
+
+\begin{enumerate}
+    \item Con el osciloscopio se mide la frecuencia de la oscilación en la tensión del transistor Vds. 
+    $$ f_{r}=1.27MHz $$ %Era esa?
+    \item Se conecta un capacitor entre \textit{drain} y \textit{source} con una capacidad $C_{p_{0}}$ tal que la frecuencia de la oscilación disminuya a la mitad. 
+    $$ C_{p_{0}}=1.5nF $$
+    \item La frecuencia de resonancia en una red LC está dada por
+    $$ w=\frac{1}{\sqrt{LC}} $$
+    Con la configuración actual, 
+    $$ f_{r}=\frac{1}{2\pi\sqrt{L_{p}(C_{p_{2}}+C_{p_{0}})}} $$
+    Para lograr que dicha frecuencia disminuya a la mitad se necesita una capacitancia total que sea cuatro veces la capacitancia parásita con la que se comenzó.
+    Por lo tanto, la capacidad parásita del circuito resulta un tercio de la capacidad agregada. 
+    $$ C_{p_{2}} = \frac{C_{p_{0}}}{3} $$
+    \item Teniendo la capacidad parásita del circuito $C_{p_2}$ y la frecuencia de la oscilación original se puede calcular la inductancia parásita del circuito:
+    $$ L_{p}=\frac{1}{(2\pi f_{r})^{2}*C_{p_{2}}} $$
+    \item La impedancia característica de los elementos parásitos resulta:
+    $$ Z_{0}=\sqrt{\frac{L_p}{C_{p_2}}} $$
+    \item El valor óptimo para la $R_{snb}$ es aproximadamente igual a la impedancia característica. Debe ser mayor o igual a esta última. Un valor muy alto puede permitir un pico propio de la oscilación y un valor más bajo permite una corriente más elevada, resultando en un sobrecalentamiento.
+    \item Se elige una $C_{snb}$ que sea igual o hasta 4 veces superior a la capacidad parásita del circuito. 
+    $$ C_{p_2}\leq C_{snb}\leq 4C_{p_2} $$
+    \item Se calcula la potencia disipada en Rsnb y se utiliza una resistencia cuya potencia máxima sea el doble que la disipada.
+    $$ P_{R_{snb}}=C_{snb}V_{in}^2f_{sw} $$
+    \item Se agrega un capacitor de \textit{bypass} de $0.1uF$ para amortiguar la inductancia del MOSFET de lado alto.     
+\end{enumerate}

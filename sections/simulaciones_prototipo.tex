@@ -29,8 +29,6 @@
 % 27) Tensión cátodo ánodo en el diodo D4
 % 28) Corriente en el secundario del transformador de potencia
 
-En esta sección se comparan las formas de onda obtenidas con el circuito una vez implementado, con las simulaciones realizadas para el prototipo.
-
 \subsection{Generador de señal PWM}
 
 Por cuestiones de costo computacional y de falta de un modelo representativo del TL494,
@@ -40,27 +38,21 @@ por lo que no se harán comparaciones con las simulaciones.
 Aun así, a continuación se mostrarán las formas de onda mas importantes del circuito implementado,
 comparando con las indicadas en la hoja de datos del fabricante.
 
-En la figura \ref{fig:osc_pwm_vout_disconnected} se muestra la forma de onda de la tensión de salida de la etapa de ganancia de corriente, con la fuente de alimentación de 36V desconectada.
-Esta debería ser una señal PWM con un período de $8\mu s$ y un ancho de pulso de aproximadamente 16\%
+En la figura \ref{fig:osc_pwm_vout_disconnected} se muestra la forma de onda de la tensión de salida de la etapa de ganancia de corriente.
+Esta debería ser una señal PWM con un período de $8\mu s$ y un ancho de pulso de aproximadamente 40\%
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{images/capturas-osciloscopio/TL494/pwm_vout_disconnected.png}
-    \caption{Tensión a la salida de la etapa de ganancia de corriente con la fuente de 36V desconectada. Se puede observar que la señal cumple con los requisitos de frecuencia y ancho de pulso}
+    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/1.png}
+    \caption{Tensión a la salida de la etapa de ganancia de corriente}
     \label{fig:osc_pwm_vout_disconnected}
 \end{figure}
 
 %Se puede observar una tensión de continua de aproximadamente $1.5V$ durante la etapa de apagado del PWM, la cual se debe al capacitor de desacople del circuito primario del driver.
 
-Si se compara la figura \ref{fig:osc_pwm_vout_disconnected} con la \ref{fig:osc_pwm_vout_connected}, la cual muestra la misma forma de onda pero con la fuente de tensión de 36V conectada, se puede observar que la forma de onda es similar, pero se presenta una oscilación de alta frecuencia durante el ciclo de apagado de la señal PWM. Esta oscilación es tratada en la sección \ref{subsec:oscilaciones}.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{images/capturas-osciloscopio/TL494/pwm_vout_connected.png}
-    \caption{Tensión a la salida de la etapa de ganancia de corriente con la fuente de 36V conectada}
-    \label{fig:osc_pwm_vout_connected}
-\end{figure}
-
+%Si se compara la figura \ref{fig:osc_pwm_vout_disconnected} con la \ref{fig:osc_pwm_vout_connected}, la cual muestra la misma forma de onda pero con la fuente de tensión de 36V conectada, se puede observar que la forma de onda es similar, pero se presenta una oscilación de alta frecuencia durante el ciclo de apagado de la señal PWM. Esta oscilación es tratada en la sección \ref{subsec:oscilaciones}.
+Se puede observar que la señal cumple con los requisitos de frecuencia y ancho de pulso.
+Durante la implementacion se presentaron oscilaciones de alta frecuencia durante el ciclo de apagado de la señal PWM, las cuales son tratadas en la sección \ref{subsec:oscilaciones}.
 En la figura \ref{fig:sim:osc_pwm_vout} se muestra la misma forma de onda simulada en LTspice.
 
 \begin{figure}[H]
@@ -108,23 +100,23 @@ En las figuras \ref{fig:ct_v} y \ref{fig:dtc_v} se muestran las tensiones en el 
 
 \subsection{Etapa de ganancia de corriente}
 
-En las figuras \ref{fig:pwm_iout_sin_bjt} y \ref{fig:pwm_iout_con_bjt} puede observarse la corriente de salida del TL494 antes y después de agregar la etapa de ganancia de corriente, respectivamente.
+% En las figuras \ref{fig:pwm_iout_sin_bjt} y \ref{fig:pwm_iout_con_bjt} puede observarse la corriente de salida del TL494 antes y después de agregar la etapa de ganancia de corriente, respectivamente.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{images/capturas-osciloscopio/TL494/pwm_iout_sin_bjt.png}
-    \caption{Corriente a la salida del TL494 sin colocar la etapa intermedia de ganancia de corriente}
-    \label{fig:pwm_iout_sin_bjt}
-\end{figure}
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\textwidth]{images/capturas-osciloscopio/TL494/pwm_iout_sin_bjt.png}
+%     \caption{Corriente a la salida del TL494 sin colocar la etapa intermedia de ganancia de corriente}
+%     \label{fig:pwm_iout_sin_bjt}
+% \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{images/capturas-osciloscopio/BJT/bjt-iin-con-etapa.png}
-    \caption{Corriente a la salida del TL494 con la etapa intermedia de ganancia de corriente}
-    \label{fig:pwm_iout_con_bjt}
-\end{figure}
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\textwidth]{images/capturas-osciloscopio/BJT/bjt-iin-con-etapa.png}
+%     \caption{Corriente a la salida del TL494 con la etapa intermedia de ganancia de corriente}
+%     \label{fig:pwm_iout_con_bjt}
+% \end{figure}
 
-Puede observarse que las oscilaciones aumentan. %WHAT?
+% Puede observarse que las oscilaciones aumentan. %WHAT?
 
 La funcion más importante de esta etapa es la de mejorar la forma de onda de la señal PWM, que al comparar las figuras \ref{fig:osc_pwm_vout_disconnected} y \ref{fig:pwm_vout_sin_bjt} se puede observar que se ha mejorado considerablemente.
 
@@ -150,33 +142,36 @@ La funcion más importante de esta etapa es la de mejorar la forma de onda de la
 
 \subsection{Driver}
 
-En las figuras \ref{fig:driver_vout_connected} y \ref{fig:driver_vout_disconnected} se muestra la salida del driver con y sin el convertidor energizado, respectivamente.
+En la figura \ref{fig:driver_vout_connected} se muestra la tensión de salida del driver, que coincide con la tensión entre \textit{gate} y \textit{source} del MOSFET de lado alto.
 Se puede ver que también están presentes las oscilaciones de alta frecuencia que se observan en la salida del TL494.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{images/capturas-osciloscopio/DRIVER/driver_vout_connected.png} %Acá tuve que dejar la simulación vieja, porque la nueva está desfasada y esta hecha con otro D, queda mal
-    \caption{Tensión a la salida del driver con la fuente de 36V conectada}
+    \includegraphics[width=\textwidth]{images/capturas-osciloscopio/17-11-2022/31.png} %Acá tuve que dejar la simulación vieja, porque la nueva está desfasada y esta hecha con otro D, queda mal
+    \caption{Tensión a la salida del driver}
     \label{fig:driver_vout_connected}
 \end{figure}
-% HAY QUE ORDENAR ESTAS 2
+
+En la figura \ref{fig:sim:driver_vout_connected} puede verse los resultados de la simulación.
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{images/capturas-osciloscopio/DRIVER/driver_vout_disconnected.png}
-    \caption{Tensión a la salida del driver con la fuente de 36V desconectada}
-    \label{fig:driver_vout_disconnected}
+    \includegraphics[width=\textwidth]{images/sim/15.pdf}
+    \caption{Simulación de la tensión a la salida del driver}
+    \label{fig:sim:driver_vout_connected}
 \end{figure}
+% HAY QUE ORDENAR ESTAS 2
 
 En la figura \ref{fig:driver_expected_waveforms} se muestran algunas formas de onda del circuito del driver con las que se hicieron comparaciones para verificar su correcto funcionamiento.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{images/driver_expected_waveforms.png}
+    \includegraphics[width=0.7\textwidth]{images/driver_expected_waveforms.png}
     \caption{Formas de onda esperadas de distintas señales del driver \cite{gatedrivers}}
     \label{fig:driver_expected_waveforms}
 \end{figure}
 
-A continuación se presentan formas de ondas variadas del driver, comaprandolas con las simulaciones para verificar su funcionamiento.
+A continuación se presentan formas de ondas variadas del driver, comparandolas con las simulaciones para verificar su funcionamiento.
 % 1) Tensiones en el transformador de señal 
 
     % Forma de onda: Rectangular 
@@ -276,18 +271,199 @@ Para comparar, se muestra en las figuras \ref{fig:vds_simulation_high} y \ref{fi
 
 % 3) Idrain de ambos MOSFETs
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/20.png}
+    \caption{}
+    \label{fig:osc:20}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/10.pdf}
+    \caption{Corriente que circula por el drain del MOSFET 1 (high side)}
+    \label{fig:sim:10}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/22.png}
+    \caption{}
+    \label{fig:osc:22}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/11.pdf}
+    \caption{Corriente que circula por el drain del MOSFET 2 (low side)}
+    \label{fig:sim:11}
+\end{figure}
+
 % 4) Tensiones en el E70
 
-% 5) Corriente en el primario
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/38.png}
+    \caption{}
+    \label{fig:osc:38}
+\end{figure}
 
-    % Medir la componente continua. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/19.pdf}
+    \caption{Tensión en el primario del transformador de potencia}
+    \label{fig:sim:19}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/40.png}
+    \caption{}
+    \label{fig:osc:40}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/20.pdf}
+    \caption{Tensión en el secundario del transformador de potencia}
+    \label{fig:sim:20}
+\end{figure}
+
+% 5) Corriente en el primario %Del e70?
+
+    % Medir la componente continua. IMPOSSIBLE
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/24.png}
+    \caption{}
+    \label{fig:osc:24}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/12.pdf}
+    \caption{Corriente en el primario del transformador de potencia}
+    \label{fig:sim:12}
+\end{figure}
 
 % 6) Caída de tensión en los diodos
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/60.png}
+    \caption{}
+    \label{fig:osc:60}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/24.pdf}
+    \caption{Tensión cátodo ánodo en el diodo D1}
+    \label{fig:sim:24}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/61.png}
+    \caption{}
+    \label{fig:osc:61}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/25.pdf}
+    \caption{Tensión cátodo ánodo en el diodo D2}
+    \label{fig:sim:25}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/62.png}
+    \caption{}
+    \label{fig:osc:62}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/26.pdf}
+    \caption{Tensión cátodo ánodo en el diodo D3}
+    \label{fig:sim:26}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/63.png}
+    \caption{}
+    \label{fig:osc:63}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/27.pdf}
+    \caption{Tensión cátodo ánodo en el diodo D4}
+    \label{fig:sim:27}
+\end{figure}
+
 % 7) Corriente en el inductor junto con su ripple
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/66.png}
+    \caption{}
+    \label{fig:osc:66}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/13.pdf}
+    \caption{Corriente en el inductor del filtro de salida}
+    \label{fig:sim:13}
+\end{figure}
 
 % 8) Corriente de salida junto con su ripple 
 
     % Idealmente medir 1A-1.6A del modo elegido. 
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/67.png}
+    \caption{Ripple de corriente por la carga}
+    \label{fig:osc:67}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/14-ripple.pdf}
+    \caption{Simulación del ripple de corriente por la carga}
+    \label{fig:sim:14ripple}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/14.pdf}
+    \caption{Simulación de la corriente por la carga}
+    \label{fig:sim:14}
+\end{figure}
+
 % 9) Tensión de salida junto con su ripple 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/58.png}
+    \caption{Ripple de tensión en la carga}
+    \label{fig:osc:58}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/21-ripple.pdf}
+    \caption{Simulación del ripple de tensión en la carga}
+    \label{fig:sim:21ripple}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/21.pdf}
+    \caption{Simulación de la tensión en la carga}
+    \label{fig:sim:21}
+\end{figure}
