@@ -29,10 +29,11 @@ El circuito de la fuente conmutada está compuesto por los bloques de rectificac
 El controlador se encarga de generar una señal PWM en base a la tensión y la corriente de la batería.
 La referencia es una señal de corriente ya que la tensión nominal del cargador es fija.
 
-Para disminuir las pérdidas de potencia en la etapa de corriente constante y obtener una mayor eficiencia, se modificó la estructura del cargador con respecto al diseño original. 
-En primera instancia, para mantener la tensión a la salida del convertidor en 42V, se propuso un ciclo de trabajo constante 
-con el cual la caída de tensión en la etapa de control de corriente generaba una disipación de potencia excesiva.
-Modificando el circuito de conversión que controla tanto la corriente como la tensión se evita una etapa posterior limitadora de corriente.
+En primer lugar se implementó la etapa de tensión constante con el convertidor DC-DC, logrando una tensión de salida de 42V mediante un ciclo de trabajo fijo. 
+La etapa de corriente constante se implementó luego del convertidor con un circuito limitador de corriente,
+pero la caída de tensión desde la salida del convertidor hasta la salida de la etapa de control de corriente generaba una disipación de potencia excesiva.
+Para disminuir sus pérdidas y obtener una mayor eficiencia se modificó la estructura del cargador. 
+Mediante el sensado de tensión y corriente en la carga y un circuito de realimentación se modifica el ciclo de trabajo y se evita una etapa posterior limitadora de corriente.
 
 %incluir esquema de cargador
 \begin{figure}

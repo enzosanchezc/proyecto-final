@@ -428,8 +428,8 @@ Internamente presenta 4 componentes principales:
     \item Un comparador para comparar la señal de error de salida con la señal de dientes de sierra
 \end{enumerate}
 
-La señal de salida PWM es la que controla a los transistores. 
-Para controlar la tensión de salida, los convertidores funcionan con un circuito de retroalimentación,
+La señal de salida del comparador es la que controla a los transistores. 
+Para controlar la tensión de salida, los convertidores funcionan con un circuito de realimentación,
 en un control por tensión o corriente, dependiendo de la señal realimentada. 
 
 \begin{figure}[ht]
@@ -444,8 +444,9 @@ en un control por tensión o corriente, dependiendo de la señal realimentada.
 %COMPLETAR CON LIBRO
 El bloque de control mide la tensión a la salida del convertidor, la escala y la compara con la tensión deseada.
 Esto genera una señal de error, la cual alimenta a un controlador PI.
-La duración del tiempo de encendido está determinada por el tiempo entre el reinicio del generador de diente de sierra
-y la intersección del voltaje de error con la señal de rampa positiva. 
+El tiempo de encendido de la forma de onda PWM inicia cuando se reestablece el generador de dientes de sierra 
+y finaliza cuando su rampa positiva se intersecta con la señal de tensión de error. 
+
 Cuando la tensión de salida es inferior al valor nominal se genera una tensión de error. 
 El ciclo de trabajo aumenta para causar un aumento posterior en el voltaje de salida. 
 %La dinámica de retroalimentación está determinada por el circuito amplificador de error que consta de Z1 y Z2.
@@ -465,14 +466,12 @@ Esta resistencia actúa como un transductor de corriente a tensión.
 
 % COMPLETAR CON JUSTIFICACIÓN DE POR QUÉ NO ELEGIMOS CONTROL POR CORRIENTE QUE PARECERÍA SER MEJOR. 
 
-% DE DONDE SALIO TODO ESTO? ^^^
-
 \subsubsection{Generador PWM}
 
-Se utilizó el circuito integrado TL494 como generador de señal.
+Se utilizó el circuito integrado TL494 como generador de señal PWM.
 El TL494 es un circuito de control de modulación de ancho de pulso (PWM) de frecuencia fija. 
 La modulación de los pulsos de salida se logra comparando la forma de onda de diente de sierra creada por el oscilador interno en el capacitor de temporización (CT) con cualquiera de las dos señales de control. 
-La etapa de salida se habilita durante el tiempo en que el voltaje de diente de sierra es mayor que las señales de control de voltaje. 
+La etapa de salida se habilita durante el tiempo en el cual la tensión de diente de sierra es mayor que las señales de control de voltaje. 
 A medida que aumenta la señal de control, disminuye el tiempo durante el cual la entrada en diente de sierra es mayor; por lo tanto, la duración del pulso de salida disminuye. 
 Un flip-flop de dirección de pulso dirige alternativamente el pulso modulado a cada uno de los dos transistores de salida.
 
@@ -586,30 +585,27 @@ llevó a la búsqueda de otros métodos de control; por eso, se optó por un con
 
 \subsection{Amplificador clase B con transistores complementarios}
 
-Dado que la carga que genera el convertidor sobre el TL494 es muy alta, sin esta etapa de amplificación, la forma de onda PWM disminuía su amplitud notablemente y se distorsionaba, lo que causaba que los MOSFETs no se saturaran y aumentaran demasiado su temperatura.
-Los resultados obtenidos con la inclusión de esta etapa fueron un incremento notorio en la amplitud y una mejora en la forma de onda de la señal PWM.
+Dado que la carga que genera el convertidor sobre el TL494 es muy alta, sin esta etapa de amplificación la forma de onda PWM 
+se distorsionaba y disminuía notablemente su amplitud, lo que causaba que los MOSFETs no se saturaran y aumentaran demasiado su temperatura.
+Los resultados obtenidos con la inclusión de esta etapa fueron una mejora en la forma de onda de la señal PWM y un incremento notorio en su amplitud.
 
 La etapa permite acoplar la carga en continua. 
-Los transistores utilizados son de potencia y no de señal. 
+Se compone de un transistor NPN y otro PNP, ambos dispositivos de potencia y no de señal. 
 Cada dispositivo de amplificación conduce durante medio ciclo de la señal de entrada, 
-excitándolos mediante el ingreso de corriente por su base.
-Se compone de un transistor NPN y otro PNP que se alimentan de forma inversa.
-El transistor NPN requiere de una tensión positiva en su colector y 
-el transistor PNP requiere de una tensión negativa en su colector.
-Los transistores conducen en base a la tensión $V_{be}$ en sus junturas ya que entre base y emisor existe una juntura PN similar a un diodo. 
+excitándolos mediante el ingreso de corriente por su base y lo hacen de forma alternativa. 
+En el semiciclo positivo de la señal conduce el NPN y el PNP se corta, y en el semiciclo negativo conduce el PNP y el NPN se corta. 
+Los transistores se alimentan de forma inversa: el NPN requiere de una tensión positiva en su colector y el PNP requiere de una tensión negativa en su colector.
+Además, requieren de una tensión $V_{be}$ en sus junturas ya que entre base y emisor existe una juntura PN similar a un diodo. 
 Si no se polariza de forma correcta, no circula corriente por su base y en consecuencia tampoco por su colector. 
 El transistor NPN conduce corriente en su emisor cuando $V_{be}>0$ mientras que el transistor PNP conduce corriente en su emisor cuando $V_{be}<0$ o $V_{eb}>0$.
-Los transistores conducen de forma alternativa: en el semiciclo positivo de la señal conduce el NPN y el PNP se corta y en el semiciclo negativo conduce el PNP y el NPN se corta. 
 Cuando la tensión de entrada en la base de ambos transistores es 0 no conduce ningún transistor, es decir, no existe consumo de corriente ni de potencia. 
-La $V_{ce}$ de ambos transistores va de $V_{cc}$ a 0.
+% La $V_{ce}$ de ambos transistores va de $V_{cc}$ a 0.
 
 Ambos funcionan como seguidor por emisor o colector común, con su tensión de alimentación en colector, la señal de excitación en la base y la carga conectada al emisor. 
-Su ganancia de tensión es aproximadamente 1.
-La topología seguidor por emisor tiene ganancia de corriente $hfe$. 
+La topología presenta una ganancia de tensión aproximadamente unitaria y una ganancia de corriente $hfe$. 
 La corriente que se entrega por la base es $hfe$ veces menor que la que se le entrega a la carga. 
-El seguidor presenta una impedancia de entrada mucho más alta que su impedancia de salida, de modo que una fuente de señal no tendría que trabajar tan duro.
-Esto puede verse en el hecho de que la corriente de base es aproximadamente 100 veces menor que la corriente de emisor. 
-La baja impedancia de salida del seguidor por emisor se adapta con una carga de baja impedancia y amortigua la fuente de señal.
+Presenta una impedancia de entrada mucho más alta que su impedancia de salida, la cual se adapta con una carga de baja impedancia. 
+Por lo tanto, la etapa amplificadora permite que por la salida circule la misma corriente que requería el convertidor, pero con una corriente de salida del TL494 por colector mucho más baja y menor a la máxima. 
 
 \subsection{Driver}
 

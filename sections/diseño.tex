@@ -179,16 +179,17 @@ Por el inductor circula una corriente continua la cual no puede ser muy elevada 
 Especificaciones: 
 
 \begin{itemize}
-    \item Inductancia: $L=400\mu H$
+    \item Inductancia: $L_x=400\mu H$
     \item Corriente continua: $I_{dc}=1A$
 \end{itemize}
 
 Procedimiento de diseño:
 
-\paragraph{Cálculo de la energía que debe almacenar el inductor}
+\begin{enumerate}
+\item{Cálculo de la energía que debe almacenar el inductor}
 $$ E=0.5\cdot L\cdot I_{dc}^2=200\mu HA^2 $$
-\paragraph{Elección del tamaño del núcleo}
-En base a la disponibilidad, se elige un E42 con material N27. 
+\item{Elección del tamaño del núcleo}
+En base a la disponibilidad se elige un E42/15 con material magnético N27. 
 Sus parámetros son:
 \begin{itemize}
     \item Longitud efectiva: $l_e=67mm$
@@ -199,9 +200,9 @@ Sus parámetros son:
     \item $A_l=200nH$ y $u_e=179$ ($gap=0.34mm$)
 \end{itemize}
 
-\paragraph{Verificar energía almacenada}
+\item{Verificar energía almacenada}
 
-Se debe corroborar que la energía que puede almacenar el inductor sin entrehierro sea suficiente
+Se debe corroborar que la energía que puede almacenar el inductor sin entrehierro sea suficiente.
 
 Con $B_m=100mT$:
 $$ E_{singap}=\frac{0.5\cdot B_m^2\cdot {volumen}}{u_0\cdot u_e}=\frac{0.5\cdot B_m^2\cdot A_e\cdot l_e}{u_0\cdot u_e}=10\mu HA^2 $$
@@ -211,7 +212,7 @@ $$ E_{singap}=\frac{0.5\cdot B_m^2\cdot {volumen}}{u_0\cdot u_e}=\frac{0.5\cdot 
 
 En ambos casos es menor a la energía que debe almacenar el inductor por lo que se evidencia la necesidad de incluir un entrehierro. 
 
-\paragraph{Dimensionar el entrehierro}
+\item{Dimensionar el entrehierro}
 
 El entrehierro $l_0$ debe almacenar la energía $E$ con $B_{max}=100mT$.
 En caso de ser necesario puede llevarse a $B_{max}=200mT$ sin problema. 
@@ -222,7 +223,7 @@ $$ l_0=\frac{2\cdot E\cdot u_0}{A_e\cdot B_m^2}=0.84mm $$
 Con $B_m=200mT$:
 $$ l_0=\frac{2\cdot E\cdot u_0}{A_e\cdot B_m^2}=0.2mm $$
 
-Gap necesario con un núcleo tipo E:
+El gap real necesario $g$ con un núcleo tipo E es la mitad de $l_0$.
 
 Con $B_m=100mT$:
 $$ g=\frac{l_0}{2}=0.42mm $$
@@ -230,23 +231,23 @@ $$ g=\frac{l_0}{2}=0.42mm $$
 Con $B_m=200mT$:
 $$ g=\frac{l_0}{2}=0.1mm $$
 
-\paragraph{Dimensionar el número de vueltas}
+\item{Dimensionar el número de vueltas}
 
-Elección de N para conseguir la inductancia L requerida.
+Se calcula el número de vueltas $N$ necesario para conseguir la inductancia $L_x$ requerida.
 
 Con $B_m=100mT$:
 $$ N=\sqrt{\frac{L\cdot l_0}{A_e\cdot u_0}}=67\ vueltas$$
 
 Con $B_m=200mT$:
 $$ N=\sqrt{\frac{L\cdot l_0}{A_e\cdot u_0}}=34\ vueltas $$
-
+\end{enumerate}
 \paragraph{Construcción}
 
-Bobinar el inductor y medir L. Si no verifica el valor deseado corregir
-considerando $L = A_LN^2$ (el valor de $A_L$ que corresponde a $l_0$ se obtiene con
-el número de vueltas del primer intento).
-
-Mediante la constante de tiempo en un circuito RL con una forma de onda cuadrada a la entrada se estima la inductancia en $L=450\mu H$. 
+Se bobina el inductor y se mide la inductancia a partir de la constante de tiempo en un circuito RL con una forma de onda cuadrada a la entrada mediante un generador de funciones. 
+% COMPLETAR CON FIGURA
+En la figura X se observa la medición realizada mediante una resistencia de $200\Omega$ con un tiempo de subida de $2.34\mu H$. 
+La inductancia resulta:
+$$L=R*\tau=468\mu H$$ 
 
 \paragraph{Validación}
 
@@ -374,28 +375,38 @@ $$ R_c=50\Omega $$
 
 \subsection{Red Snubber}
 
-A continuación se describe el procedimiento para el cálculo de los componentes. 
+Se agrega un capacitor de \textit{bypass} de $0.1uF$ para drenar la energía acumulada en la inductancia parásita del MOSFET de lado alto.   
+A continuación se describe el procedimiento para el cálculo de los componentes de la red snubber para el MOSFET de lado bajo:
 
 \begin{enumerate}
-    \item Con el osciloscopio se mide la frecuencia de la oscilación en la tensión del transistor Vds. 
-    $$ f_{r}=1.27MHz $$ %Era esa?
-    \item Se conecta un capacitor entre \textit{drain} y \textit{source} con una capacidad $C_{p_{0}}$ tal que la frecuencia de la oscilación disminuya a la mitad. 
+    \item Con el osciloscopio se mide la frecuencia de la oscilación $f_{r}$ en la tensión del transistor $V_{ds}$. 
+    $$ f_{r}=1.25MHz $$ 
+    \item Se conecta un capacitor entre \textit{drain} y \textit{source} con una capacidad $C_{p_{0}}$ tal que la frecuencia de la oscilación se reduzca a la mitad. 
     $$ C_{p_{0}}=1.5nF $$
-    \item La frecuencia de resonancia en una red LC está dada por
-    $$ w=\frac{1}{\sqrt{LC}} $$
-    Con la configuración actual, 
+    \item La frecuencia de resonancia en una red LC está dada por la siguiente fórmula:
+    $$ f_{r}=\frac{1}{2\pi\sqrt{LC}} $$
+    Con la configuración actual: 
     $$ f_{r}=\frac{1}{2\pi\sqrt{L_{p}(C_{p_{2}}+C_{p_{0}})}} $$
-    Para lograr que dicha frecuencia disminuya a la mitad se necesita una capacitancia total que sea cuatro veces la capacitancia parásita con la que se comenzó.
-    Por lo tanto, la capacidad parásita del circuito resulta un tercio de la capacidad agregada. 
-    $$ C_{p_{2}} = \frac{C_{p_{0}}}{3} $$
-    \item Teniendo la capacidad parásita del circuito $C_{p_2}$ y la frecuencia de la oscilación original se puede calcular la inductancia parásita del circuito:
-    $$ L_{p}=\frac{1}{(2\pi f_{r})^{2}*C_{p_{2}}} $$
+    donde $L_{p}$ y $C_{p_2}$ son los componentes parásitos del circuito.
+    Para lograr que dicha frecuencia disminuya a la mitad se necesita una capacidad total que sea cuatro veces la capacidad parásita con la que se comenzó.
+    Por lo tanto, la capacidad parásita del circuito resulta un tercio de la capacidad agregada:
+    $$ C_{p_{2}} = \frac{C_{p_{0}}}{3}=500pF $$
+    \item Con la capacidad parásita del circuito y la frecuencia de la oscilación original se puede calcular la inductancia parásita del circuito:
+    $$ L_{p}=\frac{1}{(2\pi f_{r})^{2}*C_{p_{2}}}=32.4\mu H $$
     \item La impedancia característica de los elementos parásitos resulta:
-    $$ Z_{0}=\sqrt{\frac{L_p}{C_{p_2}}} $$
-    \item El valor óptimo para la $R_{snb}$ es aproximadamente igual a la impedancia característica. Debe ser mayor o igual a esta última. Un valor muy alto puede permitir un pico propio de la oscilación y un valor más bajo permite una corriente más elevada, resultando en un sobrecalentamiento.
-    \item Se elige una $C_{snb}$ que sea igual o hasta 4 veces superior a la capacidad parásita del circuito. 
+    $$ Z_{0}=\sqrt{\frac{L_p}{C_{p_2}}}=255\Omega $$
+\item El valor para la resistencia de la red snubber $R_{snb}$ es igual o mayor a la impedancia característica. 
+Un valor muy alto puede permitir un pico propio de la oscilación y un valor más bajo permite una corriente más elevada, resultando en un sobrecalentamiento.
+$$ R_{snb} \ge Z_{0} $$
+El valor elegido fue:
+    $$ R_{snb}=340\Omega $$
+    \item Se elige una capacitor para la red snubber cuya capacidad sea igual o hasta 4 veces superior a la capacidad parásita del circuito. 
     $$ C_{p_2}\leq C_{snb}\leq 4C_{p_2} $$
-    \item Se calcula la potencia disipada en Rsnb y se utiliza una resistencia cuya potencia máxima sea el doble que la disipada.
-    $$ P_{R_{snb}}=C_{snb}V_{in}^2f_{sw} $$
-    \item Se agrega un capacitor de \textit{bypass} de $0.1uF$ para amortiguar la inductancia del MOSFET de lado alto.     
+    Se optó por un factor 3:
+    $$ C_{snb}=C_{p_{0}}=1.5nF $$
+    \item Se calcula la potencia disipada en $R_{snb}$ y se utiliza una resistencia cuya potencia máxima sea el doble que la disipada.
+    $$ P_{R_{snb}}=C_{snb}V_{in}^2f_{sw}= 243mW $$  
+    Se debe utilizar una resistencia de medio watt.
 \end{enumerate}
+
+Los componentes utilizados fueron un capacitor cerámico de 1.5nF y dos resistencias en paralelo de $680\Omega$ de un cuarto de watt. 
