@@ -67,19 +67,18 @@ La tensión en el bobinado primario está dada por:
 $$ V_{1}=K_{t} f N_{1} \phi_{m} $$
 
 donde $f$ es la frecuencia de conmutación de la señal de entrada y 
-$K_t$ es un factor que vale $4.44$ si la forma de onda es sinusoidal o $4$ si es rectangular \cite{rashid}.
+$K_t$ es un factor que vale $4.44$ si la forma de onda es sinusoidal o $4$ si es rectangular.
 
-El flujo se relaciona con el área de la sección transversal de la trayectoria del flujo $A_{c}$ y la densidad de flujo $B$ de la siguiente manera:
+El flujo máximo \phi_{m} se relaciona con el área de la sección transversal de la trayectoria del flujo $A_{e}$ y la densidad de flujo máxima $B_{m}$ de la siguiente manera:
 
-$$ \Phi=BA $$
+$$ \phi_{m}=B_{m} \times A_{e} $$
 
-La densidad de corriente es:
+La densidad de corriente $J$ es:
 
 $$ J=K_jA_p^x $$
 
 donde $K_j$ y $x$ son constantes que dependen del núcleo magnético dadas por la tabla \ref{tabla:Kj}:
 
-% De que libro es esto? Asi voy pasando las tablas
 \begin{table}[]
     \begin{tabular}{lcccc}
         \hline
@@ -152,7 +151,7 @@ Número de vueltas del secundario:
 $$ N_{2}=N_{1}\times\frac{V_{2}}{V_{1}} $$
 
 Como no se requiere ni desea elevar o reducir la tensión del secundario, se elige una relación de vueltas 1:1. 
-Por lo tanto, el número de vueltas del bobinado secundario es igual al del primario. \footnote{El número de vueltas del secundario se duplicó respecto al diseño original ya que al realizar las mediciones en la PCB, la tensión del secundario era mucho menor a la esperada por simulación.}
+Por lo tanto, el número de vueltas del bobinado secundario es igual al del primario. \footnote{El número de vueltas del secundario se duplicó respecto al diseño original ya que al realizar las mediciones en la PCB, la tensión del secundario era mucho menor a la simulada.}
 
 $$ N_{2}=25 $$
 
@@ -162,7 +161,67 @@ Tomando el factor de relleno $K_u=0.4$:
 
 $$ A_{p}=\left(\frac{25.86\times 10^{4}}{4\times 125kHz\times 100mT\times 0.4\times 366}\right)^{\frac{1}{1-0.14}} {cm}^4=0.0205 {cm}^4$$
 
-$$ J=366\times 0.0205^{-0.14} \frac{A}{cm^2}=630.7{cm^2} $$
+La densidad de corriente resulta:
+
+$$ J=366\times 0.0205^{-0.14} \frac{A}{cm^2}=630.7 \frac{A}{cm^2} $$
+
+La corriente que circula por el primario es:
+
+$$ I_1=\frac{(P_t-P_0)}{V_1}=\frac{(25.86W-12.6W)}{350V}=0.0379A $$
+
+El área de la sección transversal del alambre desnudo del primario resulta:
+
+$$ A_{wp}=\frac{I_1}{J}=\frac{0.0379A}{630.7 \frac{A}{cm^2}}=0.06cm^2 \times10^{-3} $$
+
+La corriente que circula por el secundario es la corriente de salida, 
+por lo tanto el área de la sección transversal del alambre desnudo del secundario resulta:
+
+$$ A_{ws}=\frac{I_o}{J}=\frac{1A}{630.7 \frac{A}{cm^2}}=1.6cm^2\times10^{-3} $$
+
+% AGREGAR IMÁGEN DE TABLA y COMPLETAR TEXTO DE ABAJO
+
+En corriente continua, la densidad de corriente es similar en todo el conductor, pero en corriente alterna se observa que hay una mayor densidad de corriente en la superficie que en el centro. 
+Este fenómeno se conoce como efecto pelicular y provoca una variación de la resistencia eléctrica de un conductor en corriente alterna debido al cambio de la frecuencia de la corriente eléctrica que circula por el mismo.
+Por lo tanto, para corriente alterna la mayor parte de la corriente eléctrica fluye entre la superficie y la profundidad superficial de los conductores $δ$.
+
+$$ \delta=\sqrt{\frac{1}{\pi f\mu\sigma}} $$
+
+dependiendo de la frecuencia de la corriente y de las propiedades eléctricas y magnéticas del conductor.
+Depende de la frecuencia, permeabilidad magnética y conductividad del material; se da en metros.
+
+La sección mínima del conductor resulta:
+
+$$ $$
+
+Dado que la mayor área es $A_{ws}$, la cual es superior a la mínima, a partir de la tabla de tamaños de cable AWG de la figura X se debería utilizar el AWG 25.
+Sin embargo, en base a la disponibilidad se construyeron ambos bobinados con un AWG 21. 
+Sus parámetros principales son:
+
+$$ A_{w}=4.116cm^2 \times10^{-3} $$
+
+$$ \sigma=\frac{481.9\mu\Omega}{cm} $$
+
+Para el carrete del núcleo E70, la longitud promedio de una vuelta es: 
+
+$$ l_{mt}=9.7cm $$
+
+La resistencia del bobinado primario y secundario y sus pérdidas en el cobre resultan:
+
+$$ R_p=R_s=l_{mt}\times N_{1}\times\sigma=9.7cm \times25 \times\frac{481.9\mu\Omega}{cm}=100m\Omega $$
+
+$$ P_p=I_1^2R_p=146\mu W $$
+
+$$ P_s=I_o^2R_s=100mW $$
+
+En base a la tabla \ref{tabla:Kj} para un núcleo tipo E las pérdidas en el núcleo son iguales a las del cobre:
+
+$$ P_{fe}=P_p+P_s \simeq P_s=100mW $$
+
+La eficiencia del transformador resulta:
+
+$$ \eta=\frac{P_o}{P_o+P_p+P_s+P_{fe}}=0.9841 (98.41\%) $$
+
+Por lo tanto, se comprueba que la eficiencia es superior a la especificada del 95\%.  
 
 \subsection{Inductor}
 
