@@ -482,6 +482,16 @@ Esta resistencia actúa como un transductor de corriente a tensión.
 
 % COMPLETAR CON JUSTIFICACIÓN DE POR QUÉ NO ELEGIMOS CONTROL POR CORRIENTE QUE PARECERÍA SER MEJOR. 
 
+\subsubsection{Amplificador de error y controlador PI}
+
+El amplificador de error es un operacional que compara la señal de entrada con una referencia y, como su nombre lo indica,
+amplifica la diferencia entre ambas. Se encarga de generar la señal que entra al bloque PI.
+
+El controlador PI está formado por dos amplificadores operacionales. Uno integra la señal de entrada, mientras que el otro la escala.
+Las salidas de estos dos bloques se suman y se obtiene la señal de entrada del comparador.
+
+Este circuito se diseñó y simuló, pero no se llegó a implementar.
+
 \subsubsection{Generador PWM}
 
 Se utilizó el circuito integrado TL494 como generador de señal PWM.
