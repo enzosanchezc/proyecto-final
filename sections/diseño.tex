@@ -16,20 +16,20 @@ Se listan a continuación las especificaciones acordadas con la cátedra para el
 Se desea obtener una variación en la corriente del inductor $\Delta i_L=25\%$ y un ripple de tensión en la salida $\Delta v=0.2\%$.
 En consecuencia:
 
-$$ \Delta i_L=I_{med}\frac{\delta i[\%]}{100}=1A\cdot\frac{25}{100}=0.25A $$
+$$ \Delta i_L=I_{med}\frac{\delta i[\%]}{100}=1A\times\frac{25}{100}=0.25A $$
 
-$$ \Delta V_o=V_{o_{med}}\cdot\frac{\Delta v[\%]}{100}=12.6V\cdot\frac{0.2}{100}=0.025V $$
+$$ \Delta V_o=V_{o_{med}}\times\frac{\Delta v[\%]}{100}=12.6V\times\frac{0.2}{100}=0.025V $$
 
 En principio se dimensiona el filtro de salida compuesto por el inductor y el capacitor. 
 En base a la variación de la corriente en el inductor se calcula la inductancia.
 Para el ciclo de trabajo mínimo se obtiene la inductancia máxima:
 
-$$ L=\frac{V_o(1-D)}{f\Delta i_L}=\frac{12.6V\cdot(1-0)}{125kHz\cdot0.25A}=400uH $$
+$$ L=\frac{V_o(1-D)}{f\Delta i_L}=\frac{12.6V\times(1-0)}{125kHz\times0.25A}=400uH $$
 
 En base a la ecuación de la tensión de rizado pico a pico en la salida se calcula la capacidad.
 Para el ciclo de trabajo mínimo se obtiene la capacidad máxima:
 
-$$ C=\frac{(1-D)V_o}{8\cdot L\cdot\Delta V_o\cdot f^2}=\frac{(1-0)\cdot12.6V}{8\cdot400uH\cdot0.025V\cdot(125kHz)^2}=10uF $$
+$$ C=\frac{(1-D)V_o}{8\times L\times\Delta V_o\times f^2}=\frac{(1-0)\times12.6V}{8\times400uH\times0.025V\times(125kHz)^2}=10uF $$
 
 Los dispositivos semiconductores fueron elegidos en base a su disponibilidad en el ATEI,
 comprobando que puedan ser utilizados en el prototipo con los parámetros especificados en sus hojas de datos.  
@@ -58,7 +58,7 @@ Sus características principales son:
 
 \subsection{Transformador}
 
-La potencia aparente del transformador es la suma de la potencia de entrada y la potencia de salida:
+La potencia aparente del transformador $P_{t}$ es la suma de la potencia de entrada $P_{i}$ y la potencia de salida $P_{o}$:
 
 $$ P_{t}=P_{i}+P_{o}=\frac{P_{o}}{\eta}+P_{o}=\left(1+\frac{1}{\eta}\right)P_{o} $$
 
@@ -97,7 +97,7 @@ donde $K_j$ y $x$ son constantes que dependen del núcleo magnético dadas por l
 
 El factor $A_{p}$ se puede calcular como: 
 
-$$ A_{p}=\left(\frac{P_{t} \cdot 10^{4}}{K_{t} f B_{m} K_{u} K_{j}}\right)^{\frac{1}{1+x}} {cm}^{4} $$
+$$ A_{p}=\left(\frac{P_{t} \times 10^{4}}{K_{t} f B_{m} K_{u} K_{j}}\right)^{\frac{1}{1+x}} {cm}^{4} $$
 
 donde $K_u$ es el factor de relleno que varía entre 0.4 y 0.6 y $B_m$ es la densidad de flujo máxima.
 
@@ -107,10 +107,10 @@ En este proyecto se trabajará con los núcleos disponibles provistos por la cá
 
 Las especificaciones obtenidas por simulación son las siguientes:
 \begin{itemize}
-    \item Frecuencia de la forma de onda rectangular: $f=125kHz$
-    \item Tensión máxima aplicada a la bobina del primario: $V_{1_{max}}=350V$
+    \item Frecuencia de la forma de onda rectangular: $f=125kHz$ y $K_{t}=4$
+    \item Tensión máxima aplicada a la bobina del primario: $V_{1_{max}}=350V$ \footnote{El transformador fue diseñado antes de reemplazar el rectificador de entrada por una fuente regulable de 36V, por lo que quedó sobredimensionado.}
     \item Tensión de salida en el secundario: $V_{0}=12.6V$
-    \item Corriente de salida en el secundario: $I_{0}=1.6A$
+    \item Corriente de salida en el secundario: $I_{0}=1A$
     \item Eficiencia: $n=95\%$
 \end{itemize}
 
@@ -118,11 +118,11 @@ Las especificaciones obtenidas por simulación son las siguientes:
 
 Potencia de salida:
 
-$$ P_{o}=V_{o}\cdot I_{o}=12.6V\cdot 1.6A=20.16W $$
+$$ P_{o}=V_{o}\times I_{o}=12.6W $$
 
 Potencia aparente: 
 
-$$P_t=P_o+P_i=P_o\cdot\left(1+\frac{1}{n}\right)=20.16W\cdot\left(1+\frac{1}{0.95}\right)=41.38W  $$
+$$ P_t=P_o+P_i=P_o\times\left(1+\frac{1}{n}\right)=25.86W  $$
 
 % Estoy buscando una decente
 %INSERTAR IMÁGEN B-H DE KIKE!
@@ -145,31 +145,24 @@ $$ A_{e}=279{mm}^{2} $$
 
 Número de vueltas del primario:
 
-$$ N_{1}=\frac{V_{1_{max}}}{K_{t}\cdot f\cdot B_{m}\cdot A_{a}}=\frac{350V}{4\cdot 125kHz\cdot 100mT\cdot 0.000279}=25.09\simeq 25 $$
+$$ N_{1}=\frac{V_{1_{max}}}{K_{t}\times f\times B_{m}\times A_{e}}=25.09\simeq 25 $$
 
 Número de vueltas del secundario: 
 
-$$ N_{2}=N_{1}\cdot\frac{V_{2}}{V_{1}} $$
+$$ N_{2}=N_{1}\times\frac{V_{2}}{V_{1}} $$
 
 Como no se requiere ni desea elevar o reducir la tensión del secundario, se elige una relación de vueltas 1:1. 
-Por lo tanto, el número de vueltas del bobinado secundario es igual al del primario. 
+Por lo tanto, el número de vueltas del bobinado secundario es igual al del primario. \footnote{El número de vueltas del secundario se duplicó respecto al diseño original ya que al realizar las mediciones en la PCB, la tensión del secundario era mucho menor a la esperada por simulación.}
 
 $$ N_{2}=25 $$
 
-$$ A_{p}=\left(\frac{41.38\cdot 10^{4}}{4\cdot 125kHz\cdot 100mT\cdot 0.4\cdot 366}\right)^{\frac{1}{1-0.14}} {cm}^4 $$
+A partir de la tabla X, para el núcleo tipo E $ K_{j}=366$ , $x=-0.14$ y $Pfe=Pcu$. 
 
-$$ J=366\cdot x^{-0.14} \frac{A}{cm^2} $$
+Tomando el factor de relleno $K_u=0.4$:
 
-$$ J=584 \frac{A}{cm^2} $$
+$$ A_{p}=\left(\frac{25.86\times 10^{4}}{4\times 125kHz\times 100mT\times 0.4\times 366}\right)^{\frac{1}{1-0.14}} {cm}^4=0.0205 {cm}^4$$
 
-\paragraph{Saturación magnética}
-
-Cualquier componente de continua puede causar la saturación magnética del núcleo, 
-elevando la corriente magnetizante. 
-Para minimizar los efectos de la saturación, se puede utilizar un núcleo más grande o incluir un entrehierro.
-El entrehierro permite que exista en el núcleo, además de una zona con alta permeabilidad propia del material magnético, 
-otra zona de baja permeabilidad propia del espacio de aire. 
-De esta forma en condiciones normales el flujo circula por el material magnético y en caso de saturación circula por el entrehierro 
+$$ J=366\times 0.0205^{-0.14} \frac{A}{cm^2}=630.7{cm^2} $$
 
 \subsection{Inductor}
 
@@ -187,10 +180,12 @@ Procedimiento de diseño:
 
 \begin{enumerate}
 \item{Cálculo de la energía que debe almacenar el inductor}
-$$ E=0.5\cdot L\cdot I_{dc}^2=200\mu HA^2 $$
+$$ E=0.5\times L\times I_{dc}^2=200\mu HA^2 $$
 \item{Elección del tamaño del núcleo}
+
 En base a la disponibilidad se elige un E42/15 con material magnético N27. 
 Sus parámetros son:
+
 \begin{itemize}
     \item Longitud efectiva: $l_e=67mm$
     \item Área efectiva: $A_e=60{mm}^2$
@@ -205,10 +200,10 @@ Sus parámetros son:
 Se debe corroborar que la energía que puede almacenar el inductor sin entrehierro sea suficiente.
 
 Con $B_m=100mT$:
-$$ E_{singap}=\frac{0.5\cdot B_m^2\cdot {volumen}}{u_0\cdot u_e}=\frac{0.5\cdot B_m^2\cdot A_e\cdot l_e}{u_0\cdot u_e}=10\mu HA^2 $$
+$$ E_{singap}=\frac{0.5\times B_m^2\times {volumen}}{u_0\times u_e}=\frac{0.5\times B_m^2\times A_e\times l_e}{u_0\times u_e}=10\mu HA^2 $$
 
 Con $B_m=200mT$:
-$$ E_{singap}=\frac{0.5\cdot B_m^2\cdot {volumen}}{u_0\cdot u_e}=\frac{0.5\cdot B_m^2\cdot A_e\cdot l_e}{u_0\cdot u_e}=40\mu HA^2 $$
+$$ E_{singap}=\frac{0.5\times B_m^2\times {volumen}}{u_0\times u_e}=\frac{0.5\times B_m^2\times A_e\times l_e}{u_0\times u_e}=40\mu HA^2 $$
 
 En ambos casos es menor a la energía que debe almacenar el inductor por lo que se evidencia la necesidad de incluir un entrehierro. 
 
@@ -218,10 +213,10 @@ El entrehierro $l_0$ debe almacenar la energía $E$ con $B_{max}=100mT$.
 En caso de ser necesario puede llevarse a $B_{max}=200mT$ sin problema. 
 
 Con $B_m=100mT$:
-$$ l_0=\frac{2\cdot E\cdot u_0}{A_e\cdot B_m^2}=0.84mm $$
+$$ l_0=\frac{2\times E\times u_0}{A_e\times B_m^2}=0.84mm $$
 
 Con $B_m=200mT$:
-$$ l_0=\frac{2\cdot E\cdot u_0}{A_e\cdot B_m^2}=0.2mm $$
+$$ l_0=\frac{2\times E\times u_0}{A_e\times B_m^2}=0.2mm $$
 
 El gap real necesario $g$ con un núcleo tipo E es la mitad de $l_0$.
 
@@ -236,24 +231,27 @@ $$ g=\frac{l_0}{2}=0.1mm $$
 Se calcula el número de vueltas $N$ necesario para conseguir la inductancia $L_x$ requerida.
 
 Con $B_m=100mT$:
-$$ N=\sqrt{\frac{L\cdot l_0}{A_e\cdot u_0}}=67\ vueltas$$
+$$ N=\sqrt{\frac{L\times l_0}{A_e\times u_0}}=67\ vueltas$$
 
 Con $B_m=200mT$:
-$$ N=\sqrt{\frac{L\cdot l_0}{A_e\cdot u_0}}=34\ vueltas $$
-\end{enumerate}
-\paragraph{Construcción}
+$$ N=\sqrt{\frac{L\times l_0}{A_e\times u_0}}=34\ vueltas $$
+
+\item{Construcción y verificación}
 
 Se bobina el inductor y se mide la inductancia a partir de la constante de tiempo en un circuito RL con una forma de onda cuadrada a la entrada mediante un generador de funciones. 
-% COMPLETAR CON FIGURA
-En la figura X se observa la medición realizada mediante una resistencia de $200\Omega$ con un tiempo de subida de $2.34\mu H$. 
+En la figura \ref{fig:osc-inductor-ts} se observa la medición realizada mediante una resistencia de $200\Omega$ con un tiempo de subida de $2.34\mu s$. 
 La inductancia resulta:
-$$L=R*\tau=468\mu H$$ 
 
-\paragraph{Validación}
+$$ L=R\times\tau=468\mu H $$ 
 
-Verificar que el valor de L se mantiene con la corriente de DC de trabajo.
-Esto generalmente se realiza sobre el propio convertidor midiendo la
-tensión aplicada sobre el inductor y la pendiente de la corriente.
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/osc-inductor-ts.jpeg}
+    \caption{Medición de la inductancia mediante tiempo de subida}
+    \label{fig:osc-inductor-ts}
+\end{figure}
+
+\end{enumerate}
 
 \subsection{Driver}
 
@@ -294,16 +292,16 @@ $$ Q_g=26nC $$
 Con este parámetro pueden determinarse la corriente promedio de polarización requerida para controlar el terminal \textit{gate} 
 y las pérdidas de potencia de carga de puerta
 
-$$ I_g=Q_g\cdot f_{drv}=3.25mA $$
+$$ I_g=Q_g\times f_{drv}=3.25mA $$
 
-$$ P_{gate}=V_{drv}\cdot Q_g\cdot f_{drv}=26mW $$
+$$ P_{gate}=V_{drv}\times Q_g\times f_{drv}=26mW $$
 
 % 4) Delta VC1 y Delta VC2: INSERTAR SÍMBOLOS COMO ANTES
 
 La suma de los ripples en ambos capacitores de acoplamiento aparece en el terminal \textit{gate},
 por lo que se elige:
 
-$$ \Delta V_c=0.1\cdot V_{drv} $$
+$$ \Delta V_c=0.1\times V_{drv} $$
 
 $$ \Delta V_{c_1}=\Delta V_{c_2}=\frac{\Delta V_c}{2} $$
 
@@ -352,7 +350,7 @@ Siendo
 
 El capacitor de acoplamiento $C_{C_1}$ se calcula como:
 
-$$ C_{C_1}(D)=\frac{Q_g}{\Delta V_{C_1}}+\frac{(V_{drv}-V_{{dc}_2})\cdot D}{\Delta V_{C_1}\cdot R_{gs}\cdot f_{drv}}+\frac{V_{drv}\cdot (D^2-D^3)}{\Delta V_{C1}\cdot 4\cdot L_m\cdot f_{drv}^2} $$
+$$ C_{C_1}(D)=\frac{Q_g}{\Delta V_{C_1}}+\frac{(V_{drv}-V_{{dc}_2})\times D}{\Delta V_{C_1}\times R_{gs}\times f_{drv}}+\frac{V_{drv}\times (D^2-D^3)}{\Delta V_{C1}\times 4\times L_m\times f_{drv}^2} $$
 
 La capacidad mínima que asegura permanecer por debajo del ripple de tensión máximo en todas las condiciones de operación 
 se puede encontrar determinando el máximo de la expresión anterior:

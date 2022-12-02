@@ -291,22 +291,28 @@ Resolviendo para obtener $\Delta T_x$,
 $$ \Delta T_x=DT\left(\frac{N_3}{N_1}\right) $$
 
 El instante $t_0$ en el que se anula la corriente es:
-% ECUACIÓN 7.32
+
 $$ t_0=DT+\Delta T_x=DT+DT\left(\frac{N_3}{N_1}\right)=DT\left(1+\frac{N_3}{N_1}\right) $$
 
 Teniendo en cuenta que la corriente debe anularse antes del inicio del siguiente periodo,
-% ECUACIÓN 7.33
+
 $$ t_0<T $$
 
 $$ DT\left(1+\frac{N_3}{N_1}\right)<T $$
 
 $$ D<\frac{1}{\left(1+\frac{N_3}{N_1}\right)} $$
 
+Cualquier componente de continua puede causar la saturación magnética del núcleo, 
+elevando la corriente magnetizante. 
+Para minimizar los efectos de la saturación, se puede utilizar un núcleo más grande o incluir un entrehierro.
+El entrehierro permite que exista en el núcleo, además de una zona con alta permeabilidad propia del material magnético, 
+otra zona de baja permeabilidad propia del espacio de aire. 
+De esta forma en condiciones normales el flujo circula por el material magnético y en caso de saturación circula por el entrehierro. 
 Para evitar la saturación del núcleo del transformador, el ciclo de trabajo debe mantenerse siempre por debajo del máximo.
 El transistor puede dañarse si el núcleo se satura.
 
 La tensión en el interruptor abierto es $V_s-v_1$, por lo que
-% ECUACIÓN 7.34
+
 $$
 v_{sw}=
 \begin{cases}
@@ -388,24 +394,34 @@ En la figura \ref{fig:forward_doble_switch} se muestra el esquema de éste últi
 A partir de los diodos $D_3$ y $D_4$ en el primario se reduce la tensión de colector en los transistores cuando los mismos 
 se encuentran apagados, lo cual permite utilizar transistores de menores prestaciones.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{../images/hart/forward_doble_switch.png}
     \caption{Esquema del convertidor forward de doble switch}
     \label{fig:forward_doble_switch}
 \end{figure}
 
-% AGREGAR IMÁGEN
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/hart/forward_doble_switch_closed.png}
+    \caption{}
+    \label{fig:forward_doble_switch_closed}
+\end{figure}
 
 Los transistores se encienden y se apagan de forma simultánea. 
-En la figura X se muestra el circuito equivalente cuando los interruptores están cerrados.  
+En la figura \ref{fig:forward_doble_switch_closed} se muestra el circuito equivalente cuando los interruptores están cerrados.  
 Cuando los transistores están encendidos, la tensión en el primario del transformador es igual a la tensión de entrada $V_s$. 
 En consecuencia, la tensión en el devanado secundario es positiva y la energía se transfiere a la carga. 
 Además la corriente que circula por la inductancia magnetizante se incrementa con el tiempo. 
 
-% AGREGAR IMÁGEN
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/hart/forward_doble_switch_open.png}
+    \caption{}
+    \label{fig:forward_doble_switch_open}
+\end{figure}
 
-En la figura X se muestra el circuito equivalente cuando los interruptores están abiertos.  
+En la figura \ref{fig:forward_doble_switch_open} se muestra el circuito equivalente cuando los interruptores están abiertos.  
 Cuando los transistores se apagan, el diodo $D_1$ evita que la corriente magnetizante circule por el secundario 
 (y por lo tanto también en el primario) del transformador, forzando su camino por los diodos $D_3$ y $D_4$ de regreso a la fuente de entrada.  
 Con esto se elimina la necesidad del tercer devanado de desmagnetización, y la tensión en el primario del transformador es $-V_s$, causando un decremento en el tiempo de la corriente magnetizante. 
@@ -493,7 +509,7 @@ El oscilador carga al $C_t$ con una corriente constante determinada por $R_t$ pr
 $$ I_{carga}=\frac{3V}{R_t} $$
 
 Cuando la tensión sobre el mismo llega a $3V$, el circuito se descarga y se reinicia el ciclo. 
-La frecuencia es $f=\frac{1}{R_t\cdot C_t}$ para el modo single ended.
+La frecuencia es $f=\frac{1}{R_t\times C_t}$ para el modo single ended.
 
 Según la hoja de datos, los valores recomendados para $R_t$ y $C_t$ son:
 
@@ -621,6 +637,20 @@ El terminal \textit{source} está a tierra y la carga se encuentra entre la alim
 El terminal \textit{drain} se encuentra conectado a la alimentación y el terminal \textit{source} a la carga.\\
 
 % INSERTAR FIGURA DE YCIRCUIT YA SUBIDA
+\begin{figure}[H]
+    \centering
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.5\textwidth]{images/low_high_side/Low_Side.png}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.5\textwidth]{images/low_high_side/High_Side.png}
+    \end{minipage}
+    \caption{A la izquierda, un transistor de lado bajo. A la derecha, uno de lado alto.}
+    \label{fig:high_side}
+\end{figure}
 
 Para controlar MOSFETs de lado alto se puede utilizar un circuito integrado o un transformador. 
 Los circuitos integrados, si bien son más pequeños y ocupan menor espacio en las placas, 
@@ -660,12 +690,12 @@ Este driver en particular está diseñado para convertir la salida de un extremo
 Para evitar la componente continua se coloca un capacitor de acoplamiento en serie con el bobinado primario, 
 evitando la saturación del núcleo. La tensión sobre el mismo resulta: 
 
-$$ V_{cc_1}=D\cdot V_{drv} $$
+$$ V_{cc_1}=D\times V_{drv} $$
 
 En base al máximo ripple de tensión permitido y la carga que atraviesa al capacitor de acoplamiento en estado estacionario:
 
 %INSERTAR FÓRMULA DE CC1
-$$ C_{C_1}=\frac{Q_G}{\Delta V_{C_1}}+\frac{(V_{drv}-V_{dc2,fw})D}{\Delta V_{C_1}R_{gs}f_{drv}}+\frac{V_{drv}(D^2-D^3)}{\Delta V_{C_1}\cdot4\cdot L_mf_{drv}^2} $$
+$$ C_{C_1}=\frac{Q_G}{\Delta V_{C_1}}+\frac{(V_{drv}-V_{dc2,fw})D}{\Delta V_{C_1}R_{gs}f_{drv}}+\frac{V_{drv}(D^2-D^3)}{\Delta V_{C_1}\times4\times L_mf_{drv}^2} $$
 
 Para este capacitor, el ripple tiene una componente relacionada a la carga del MOSFET, 
 otra relacionada con la corriente que pasa por la resistencia entre \textit{gate} y \textit{source} 
@@ -691,7 +721,7 @@ y la inductancia magnetizante, provocando resonancias indeseadas en la tensión 
 Esta resistencia de bajo valor en serie con el capacitor de acoplamiento permite amortiguar las resonancias. 
 Su valor puede calcularse a partir de la siguiente fórmula:
 
-$$ R_c\geq2\cdot\sqrt{\frac{L_m}{C_{C_1}}} $$
+$$ R_c\geq2\times\sqrt{\frac{L_m}{C_{C_1}}} $$
 
 Si la resistencia es muy grande, genera una sobre amortiguación que limita la corriente que ingresa al terminal \textit{gate} y disminuye la frecuencia de switching. 
 Si la resistencia es muy chica, las resonancias provocadas generan una tensión entre \textit{gate} y \textit{source} muy elevada.
