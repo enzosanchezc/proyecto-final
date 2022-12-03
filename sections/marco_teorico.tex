@@ -431,7 +431,64 @@ La tensión de salida es la misma que en el convertidor forward con un interrupt
 La principal ventaja de esta topología es que la tensión de colector en los transistores cuando los mismos se encuentran apagados 
 es $V_s$ y no $V_s\left(1+N_1/N_3\right)$ como en el forward de un único switch.
 
-\subsection{Circuitos de control}
+\subsection{Diseño del circuito de control}
+% El diseño se realizó en bloques según la figura \ref{fig:marco_teorico:control} y puede ser dividido en tres partes:
+
+% \begin{enumerate}
+%     \item Compensador y generador PWM
+%     \item Selector de modo de funcionamiento
+%     \item Controlador para los switches
+% \end{enumerate}
+
+
+
+% Para la selección de un controlador para los MOSFETs se tuvieron en cuenta algunos parámetros como
+% la tensión máxima de entrada, frecuencia de switching y sincronización de las señales,
+% pero no se logró hallar un controlador adecuado para esta aplicación.
+% El principal motivo fue que los controladores convencionales generan señales alternadas mediante el método de bootstrapping \cite{hart},
+% lo cual no sirve para la topología elegida. Esto, combinado con el elevado nivel de tensión en la entrada,
+% llevó a la búsqueda de otros métodos de control; por eso, se optó por un controlador con transformador aislante para el MOSFET cuyo source no esta a tierra \cite{gatedrivers}. El diagrama de este driver puede observarse en la figura \ref{fig:driver}.
+
+\subsubsection{Modos de control}
+
+Para controlar la tensión de salida, los convertidores funcionan con un circuito de realimentación,
+en un control por tensión o corriente, dependiendo de la señal realimentada. 
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/compensador.png}
+    \caption{Diagrama de bloques del circuito de control}
+    \label{fig:marco_teorico:control}
+\end{figure}
+
+\paragraph{Control por tensión}
+
+%COMPLETAR CON LIBRO
+El bloque de control mide la tensión a la salida del convertidor, la escala y la compara con la tensión deseada.
+Esto genera una señal de error, la cual alimenta a un controlador PI.
+El tiempo de encendido de la forma de onda PWM inicia cuando se reestablece el generador de dientes de sierra 
+y finaliza cuando su rampa positiva se intersecta con la señal de tensión de error. 
+Cuando la tensión de salida es inferior al valor nominal se genera una tensión de error. 
+El ciclo de trabajo aumenta para causar un aumento posterior en el voltaje de salida. 
+%La dinámica de retroalimentación está determinada por el circuito amplificador de error que consta de Z1 y Z2.
+
+\paragraph{Control por corriente}
+La corriente a la salida del convertidor es medida con una resistencia de bajo valor conectada en serie con la carga.
+Esta resistencia actúa como un transductor de corriente a tensión.
+Esta señal es muestreada y el resto del proceso es análogo al control por tensión.\\
+
+% Consiste en un lazo interno que muestrea el valor de la corriente primaria y apaga los interruptores tan pronto como la corriente alcanza cierto valor establecido por el lazo de voltaje externo. 
+% De esta manera, el control de corriente logra una respuesta más rápida que el modo de voltaje. 
+% La forma de onda de corriente primaria actúa como onda de diente de sierra. 
+% la tensión análoga a la corriente puede ser proporcionada por una pequeña resistencia o por un transformador de corriente. 
+% La figura 13.19a muestra un convertidor flyback controlado por modo de corriente, donde la corriente del interruptor isw se usa como señal portadora. 
+% La corriente del interruptor isw produce un voltaje a través de Rs, que se retroalimenta al comparador. 
+% El encendido está sincronizado con el pulso del reloj y el apagado está determinado por el instante en que la corriente de entrada es igual al voltaje de error.
+% Debido a su capacidad inherente de limitación de corriente máxima, el control de modo de corriente puede mejorar la confiabilidad de los interruptores de alimentación. El rendimiento dinámico se mejora debido al uso de la información actual adicional. El control de modo de corriente reduce efectivamente el sistema a primer orden al obligar a que la corriente del inductor se relacione con el voltaje de salida, logrando así una respuesta más rápida. Las figuras 13.18b–e muestran las formas de onda.
+
+% COMPLETAR CON JUSTIFICACIÓN DE POR QUÉ NO ELEGIMOS CONTROL POR CORRIENTE QUE PARECERÍA SER MEJOR. 
+
+\subsubsection{Generador PWM}
 
 La tensión de salida del convertidor puede ser controlada variando el ciclo de trabajo D. 
 Para ello se utilizan circuitos integrados controladores PWM que sólo requieren de unos pocos componentes pasivos adicionales para su funcionamiento. 
@@ -445,54 +502,43 @@ Internamente presenta 4 componentes principales:
 \end{enumerate}
 
 La señal de salida del comparador es la que controla a los transistores. 
-Para controlar la tensión de salida, los convertidores funcionan con un circuito de realimentación,
-en un control por tensión o corriente, dependiendo de la señal realimentada. 
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/compensador.png}
-    \caption{Diagrama de bloques del circuito de control}
-    \label{fig:marco_teorico:control}
-\end{figure}
-
-\subsubsection{Control por tensión}
-
-%COMPLETAR CON LIBRO
-El bloque de control mide la tensión a la salida del convertidor, la escala y la compara con la tensión deseada.
-Esto genera una señal de error, la cual alimenta a un controlador PI.
-El tiempo de encendido de la forma de onda PWM inicia cuando se reestablece el generador de dientes de sierra 
-y finaliza cuando su rampa positiva se intersecta con la señal de tensión de error. 
-
-Cuando la tensión de salida es inferior al valor nominal se genera una tensión de error. 
-El ciclo de trabajo aumenta para causar un aumento posterior en el voltaje de salida. 
-%La dinámica de retroalimentación está determinada por el circuito amplificador de error que consta de Z1 y Z2.
-
-\subsubsection{Control por corriente}
-La corriente a la salida del convertidor es medida con una resistencia de bajo valor conectada en serie con la carga.
-Esta resistencia actúa como un transductor de corriente a tensión.
-
-% Consiste en un lazo interno que muestrea el valor de la corriente primaria y apaga los interruptores tan pronto como la corriente alcanza cierto valor establecido por el lazo de voltaje externo. 
-% De esta manera, el control de corriente logra una respuesta más rápida que el modo de voltaje. 
-% La forma de onda de corriente primaria actúa como onda de diente de sierra. 
-% la tensión análoga a la corriente puede ser proporcionada por una pequeña resistencia o por un transformador de corriente. 
-% La figura 13.19a muestra un convertidor flyback controlado por modo de corriente, donde la corriente del interruptor isw se usa como señal portadora. 
-% La corriente del interruptor isw produce un voltaje a través de Rs, que se retroalimenta al comparador. 
-% El encendido está sincronizado con el pulso del reloj y el apagado está determinado por el instante en que la corriente de entrada es igual al voltaje de error.
-% Debido a su capacidad inherente de limitación de corriente máxima, el control de modo de corriente puede mejorar la confiabilidad de los interruptores de alimentación. El rendimiento dinámico se mejora debido al uso de la información actual adicional. El control de modo de corriente reduce efectivamente el sistema a primer orden al obligar a que la corriente del inductor se relacione con el voltaje de salida, logrando así una respuesta más rápida. Las figuras 13.18b–e muestran las formas de onda.
-
-% COMPLETAR CON JUSTIFICACIÓN DE POR QUÉ NO ELEGIMOS CONTROL POR CORRIENTE QUE PARECERÍA SER MEJOR. 
-
-\subsubsection{Amplificador de error y controlador PI}
 
 El amplificador de error es un operacional que compara la señal de entrada con una referencia y, como su nombre lo indica,
 amplifica la diferencia entre ambas. Se encarga de generar la señal que entra al bloque PI.
 
 El controlador PI está formado por dos amplificadores operacionales. Uno integra la señal de entrada, mientras que el otro la escala.
 Las salidas de estos dos bloques se suman y se obtiene la señal de entrada del comparador.
+Los parámetros del bloque proporcional-integrador (PI) fueron definidos a partir de valores típicos
+y posteriormente ajustados para que el circuito funcione en las condiciones de la aplicación.
+La frecuencia de switching es definida por la frecuencia de la señal de diente de sierra y también se tomó un valor típico.
 
-Este circuito se diseñó y simuló, pero no se llegó a implementar.
+Tanto el amplificador de error como el controlador PI se diseñaron y simularon, pero no se llegaron a implementar.
 
-\subsubsection{Generador PWM}
+\subsubsection{Selector de modo de funcionamiento}
+
+Una vez diseñado el compensador, se procedió a diseñar el circuito de cambio de modo (Precarga, tensión constante y corriente constante).
+En la figura \ref{fig:esquema_selector} se puede observar el esquema de este circuito.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/selector.png}
+    \caption{Esquema del selector de modo}
+    \label{fig:esquema_selector}
+\end{figure}
+
+Las señales de tensión y corriente están normalizadas con respecto a sus valores nominales.
+Un amplificador de ganancia variable actúa como selector de corriente de salida,
+modificando la amplitud de la señal de control de dicha variable.
+La selección entre el modo de precarga y el modo de corriente constante se hace comparando el nivel de tensión de la batería
+con una señal de referencia, siendo el segundo modo activado una vez que la tensión supera los 30V.
+El bloque de ganancia 5 tiene como objetivo amplificar la señal de control, ya que la corriente de salida para el modo
+de precarga es 5 veces mas chica que la de corriente constante.
+
+La normalización de las señales nombrada anteriormente permite que la selección de la señal del último multiplexor
+se haga en base a cual es la mayor de las dos. Esto, visto desde una perspectiva general, permite establecer un límite
+tanto de tensión como de corriente de salida, lo cual es importante porque representa la base del método de carga.
+
+\subsubsection{TL494}
 
 Se utilizó el circuito integrado TL494 como generador de señal PWM.
 El TL494 es un circuito de control de modulación de ancho de pulso (PWM) de frecuencia fija. 
@@ -558,57 +604,6 @@ que pueden trabajar tanto en emisor común como en colector común. La corriente
 % REVISAR SI ES DEL TL494 O ES UNA NOTA AL TUN TUN
 % Transformador: permite que no circule corriente continua por su secundario. 
 
-\subsubsection{Diseño del circuito de control}
-El diseño se realizó en bloques según la figura \ref{fig:marco_teorico:control} y puede ser dividido en tres partes:
-
-\begin{enumerate}
-    \item Compensador y generador PWM
-    \item Selector de modo de funcionamiento
-    \item Controlador para los switches
-\end{enumerate}
-
-La primer etapa se implementó en base a las topologías estudiadas durante la etapa de investigación.
-Los parámetros del bloque proporcional-integrador (PI) fueron definidos a partir de valores típicos
-y posteriormente ajustados para que el circuito funcione en las condiciones de la aplicación.
-La frecuencia de switching es definida por la frecuencia de la señal de diente de sierra y también se tomó un valor típico.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{images/selector.png}
-    \caption{Esquema del selector de modo}
-    \label{fig:esquema_selector}
-\end{figure}
-
-Una vez diseñado el compensador, se procedió a diseñar el circuito de cambio de modo (Precarga, tensión constante y corriente constante).
-En la figura \ref{fig:esquema_selector} se puede observar el esquema de este circuito.
-
-Las señales de tensión y corriente están normalizadas con respecto a sus valores nominales.
-Un amplificador de ganancia variable actúa como selector de corriente de salida,
-modificando la amplitud de la señal de control de dicha variable.
-La selección entre el modo de precarga y el modo de corriente constante se hace comparando el nivel de tensión de la batería
-con una señal de referencia, siendo el segundo modo activado una vez que la tensión supera los 30V.
-El bloque de ganancia 10 tiene como objetivo amplificar la señal de control, ya que la corriente de salida para el modo
-de precarga es 10 veces mas chica que la de corriente constante.
-% Era realmente 10 veces mas chica? O al final era 5 veces?
-
-La normalización de las señales nombrada anteriormente permite que la selección de la señal del último multiplexor
-se haga en base a cual es la mayor de las dos. Esto, visto desde una perspectiva general, permite establecer un límite
-tanto de tensión como de corriente de salida, lo cual es importante porque representa la base del método de carga.
-
-Finalmente, para la selección de un controlador para los MOSFETs se tuvieron en cuenta algunos parámetros como
-la tensión máxima de entrada, frecuencia de switching y sincronización de las señales,
-pero no se logró hallar un controlador adecuado para esta aplicación.
-El principal motivo fue que los controladores convencionales generan señales alternadas mediante el método de bootstrapping \cite{hart},
-lo cual no sirve para la topología elegida. Esto, combinado con el elevado nivel de tensión en la entrada,
-llevó a la búsqueda de otros métodos de control; por eso, se optó por un controlador con transformador aislante para el MOSFET cuyo source no esta a tierra \cite{gatedrivers}. El diagrama de este driver puede observarse en la figura \ref{fig:driver}.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{images/esquema_driver.png}
-    \caption{Esquema del controlador del MOSFET de lado alto}
-    \label{fig:driver}
-\end{figure}
-
 \subsection{Amplificador clase B con transistores complementarios}
 
 Dado que la carga que genera el convertidor sobre el TL494 es muy alta, sin esta etapa de amplificación la forma de onda PWM 
@@ -653,7 +648,7 @@ El terminal \textit{drain} se encuentra conectado a la alimentación y el termin
     \begin{minipage}{0.45\textwidth}
         \centering
         \includegraphics[width=0.5\textwidth]{images/low_high_side/Low_Side.png}
-    \end{minipage}\hfill
+    \end{minipage}
     \begin{minipage}{0.45\textwidth}
         \centering
         \includegraphics[width=0.5\textwidth]{images/low_high_side/High_Side.png}
@@ -684,9 +679,16 @@ por lo cual cualquier pequeña señal de continua puede hacer saturar al núcleo
 La saturación limita el producto volt-segundo aplicado a través de los devanados. 
 Su valor máximo se da en la peor condición de funcionamiento, con el ciclo de trabajo máximo y la máxima tensión de entrada de forma simultánea. 
 
-Como el convertidor forward trabaja sólo en el primer cuadrante del plano B-H, una gran parte del período de switching debe reservarse para restaurar el núcleo de la potencia del transformador. 
+Como el convertidor forward trabaja sólo en el primer cuadrante del plano B-H, una gran parte del período de switching debe reservarse para restaurar el núcleo de la potencia del transformador \cite{hart_espanol}.
 Esto limita la relación de trabajo del transformador, pero no suele ser un problema ya que 
-el transformador debe estar acoplado a corriente alterna y por lo tanto funciona con magnetización bidireccional. 
+el transformador debe estar acoplado a corriente alterna y por lo tanto funciona con magnetización bidireccional.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/esquema_driver.png}
+    \caption{Esquema del controlador del MOSFET de lado alto}
+    \label{fig:driver}
+\end{figure}
 
 La figura \ref{fig:driver} muestra el circuito básico del driver mediante un transformador.
 A continuación se detalla información relevante de cada componente: 
@@ -704,7 +706,6 @@ $$ V_{cc_1}=D\times V_{drv} $$
 
 En base al máximo ripple de tensión permitido y la carga que atraviesa al capacitor de acoplamiento en estado estacionario:
 
-%INSERTAR FÓRMULA DE CC1
 $$ C_{C_1}=\frac{Q_G}{\Delta V_{C_1}}+\frac{(V_{drv}-V_{dc2,fw})D}{\Delta V_{C_1}R_{gs}f_{drv}}+\frac{V_{drv}(D^2-D^3)}{\Delta V_{C_1}\times4\times L_mf_{drv}^2} $$
 
 Para este capacitor, el ripple tiene una componente relacionada a la carga del MOSFET, 

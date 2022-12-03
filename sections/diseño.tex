@@ -69,7 +69,7 @@ $$ V_{1}=K_{t} f N_{1} \phi_{m} $$
 donde $f$ es la frecuencia de conmutación de la señal de entrada y 
 $K_t$ es un factor que vale $4.44$ si la forma de onda es sinusoidal o $4$ si es rectangular.
 
-El flujo máximo \phi_{m} se relaciona con el área de la sección transversal de la trayectoria del flujo $A_{e}$ y la densidad de flujo máxima $B_{m}$ de la siguiente manera:
+El flujo máximo $\phi_{m}$ se relaciona con el área de la sección transversal de la trayectoria del flujo $A_{e}$ y la densidad de flujo máxima $B_{m}$ de la siguiente manera:
 
 $$ \phi_{m}=B_{m} \times A_{e} $$
 
@@ -179,27 +179,66 @@ por lo tanto el área de la sección transversal del alambre desnudo del secunda
 $$ A_{ws}=\frac{I_o}{J}=\frac{1A}{630.7 \frac{A}{cm^2}}=1.6cm^2\times10^{-3} $$
 
 % AGREGAR IMÁGEN DE TABLA y COMPLETAR TEXTO DE ABAJO
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cccc}
+        \hline
+                & \multicolumn{2}{c}{Área}          & Resistencia          \\ \cline{2-4} 
+        Tamaño AWG & $[cm^2\times10^{-3}]$ & $Cir-Mil$ & $[10^{-6}\Omega/cm]$ \\ \hline
+        10         & 52.61                 & 10384     & 32.70                \\
+        11         & 41.68                 & 8226      & 41.37                \\
+        12         & 33.08                 & 6529      & 52.09                \\
+        13         & 26.26                 & 5184      & 65.64                \\
+        14         & 20.82                 & 4109      & 82.80                \\
+        15         & 16.51                 & 3260      & 104.3                \\
+        16         & 13.07                 & 2581      & 131.8                \\
+        17         & 10.39                 & 2052      & 165.8                \\
+        18         & 8.228                 & 1624      & 209.5                \\
+        19         & 6.531                 & 1289      & 263.9                \\
+        20         & 5.188                 & 1024      & 332.3                \\
+        21         & 4.116                 & 812.3     & 418.9                \\
+        22         & 3.243                 & 640.1     & 531.4                \\
+        23         & 2.588                 & 510.8     & 666.0                \\
+        24         & 2.047                 & 404.0     & 842.1                \\
+        25         & 1.623                 & 320.4     & 1062.0               \\
+        26         & 1.280                 & 252.8     & 1345.0               \\
+        27         & 1.021                 & 201.6     & 1687.6               \\
+        28         & 0.8046                & 158.8     & 2142.7               \\
+        29         & 0.6470                & 127.7     & 2664.3               \\
+        30         & 0.5067                & 100.0     & 3402.2               \\
+        31         & 0.4013                & 79.21     & 4294.6               \\
+        32         & 0.3242                & 64.00     & 5314.9               \\
+        33         & 0.2554                & 50.41     & 6748.6               \\
+        34         & 0.2011                & 39.69     & 3572.8               \\ \hline
+    \end{tabular}
+    \caption{Tabla de valores AWG}
+    \label{table:awg}
+\end{table}
+% texto
 
-En corriente continua, la densidad de corriente es similar en todo el conductor, pero en corriente alterna se observa que hay una mayor densidad de corriente en la superficie que en el centro. 
-Este fenómeno se conoce como efecto pelicular y provoca una variación de la resistencia eléctrica de un conductor en corriente alterna debido al cambio de la frecuencia de la corriente eléctrica que circula por el mismo.
-Por lo tanto, para corriente alterna la mayor parte de la corriente eléctrica fluye entre la superficie y la profundidad superficial de los conductores $δ$.
-
-$$ \delta=\sqrt{\frac{1}{\pi f\mu\sigma}} $$
-
-dependiendo de la frecuencia de la corriente y de las propiedades eléctricas y magnéticas del conductor.
-Depende de la frecuencia, permeabilidad magnética y conductividad del material; se da en metros.
-
-La sección mínima del conductor resulta:
-
-$$ $$
-
-Dado que la mayor área es $A_{ws}$, la cual es superior a la mínima, a partir de la tabla de tamaños de cable AWG de la figura X se debería utilizar el AWG 25.
+Dado que la mayor área es $A_{ws}$, la cual es superior a la mínima, a partir de la tabla \ref{table:awg} de tamaños de cable AWG se debería utilizar el AWG 25.
 Sin embargo, en base a la disponibilidad se construyeron ambos bobinados con un AWG 21. 
 Sus parámetros principales son:
 
-$$ A_{w}=4.116cm^2 \times10^{-3} $$
+\begin{itemize}
+    \item Diámetro del cable: $d=0.723mm$
+    \item Área de la sección transversal: $A_{w}=4.116\times10^{-3}cm^2$
+    \item Conductividad del cobre: $\sigma=\frac{481.9\mu\Omega}{cm}$
+    \item Permeabilidad magnetica del cobre: $\mu_r\simeq1$
+\end{itemize}
 
-$$ \sigma=\frac{481.9\mu\Omega}{cm} $$
+En corriente continua, la densidad de corriente es similar en todo el conductor, pero en corriente alterna se observa que hay una mayor densidad de corriente en la superficie que en el centro. 
+Este fenómeno se conoce como efecto pelicular y provoca una variación de la resistencia eléctrica de un conductor en corriente alterna debido al cambio de la frecuencia $f$ de la corriente eléctrica que circula por el mismo.
+Por lo tanto, para corriente alterna la mayor parte de la corriente eléctrica fluye entre la superficie y la profundidad superficial de los conductores $\delta$.
+Esta última depende de la frecuencia de la corriente y de las propiedades eléctricas y magnéticas del conductor.
+
+$$ \delta=\sqrt{\frac{1}{\pi f\mu\sigma}}=\sqrt{\frac{1}{\pi\times125kHz\times1\times4\pi\times10^{-7}\times\frac{481.9\mu\Omega}{cm}}}=65mm $$
+
+El diámetro mínimo del conductor resulta:
+
+$$ d_{min}=2\times\delta=130mm$$
+
+Por lo tanto, se verifica que el diámetro del cable AWG 21 es mayor al mínimo requerido. 
 
 Para el carrete del núcleo E70, la longitud promedio de una vuelta es: 
 
