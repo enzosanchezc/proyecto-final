@@ -112,7 +112,7 @@ Como desventajas, el tamaño del núcleo del transformador se incrementa con la 
 interruptor presenta una tensión igual al doble de la tensión máxima de entrada.
 En aplicaciones típicas se alcanzan potencias de hasta 150W.
 
-La topología forward con un solo switch disminuye el tamaño del núcleo ya que la energía no necesita almacenarse en el transformador.
+La topología forward con un solo switch disminuye el tamaño del núcleo ya que la energía no necesita almacenarse en el primario.
 En esta topología, la energía del generador se transfiere a la carga cuando el interruptor está cerrado.
 Como desventajas, al igual que la flyback presenta alta tensión en bornes del interruptor y se eleva el costo debido al agregado de la bobina de filtrado.
 La topología forward con dos switches reduce la tensión en bornes del interruptor a la mitad respecto a la de un solo switch (y con ello la disipación de potencia por switch), 
@@ -547,7 +547,7 @@ La etapa de salida se habilita durante el tiempo en el cual la tensión de dient
 A medida que aumenta la señal de control, disminuye el tiempo durante el cual la entrada en diente de sierra es mayor; por lo tanto, la duración del pulso de salida disminuye. 
 Un flip-flop de dirección de pulso dirige alternativamente el pulso modulado a cada uno de los dos transistores de salida.
 
-Dentro de sus caracteristicas principales, se encuentran:
+Dentro de sus características principales, se encuentran:
 \begin{itemize}
     \item Rango de suministro de voltaje de entrada entre 7 V y 40 V
     \item Regulador interno de 5V con precisión del 5\%
@@ -586,7 +586,7 @@ Para esto se compara la rampa de tensión sobre el capacitor $C_t$ con la señal
 presente en la salida de los amplificadores de error.\\
 
 Otros puntos a destacar de este integrado son la presencia de dos amplificadores de error y de dos transistores de salida,
-que pueden trabajar tanto en emisor común como en colector común. La corriente de salida maxima de estos transistores es de $200mA.$
+que pueden trabajar tanto en emisor común como en colector común. La corriente de salida máxima de estos transistores es de $200mA.$
 
 % Dos amplificadores de error:
 % Presentan alta ganancia y se alimentan mediante su entrada $V_i$. 
@@ -737,6 +737,15 @@ $$ R_c\geq2\times\sqrt{\frac{L_m}{C_{C_1}}} $$
 Si la resistencia es muy grande, genera una sobre amortiguación que limita la corriente que ingresa al terminal \textit{gate} y disminuye la frecuencia de switching. 
 Si la resistencia es muy chica, las resonancias provocadas generan una tensión entre \textit{gate} y \textit{source} muy elevada.
 
+\paragraph{Transformador}
+
+Su función es transmitir el pulso de accionamiento de puerta referenciado a tierra a través de grandes diferencias de potencial para adaptarse a las implementaciones de accionamiento flotante. 
+Para hacerlo maneja muy poca potencia pero requiere de elevados picos de corriente. 
+
+Está controlado por un ancho de pulso variable y de amplitud constante,
+acoplado en alterna y la inductancia de magnetización ve un pulso de amplitud variable.
+Operan en el primer y tercer cuadrante del plano B-H.
+
 \paragraph{Resistencia de carga entre \textit{gate} y \textit{source} $R_{gs}$}
 
 Es una resistencia de pull down que pone a tierra el terminal \textit{gate} al alimentar el circuito, manteniendo al MOSFET apagado durante el inicio. 
@@ -766,44 +775,6 @@ La capacidad es máxima cuando el ciclo de trabajo es máximo.
 
 %Evita sobre tensiones. <<< Esto era así? No evitaba tension negativa a la salida?
 Mantiene la tensión entre \textit{gate} y \textit{source} por arriba de $-V_\gamma$.\\
-
-\subsubsection{Diseño del transformador}
-
-Su diseño es similar a un transformador de potencia. 
-Su función es transmitir el pulso de accionamiento de puerta referenciado a tierra a través de grandes diferencias de potencial para adaptarse a las implementaciones de accionamiento flotante. Para hacerlo maneja muy poca potencia pero requiere de elevados picos de corriente. 
-
-Su relación será 1:1 ya que no se requiere cambiar el nivel de tensión.
-Está controlado por un ancho de pulso variable y de amplitud constante,
-acoplado a CA y la inductancia de magnetización ve un pulso de amplitud variable.
-Operan en el primer y tercer cuadrante del plano B-H.
-
-Primero se selecciona el núcleo. En base a la disponibilidad se elige el E25. 
-El material del núcleo es ferrita de alta permeabilidad para maximizar el valor de 
-la inductancia de magnetización y, en consecuencia, reducir la corriente de magnetización.
-
-El número de vueltas del primario se calcula como: 
-
-%INSERTAR FÓRMULA DEL NÚMERO DE VUELTAS JUNTO A LA DESCRIPCIÓN DE CADA variable
-
-Primero se halla el numerador con:
-
-%INSERTAR IMÁGEN 36: Gate-Drive Transformer Volt-second Product vs. Duty Ratio
-
-Para un circuito acoplado de CA, el peor de los casos es $D=0.5$, 
-mientras que el acoplamiento directo alcanza el valor pico de voltios por segundo en la máxima relación de trabajo operativa. 
-Curiosamente, el acoplamiento de CA reduce el producto volt-segundo de estado estacionario máximo en un factor de cuatro debido a que, 
-en relaciones de trabajo grandes, el voltaje del transformador se reduce proporcionalmente debido al voltaje que 
-se desarrolla a través del capacitor de acoplamiento.
-%Delta B: valor pico a pico del cambio en el flujo que se produce durante la duración del pulso. 
-
-Es mucho más difícil calcular $\Delta B$ en la ecuación $N_p$. 
-La razón es el desplazamiento del flujo durante el funcionamiento transitorio. 
-Cuando el voltaje de entrada o la carga cambian rápidamente, el controlador PWM ajusta la relación de trabajo en consecuencia. 
-Es bastante difícil deducir el resultado cuantitativo exacto de la caminata de flujo. 
-Depende de la respuesta del lazo de control y de la constante de tiempo de la red de acoplamiento cuando está presente. 
-En general, una respuesta de bucle más lenta y una constante de tiempo más rápida tienden a reducir el desplazamiento de flujo. 
-Para la mayoría de los diseños, es deseable un margen de tres a uno entre la densidad de flujo de saturación 
-y el valor de flujo máximo en el peor de los casos de operación en estado estable para cubrir la operación transitoria.
 
 \subsection{Snubber} \label{subsec:oscilaciones}
 

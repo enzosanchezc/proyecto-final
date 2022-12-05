@@ -3,17 +3,6 @@
 % EMPEZAR CON LAS COSAS BUENAS: Se logró, se implementó, ...
 % Recomendaciones 
 
-La tensión de salida no se mantiene estable ante variaciones en la carga con ciclo de trabajo y tensión de alimentación fija. 
-Esto puede deberse a que se consideró el modelo ideal de todos los componentes del circuito al momento de realizar el análisis del conversor. 
-
-En la teoría analizada por la bibliografía se supone que todos los componentes del convertidor forward son ideales. 
-Esto se evidencia en el simulador donde al utilizar modelos reales de los semiconductores se comienza a evidenciar como la tensión de salida varía levemente con la carga. 
-Esta suposición realizada para simplificar el análisis lleva a tener diferencias en la práctica principalmente con el comportamiento de la tensión de salida. 
-Ejemplos: resistencia del inductor del filtro de salida, pérdidas en los MOSFETs,
-Se evidencia como ante el aumento de la corriente de carga la tensión de salida obtenida disminuye y se aleja del comportamiento semi-ideal del simulador. 
-Como las pérdidas en todos los componentes aumentan con la corriente de carga. 
-Es por ello que en la práctica los convertidores funcionan a lazo cerrado sensando la tensión o corriente de salida, y por medio de un sistema de realimentación ajustan el ciclo de trabajo para obtener una tensión de salida constante ante los cambios de carga o la tensión de entrada del convertidor.
-
 % Completar
 
 Quedó pendiente por implementar el rectificador a la entrada del conversor y el circuito de control.

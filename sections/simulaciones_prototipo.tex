@@ -1,4 +1,4 @@
-\section{Simulacion del prototipo}
+\section{Simulación del prototipo}
 
 % 1) Tensión de salida en el colector del TL494
 % 2) Tensión en el capacitor Ct <<< N/A
@@ -52,7 +52,7 @@ Esta debería ser una señal PWM con un período de $8\mu s$ y un ancho de pulso
 
 %Si se compara la figura \ref{fig:osc_pwm_vout_disconnected} con la \ref{fig:osc_pwm_vout_connected}, la cual muestra la misma forma de onda pero con la fuente de tensión de 36V conectada, se puede observar que la forma de onda es similar, pero se presenta una oscilación de alta frecuencia durante el ciclo de apagado de la señal PWM. Esta oscilación es tratada en la sección \ref{subsec:oscilaciones}.
 Se puede observar que la señal cumple con los requisitos de frecuencia y ancho de pulso.
-Durante la implementacion se presentaron oscilaciones de alta frecuencia durante el ciclo de apagado de la señal PWM, las cuales son tratadas en la sección \ref{subsec:oscilaciones}.
+Durante la implementación se presentaron oscilaciones de alta frecuencia durante el ciclo de apagado de la señal PWM, las cuales son tratadas en la sección \ref{subsec:oscilaciones}.
 En la figura \ref{fig:sim:osc_pwm_vout} se muestra la misma forma de onda simulada en LTspice.
 
 \begin{figure}[H]
@@ -118,7 +118,7 @@ En las figuras \ref{fig:ct_v} y \ref{fig:dtc_v} se muestran las tensiones en el 
 
 % Puede observarse que las oscilaciones aumentan. %WHAT?
 
-La funcion más importante de esta etapa es la de mejorar la forma de onda de la señal PWM, que al comparar las figuras \ref{fig:osc_pwm_vout_disconnected} y \ref{fig:pwm_vout_sin_bjt} se puede observar que se ha mejorado considerablemente.
+La función más importante de esta etapa es la de mejorar la forma de onda de la señal PWM, que al comparar las figuras \ref{fig:osc_pwm_vout_disconnected} y \ref{fig:pwm_vout_sin_bjt} se puede observar que se ha mejorado considerablemente.
 
 \begin{figure}[H]
     \centering
@@ -171,7 +171,7 @@ En la figura \ref{fig:driver_expected_waveforms} se muestran algunas formas de o
     \label{fig:driver_expected_waveforms}
 \end{figure}
 
-A continuación se presentan formas de ondas variadas del driver, comparandolas con las simulaciones para verificar su funcionamiento.
+A continuación se presentan formas de ondas variadas del driver, comparándolas con las simulaciones para verificar su funcionamiento.
 % 1) Tensiones en el transformador de señal 
 
     % Forma de onda: Rectangular 
@@ -401,7 +401,7 @@ La figura \ref{fig:sim:14} muestra la simulación de la corriente de salida dura
     \label{fig:sim:14}
 \end{figure}
 
-Analogamente, en las figuras \ref{fig:osc:58} y \ref{fig:sim:21ripple} se muestra el ripple de tensión en la salida salida y su simulación. En la figura \ref{fig:sim:21} se muestra la simulación de la tensión de salida durante el encendido.<
+Análogamente, en las figuras \ref{fig:osc:58} y \ref{fig:sim:21ripple} se muestra el ripple de tensión en la salida salida y su simulación. En la figura \ref{fig:sim:21} se muestra la simulación de la tensión de salida durante el encendido.<
 % 9) Tensión de salida junto con su ripple 
 
 \begin{figure}[H]
@@ -424,3 +424,14 @@ Analogamente, en las figuras \ref{fig:osc:58} y \ref{fig:sim:21ripple} se muestr
     \caption{Simulación de la tensión en la carga}
     \label{fig:sim:21}
 \end{figure}
+
+La tensión de salida no se mantiene estable ante variaciones en la carga con ciclo de trabajo y tensión de alimentación fija. 
+Esto puede deberse a que se consideró el modelo ideal de todos los componentes del circuito al momento de realizar el análisis del conversor. 
+
+En la teoría analizada por la bibliografía se supone que todos los componentes del convertidor forward son ideales. 
+Esto se evidencia en el simulador donde al utilizar modelos reales de los semiconductores se comienza a evidenciar como la tensión de salida varía levemente con la carga. 
+Esta suposición realizada para simplificar el análisis lleva a tener diferencias en la práctica principalmente con el comportamiento de la tensión de salida. 
+Ejemplos: resistencia del inductor del filtro de salida, pérdidas en los MOSFETs,
+Se evidencia como ante el aumento de la corriente de carga la tensión de salida obtenida disminuye y se aleja del comportamiento semi-ideal del simulador. 
+Como las pérdidas en todos los componentes aumentan con la corriente de carga. 
+Es por ello que en la práctica los convertidores funcionan a lazo cerrado sensando la tensión o corriente de salida, y por medio de un sistema de realimentación ajustan el ciclo de trabajo para obtener una tensión de salida constante ante los cambios de carga o la tensión de entrada del convertidor.

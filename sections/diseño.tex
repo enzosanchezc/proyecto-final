@@ -224,7 +224,7 @@ Sus parámetros principales son:
     \item Diámetro del cable: $d=0.723mm$
     \item Área de la sección transversal: $A_{w}=4.116\times10^{-3}cm^2$
     \item Conductividad del cobre: $\sigma=\frac{481.9\mu\Omega}{cm}$
-    \item Permeabilidad magnetica del cobre: $\mu_r\simeq1$
+    \item Permeabilidad magnética del cobre: $\mu_r\simeq1$
 \end{itemize}
 
 En corriente continua, la densidad de corriente es similar en todo el conductor, pero en corriente alterna se observa que hay una mayor densidad de corriente en la superficie que en el centro. 
@@ -406,11 +406,11 @@ $$ \Delta V_{c_1}=\Delta V_{c_2}=\frac{\Delta V_c}{2} $$
 Para el diodo de rueda libre del secundario se utiliza el mismo diodo que en el convertidor forward, modelo UF4007. 
 La tensión directa máxima se obtiene de la hoja de datos: 
 
-$$ V_{dc_2}=1.7V $$.
+$$ V_{dc_2}=1.7V $$
 
 El ciclo de trabajo máximo está definido por el conversor forward, 
 
-$$ D_{max}=0.5 $$.
+$$ D_{max}=0.5 $$
 
 El valor de la resistencia entre \textit{gate} y \textit{source} se despeja en base a la constante de tiempo deseada en el transitorio de la tensión en el capacitor de acoplamiento.
 
@@ -468,6 +468,32 @@ $$ R_{c_{min}}=2\sqrt{\frac{L_m}{C_{C_1}}}=47.6\Omega $$
 Se elige:
 
 $$ R_c=50\Omega $$
+
+El diseño del transformador del driver es similar a un transformador de potencia. 
+Para la selección del núcleo, si bien suelen utilizarse núcleos toroidales, en base a la disponibilidad se elige el E30. 
+El material del núcleo es N27, cuya alta permeabilidad maximiza el valor de 
+la inductancia de magnetización y, en consecuencia, reduce la corriente de magnetización.
+
+El número de vueltas del primario se calcula como: 
+
+$$ N_{1}=\frac {V_{tr}\times t}{\Delta B \times A_{e}} $$
+
+donde $V_{tr}$ es la tensión en el bobinado primario, $t$ es la duración del pulso, 
+$\Delta B$ es la variación en el flujo pico a pico durante el tiempo $t$ y $A_{e}$ es la sección transversal equivalente del núcleo. 
+
+%INSERTAR IMÁGEN 36: Gate-Drive Transformer Volt-second Product vs. Duty Ratio
+
+Primero se halla el máximo producto volt-segundo del numerador mediante la figura X.
+Para un transformador acoplado en alterna, el peor de los casos se da para el ciclo de trabajo máximo $D=0.5$, por lo tanto se obtiene un valor de 0.25. 
+Dado que el valor está normalizado, se lo debe multiplicar por la tensión de entrada $V_{drv}=8V$ y por el período de conmutación $T_{drv}=8\mu s$.
+De la hoja de datos del núcleo elegido la sección transversal equivalente es $A_{e}=60mm^2$. 
+Fijando una variación en el flujo pico a pico de $\Delta B=0.03Wb$ se obtiene: 
+
+$$ N_{1}=\frac {0.25\times 8V \times 8\mu s}{0.03Wb \times 60mm^2}=8.88\simeq 9 $$
+
+Se establece una relación 1:1 para el transformador ya que no se requiere modificar el nivel de tensión.
+
+$$ N_{2}=N_{1}=9 $$
 
 \subsection{Red Snubber}
 
