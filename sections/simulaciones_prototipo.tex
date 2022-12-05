@@ -230,9 +230,10 @@ A continuación se presentan formas de ondas variadas del driver, comparandolas 
 
         % Forma de onda: diente de sierra invertida y espejada con tiempo muerto 
 
-\subsection{Convertidor Forward Doble Switch}
+\subsection{Convertidor}
 
 % Agregar intro
+\subsubsection{MOSFETs}
 
 % 1) Vgs de ambos MOSFETs %Ya se midió en otros lados
 
@@ -271,155 +272,110 @@ Para comparar, se muestra en las figuras \ref{fig:vds_simulation_high} y \ref{fi
 
 % 3) Idrain de ambos MOSFETs
 
+En las figuras \ref{fig:osc:20} y \ref{fig:osc:22} puede verse la corriente por el terminal \textit{drain} de los MOSFETs del convertidor. Las figuras \ref{fig:sim:10} y \ref{fig:sim:11} muestran sus simulaciones, respectivamente.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/20.png}
-    \caption{}
+    \caption{Corriente que circula por el \textit{drain} del MOSFET de lado alto}
     \label{fig:osc:20}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/sim/10.pdf}
-    \caption{Corriente que circula por el drain del MOSFET 1 (high side)}
+    \caption{Simulación de la corriente que circula por el \textit{drain} del MOSFET de lado alto}
     \label{fig:sim:10}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/22.png}
-    \caption{}
+    \caption{Corriente que circula por el \textit{drain} del MOSFET de lado bajo}
     \label{fig:osc:22}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/sim/11.pdf}
-    \caption{Corriente que circula por el drain del MOSFET 2 (low side)}
+    \caption{Simulación de la corriente que circula por el \textit{drain} del MOSFET de lado bajo}
     \label{fig:sim:11}
 \end{figure}
 
+\subsubsection{Transformador de potencia}
 % 4) Tensiones en el E70
+
+Las figuras \ref{fig:osc:38} y \ref{fig:osc:40} muestran las tensiones en el primario y el secundario del transformador de potencia, respectivamente. Puede observarse comparando con sus simulaciones (Figuras \ref{fig:sim:19} y \ref{fig:sim:20}) que las oscilaciones son mucho mayores en el secundario del transformador.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/38.png}
-    \caption{}
+    \caption{Tensión en el primario del transformador de potencia}
     \label{fig:osc:38}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/sim/19.pdf}
-    \caption{Tensión en el primario del transformador de potencia}
+    \caption{Simulación de la tensión en el primario del transformador de potencia}
     \label{fig:sim:19}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/40.png}
-    \caption{}
+    \caption{Tensión en el secundario del transformador de potencia}
     \label{fig:osc:40}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/sim/20.pdf}
-    \caption{Tensión en el secundario del transformador de potencia}
+    \caption{Simulación de la tensión en el secundario del transformador de potencia}
     \label{fig:sim:20}
 \end{figure}
 
 % 5) Corriente en el primario %Del e70?
 
     % Medir la componente continua. IMPOSSIBLE
+Las figuras \ref{fig:osc:24} muestra la corriente que circula por el primario del transformador de potencia. La figura \ref{fig:sim:12} muestra la simulación de la misma.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/24.png}
-    \caption{}
+    \caption{Corriente en el primario del transformador de potencia}
     \label{fig:osc:24}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/sim/12.pdf}
-    \caption{Corriente en el primario del transformador de potencia}
+    \caption{Simulación de la corriente en el primario del transformador de potencia}
     \label{fig:sim:12}
 \end{figure}
 
-% 6) Caída de tensión en los diodos
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/60.png}
-    \caption{}
-    \label{fig:osc:60}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{images/sim/26.pdf}
-    \caption{Tensión cátodo ánodo en el diodo D1}
-    \label{fig:sim:26}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/61.png}
-    \caption{}
-    \label{fig:osc:61}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{images/sim/27.pdf}
-    \caption{Tensión cátodo ánodo en el diodo D2}
-    \label{fig:sim:27}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/62.png}
-    \caption{}
-    \label{fig:osc:62}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{images/sim/25.pdf}
-    \caption{Tensión cátodo ánodo en el diodo D3}
-    \label{fig:sim:25}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/63.png}
-    \caption{}
-    \label{fig:osc:63}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{images/sim/24.pdf}
-    \caption{Tensión cátodo ánodo en el diodo D4}
-    \label{fig:sim:24}
-\end{figure}
-
+\subsubsection{Circuito de salida}
 % 7) Corriente en el inductor junto con su ripple
+
+La corriente por el inductor de salida se muestra en la figura \ref{fig:osc:66}. La figura \ref{fig:sim:13} muestra su simulación.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/66.png}
-    \caption{}
+    \caption{Corriente en el inductor del filtro de salida}
     \label{fig:osc:66}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/sim/13.pdf}
-    \caption{Corriente en el inductor del filtro de salida}
+    \caption{Simulación de la corriente en el inductor del filtro de salida}
     \label{fig:sim:13}
 \end{figure}
 
+En las figuras \ref{fig:osc:67} y \ref{fig:sim:14ripple} se muestra la corriente por la resistencia de carga y su simulación, respectivamente. Se puede observar que el ripple obtenido es mayor al simulado.
+
+La figura \ref{fig:sim:14} muestra la simulación de la corriente de salida durante el encendido.
 % 8) Corriente de salida junto con su ripple 
 
     % Idealmente medir 1A-1.6A del modo elegido. 
@@ -445,6 +401,7 @@ Para comparar, se muestra en las figuras \ref{fig:vds_simulation_high} y \ref{fi
     \label{fig:sim:14}
 \end{figure}
 
+Analogamente, en las figuras \ref{fig:osc:58} y \ref{fig:sim:21ripple} se muestra el ripple de tensión en la salida salida y su simulación. En la figura \ref{fig:sim:21} se muestra la simulación de la tensión de salida durante el encendido.<
 % 9) Tensión de salida junto con su ripple 
 
 \begin{figure}[H]
