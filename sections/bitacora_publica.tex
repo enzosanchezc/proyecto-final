@@ -1,0 +1,12 @@
+\section{Problemas afrontados}
+
+Una incorrecta elección de $R_t$ y $C_t$ para el TL494 fuera de los valores recomendados por el fabricante generaba variaciones muy grandes de la frecuencia de switching, 
+lo cual causaba inestabilidad en la tensión de salida. 
+
+La frecuencia de conmutación ajustada mediante el potenciómetro posee una gran estabilidad.
+
+La amplitud de la forma de onda PWM disminuye al aumentar el ciclo de trabajo con el convertidor conectado a la salida del TL494. 
+
+Dado que la carga que genera el convertidor sobre el TL494 es muy alta, sin una etapa de ganancia de corriente, la forma de onda PWM 
+se distorsionaba y disminuía notablemente su amplitud, lo que causaba que los MOSFETs no se saturaran y aumentaran demasiado su temperatura.
+Los resultados obtenidos con la inclusión de esta etapa fueron una mejora en la forma de onda de la señal PWM y un incremento notorio en su amplitud.

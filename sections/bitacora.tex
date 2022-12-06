@@ -1,10 +1,5 @@
 \section{Problemas afrontados y soluciones}
 
-TL494
-
-Una incorrecta elección de Rt y Ct fuera de los valores recomendados generaba variaciones muy grandes de la frecuencia de switching, 
-lo cual causaba inestabilidad en la tensión de salida. 
-
 MEDIDOR DE CAPACITANCIA E INDUCTANCIA DM6243L
 
 Con este instrumento se obtuvo el valor de inductancia del inductor de la salida y de la inductancia de magnetización del transformador. 
@@ -29,14 +24,6 @@ Las oscilaciones de alta frecuencia (superior a 125kHz) observadas en las formas
 CABLES
 
 Para reducir el ruido se utilizó la menor longitud posible para los cables utilizados en las conexiones. 
-
-ESQUEMÁTICO GENERAL 
-
-Sacar de EasyEda. 
-
-IDENTIFICACIÓN DE PUNTOS HOMÓLOGOS UNA VEZ REALIZADOS 
-
-Texto.
 
 IMPLEMENTACIÓN
 
@@ -220,13 +207,18 @@ Tabla:
  
 %INVENTAR VALORES QUE FALTAN
 
-R[\Omega]       Ii[A]       Vo[V]       Io[A]
-12.6            0.23        5.77        0.47
-18              0.25        7           0.4
-24.3            0.23        8.3         0.35
-30.6            0.23        9.13        0.3
-40                          10.2        0.25
-58                          11.6        0.2
-80.7            0.16        12.4        0.15           
-88.5            0.16        12.6        0.14     
-165             0.16        14.27       0.09   
+\begin{table}[]
+    \begin{tabular}{cccc}
+    \hline
+    $R[\Omega]$ & $I_i[A]$ & $V_o[V]$ & $I_o[A]$ \\ \hline
+    12.6        & 0.23     & 5.77     & 0.47     \\
+    18          & 0.25     & 7        & 0.4      \\
+    24.3        & 0.23     & 8.3      & 0.35     \\
+    30.6        & 0.23     & 9.13     & 0.3      \\
+    40          &          & 10.2     & 0.25     \\
+    58          &          & 11.6     & 0.2      \\
+    80.7        & 0.16     & 12.4     & 0.15     \\
+    88.5        & 0.16     & 12.6     & 0.14     \\
+    165         & 0.16     & 14.27    & 0.09     \\ \hline
+    \end{tabular}
+\end{table}

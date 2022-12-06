@@ -3,6 +3,7 @@
 import csv
 import matplotlib.pyplot as plt
 from matplotlib.ticker import EngFormatter
+from matplotlib.widgets import Cursor
 import sys
 
 x = []
@@ -44,5 +45,6 @@ if len(sys.argv) == 4:
 # Inverti y values
 y = [-i for i in y]
 ax.plot(x,y,color='red', linewidth=0.7)
+cursor = Cursor(ax, useblit=True, color='red', linewidth=2)
 plt.show()
 #plt.savefig(sys.argv[2])
