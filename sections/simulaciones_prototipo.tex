@@ -9,33 +9,34 @@ Condiciones de simulación y ensayo:
     \item Resistencia de carga: $R=88.6\Omega$
 \end{itemize}
  
-% % 1) Tensión de salida en el colector del TL494
+% % 1) Tensión de salida en el colector del TL494 <<< DONE
 
 % Se verifica que el ciclo de trabajo es de $D=0.4$ y la frecuencia de conmutación es de aproximadamente $f=125kHz$. 
 % Su amplitud se reduce considerablemente de los $12V$ que poseía sin la carga del convertidor a $8V$ con el mismo acoplado. 
+% La forma de onda presenta una leve deformación respecto a la señal sin carga. 
 
-% % 2) Tensión en el capacitor Ct <<< N/A
+% % 2) Tensión en el capacitor Ct <<< N/A <<< DONE
 
 % Se observa una disminución en la frecuencia de la forma de onda a aproximadamente $f=112kHz$. 
 % El prototipo presenta una oscilación no deseada de $f_{osc}=1.25MHz$, 
 % la cual estará presente en muchas de las formas de onda que se analizarán a continuación. 
 
-% % 3) Tensión de salida de la etapa de ganancia de corriente
+% % 3) Tensión de salida de la etapa de ganancia de corriente <<< DONE
 
 % Dado que la etapa posee ganancia de tensión unitaria, su forma de onda es aproximadamente igual a la tensión de salida del TL494. 
 % Las oscilaciones fueron eliminadas mediante la red snubber. 
 
-% % 4) Tensión en el primario del transformador del driver
+% % 4) Tensión en el primario del transformador del driver <<< DONE
 
 % La amplitud y la forma de onda de la señal del prototipo coinciden respecto a la simulación. 
 % Se observan unos picos en los flancos de subida y de bajada. 
 
-% % 5) Tensión en el secundario del transformador del driver
+% % 5) Tensión en el secundario del transformador del driver <<< DONE
 
 % La amplitud y la forma de onda de la señal del prototipo coinciden respecto a la simulación. 
 % Se observa un pico en el flanco de bajada. 
 
-% % 6) Corriente en el primario del transformador del driver
+% % 6) Corriente en el primario del transformador del driver <<< DONE
 
 % La forma de onda del prototipo está deformada y posee levemente mayor amplitud. 
 
@@ -136,29 +137,30 @@ Condiciones de simulación y ensayo:
 \subsection{Generador de señal PWM}
 
 No se realizarán comparaciones ya que su circuito no fue simulado debido a la ausencia de un correcto modelo del TL494.
-El mismo fue implementado en una protoboard y sus formas de onda más importantes se comparan con las indicadas en la hoja de datos del fabricante.
+El mismo fue implementado primero en una protoboard y luego en un circuito impreso.
+Sus formas de onda más importantes se compararán con las indicadas en la hoja de datos del fabricante.
 
-En la figura \ref{fig:osc_pwm_vout_disconnected} se muestra la forma de onda de la tensión de salida de la etapa de ganancia de corriente.
-Esta debería ser una señal PWM con un período de $8\mu s$ y un ancho de pulso de aproximadamente 40\%
+En la figura \ref{fig:osc_pwm_vout_disconnected} se observa la tensión a la salida del TL494 medida del prototipo.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/1.png}
-    \caption{Tensión a la salida de la etapa de ganancia de corriente}
+    \caption{Tensión a la salida del TL494}
     \label{fig:osc_pwm_vout_disconnected}
 \end{figure}
 
-%Se puede observar una tensión de continua de aproximadamente $1.5V$ durante la etapa de apagado del PWM, la cual se debe al capacitor de desacople del circuito primario del driver.
-
-%Si se compara la figura \ref{fig:osc_pwm_vout_disconnected} con la \ref{fig:osc_pwm_vout_connected}, la cual muestra la misma forma de onda pero con la fuente de tensión de 36V conectada, se puede observar que la forma de onda es similar, pero se presenta una oscilación de alta frecuencia durante el ciclo de apagado de la señal PWM. Esta oscilación es tratada en la sección \ref{subsec:oscilaciones}.
-Se puede observar que la señal cumple con los requisitos de frecuencia y ancho de pulso.
+% Se verifica que el ciclo de trabajo es de $D=0.4$ y la frecuencia de conmutación es de aproximadamente $f=125kHz$. 
+% Su amplitud se reduce considerablemente de los $12V$ que poseía sin la carga del convertidor a $8V$ con el mismo acoplado. 
+% La forma de onda presenta una leve deformación respecto a la señal sin carga. <<< Comparando con otras formas de onda, esta está casi identica
+Se puede observar que la señal cumple con los requisitos de frecuencia ($f=125kHz$) y ancho de pulso ($D=0.4$).
+La amplitud de la señal es de $8V$, lo cual es menor a la señal sin carga ($12V$).
 Durante la implementación se presentaron oscilaciones de alta frecuencia durante el ciclo de apagado de la señal PWM, las cuales son tratadas en la sección \ref{subsec:oscilaciones}.
 En la figura \ref{fig:sim:osc_pwm_vout} se muestra la misma forma de onda simulada en LTspice.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/sim/3.pdf}
-    \caption{Simulación de la tensión a la salida de la etapa de ganancia de corriente}
+    \caption{Simulación de la tensión a la salida del TL494}
     \label{fig:sim:osc_pwm_vout}
 \end{figure}
 
@@ -179,6 +181,10 @@ En las figuras \ref{fig:ct_v} y \ref{fig:dtc_v} se muestran las tensiones en el 
     \caption{Tensión a la salida del pin DTC del TL494} %COMPLETAR
     \label{fig:dtc_v}
 \end{figure}
+
+Se observa una disminución en la frecuencia de la forma de onda a aproximadamente $f=112kHz$. 
+En esta señal se observa mejor la oscilación no deseada de $f_{osc}=1.25MHz$, 
+la cual estará presente en muchas de las formas de onda que se analizarán a continuación. 
 
 % 1) Señal PWM
 
@@ -217,6 +223,28 @@ En las figuras \ref{fig:ct_v} y \ref{fig:dtc_v} se muestran las tensiones en el 
 % \end{figure}
 
 % Puede observarse que las oscilaciones aumentan. %WHAT?
+
+En la figura \ref{fig:osc_pwm_vout_disconnected} se muestra la forma de onda de la tensión de salida de la etapa de ganancia de corriente.
+Esta debería ser una señal PWM con un período de $8\mu s$ y un ancho de pulso de aproximadamente 40\%.
+
+% Dado que la etapa posee ganancia de tensión unitaria, su forma de onda es aproximadamente igual a la tensión de salida del TL494. 
+% Las oscilaciones fueron eliminadas mediante la red snubber. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/3.png}
+    \caption{Tensión a la salida de la etapa de ganancia de corriente}
+    \label{fig:osc_pwm_vout_disconnected}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/3.pdf}
+    \caption{Simulación de la tensión a la salida de la etapa de ganancia de corriente}
+    \label{fig:sim:osc_pwm_vout}
+\end{figure}
+
+Se observa una mejora considerable en la forma de onda de la señal, incluso dando mejores resultados que el simulador. %Porque estamos re masa.
 
 La función más importante de esta etapa es la de mejorar la forma de onda de la señal PWM, que al comparar las figuras \ref{fig:osc_pwm_vout_disconnected} y \ref{fig:pwm_vout_sin_bjt} se puede observar que se ha mejorado considerablemente.
 
@@ -292,6 +320,9 @@ A continuación se presentan formas de ondas variadas del driver, comparándolas
     \label{fig:sim:4}
 \end{figure}
 
+La amplitud y la forma de onda de la señal del prototipo coinciden respecto a la simulación. 
+Se observan unos picos en los flancos de subida y de bajada. 
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{images/capturas-osciloscopio/17-11-2022/9.png}
@@ -305,6 +336,44 @@ A continuación se presentan formas de ondas variadas del driver, comparándolas
     \caption{Simulación de la tensión en el secundario del transformador del driver}
     \label{fig:sim:5}
 \end{figure}
+
+Para el caso del secundario, las formas de onda también coinciden. 
+Se observa un pico solo en el flanco de bajada.
+
+En las figuras \ref{fig:osc:11} y \ref{fig:sim:6} se muestran la forma de onda de la corriente por el primario del transformador del driver junto con su simulación.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/capturas-osciloscopio/17-11-2022/11.png}
+    \caption{Corriente por el primario del transformador del driver}
+    \label{fig:osc:11}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/6.pdf}
+    \caption{Simulación de la corriente por el primario del transformador del driver}
+    \label{fig:sim:6}
+\end{figure}
+
+La forma de onda del prototipo presenta una deformación y posee levemente mayor amplitud. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/capturas-osciloscopio/17-11-2022/13.png}
+    \caption{Corriente por la resistencia entre \textit{gate} y \textit{source} del MOSFET de lado alto}
+    \label{fig:osc:13}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/7.pdf}
+    \caption{Simulación de la corriente por la resistencia $R_{gs}$}
+    \label{fig:sim:7}
+\end{figure}
+
+La amplitud y la forma de onda de la señal del prototipo coinciden respecto a la simulación. 
+Presenta la oscilación de $f_{osc}=1.25MHz$. 
 
 % 2) Tensión Gate del MOSFET high side % Sería vout del driver?
 % DONE

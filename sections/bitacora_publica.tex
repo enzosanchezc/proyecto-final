@@ -10,3 +10,46 @@ La amplitud de la forma de onda PWM disminuye al aumentar el ciclo de trabajo co
 Dado que la carga que genera el convertidor sobre el TL494 es muy alta, sin una etapa de ganancia de corriente, la forma de onda PWM 
 se distorsionaba y disminuía notablemente su amplitud, lo que causaba que los MOSFETs no se saturaran y aumentaran demasiado su temperatura.
 Los resultados obtenidos con la inclusión de esta etapa fueron una mejora en la forma de onda de la señal PWM y un incremento notorio en su amplitud.
+
+Las oscilaciones de alta frecuencia (superior a 125kHz) observadas en las formas de onda se pueden deber a cualquier tanque LC. 
+
+Se evidenció un problema con la tierra de la PCB ya que al realizar las mediciones de tensión, la fuente regulable de 36V eleva notablemente su corriente entregada al circuito 
+cuando se conecta la tierra de la punta del osciloscopio en ciertos puntos de la placa. 
+Estas mediciones fueron tomadas estableciendo un correcto límite de corriente en la fuente. 
+Además, en otros puntos como el transformador de potencia disminuye la tensión entregada por la fuente regulable de 12V. 
+
+Al utilizar resistencias de $1\Omega$ y potencia nominal $2Watts$ para medir corrientes en el circuito, 
+se detectaron oscilaciones indeseadas en sus formas de onda con una frecuencia de $f_{osc}=1.1MHz$. 
+En consecuencia, se quitaron dichas resistencias y se soldaron cables con un largo tal que se pueda medir 
+la corriente a través de los mismos utilizando puntas de corriente para el osciloscopio TEKTRONIX modelo P6021. 
+Pueden variar su sensibilidad seleccionando 2mA/mV o 10mA/mV y están conformadas por un transformador de corriente.
+En consecuencia, sólo miden la componente alterna de la señal y las formas de onda que presentan una componente continua deben ajustarse.
+El cable que se introduce es el primario, por lo que consta de una única vuelta, y el secundario está adentro de la punta. 
+Al medir corriente con las mismas no se detectaron las oscilaciones,
+con lo cual se concluye que a la frecuencia de trabajo las resistencias presentan una alta componente inductiva que genera las oscilaciones indeseadas. 
+Además, al quitar las resistencias se incrementó levemente la tensión de salida y la eficiencia. 
+
+La mayor diferencia del prototipo implementado respecto a las simulaciones se dio en la tensión de salida. 
+Se varió la resistencia de carga conectada al convertidor y se midieron la tensión y corriente de entrada y de salida para calcular la eficiencia del circuito.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lllllll}
+        \hline
+        \multicolumn{1}{c}{$R[\Omega]$} & \multicolumn{1}{c}{$I_i[A]$} & \multicolumn{1}{c}{$V_o[V]$} & \multicolumn{1}{c}{$I_o[A]$} & \multicolumn{1}{c}{$P_i[W]$} & \multicolumn{1}{c}{$P_o[W]$} & \multicolumn{1}{c}{$\eta[\%]$} \\ \hline
+        12.6                            & 0.23                         & 5.77                         & 0.47                         & 8.28                         & 2.71                         & 32.7                           \\
+        18                              & 0.23                         & 7                            & 0.4                          & 8.28                         & 2.8                          & 33.8                           \\
+        24.3                            & 0.23                         & 8.3                          & 0.35                         & 8.28                         & 2.91                         & 35.1                           \\
+        30.6                            & 0.23                         & 9.13                         & 0.3                          & 8.28                         & 2.74                         & 33.1                           \\
+        40                              & 0.2                          & 10.2                         & 0.25                         & 7.2                          & 2.7                          & 37.5                           \\
+        58                              & 0.18                         & 11.6                         & 0.2                          & 6.48                         & 2.32                         & 35.8                           \\
+        80.7                            & 0.16                         & 12.4                         & 0.15                         & 5.76                         & 1.86                         & 32.3                           \\
+        88.5                            & 0.16                         & 12.6                         & 0.14                         & 5.76                         & 1.76                         & 30.6                           \\ \hline
+    \end{tabular}
+    \caption{Resultados de las mediciones realizadas con el convertidor}
+    \label{tab:mediciones}
+\end{table}
+
+Se evidencia como la tensión de salida varía con la carga conectada y, en consecuencia, la tensión de salida deseada de $V_{o}=12.6V$ sólo se logra para una resistencia de $R=88.5\Omega$.
+Respecto a las simulaciones, la variación de carga si bien modifica levemente la tensión de salida, no disminuye notablemente su valor y presenta una corriente de salida mucho mayor especialmente en las resistencias de carga más bajas.
+
