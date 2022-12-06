@@ -1,42 +1,141 @@
 \section{Simulación del prototipo}
 
+Condiciones de simulación y ensayo: 
+Tensión de entrada: $V_s=36V$
+Frecuencia de conmutación: $f=125kHz$
+Ciclo de trabajo: $D=0.4$  
+% REVISAR
+% 88.6 s/ imagen de apéndice, 130, 150 o 165 s/ mi hoja
+Resistencia de carga: $R=88.6\Omega$
+
 % 1) Tensión de salida en el colector del TL494
+
+Se verifica que el ciclo de trabajo es de $D=0.4$ y la frecuencia de conmutación es de aproximadamente $f=125kHz$. 
+Su amplitud se reduce considerablemente de los $12V$ que poseía sin la carga del convertidor a $8V$ con el mismo acoplado. 
+
 % 2) Tensión en el capacitor Ct <<< N/A
+
+Se observa una disminución en la frecuencia de la forma de onda a aproximadamente $f=112kHz$. 
+El prototipo presenta una oscilación no deseada de $f_{osc}=1.25MHz$, 
+la cual estará presente en muchas de las formas de onda que se analizarán a continuación. 
+
 % 3) Tensión de salida de la etapa de ganancia de corriente
+
+Dado que la etapa posee ganancia de tensión unitaria, su forma de onda es aproximadamente igual a la tensión de salida del TL494. 
+Las oscilaciones fueron eliminadas mediante la red snubber. 
+
 % 4) Tensión en el primario del transformador del driver
+
+La amplitud y la forma de onda de la señal del prototipo coinciden respecto a la simulación. 
+Se observan unos picos en los flancos de subida y de bajada. 
+
 % 5) Tensión en el secundario del transformador del driver
+
+La amplitud y la forma de onda de la señal del prototipo coinciden respecto a la simulación. 
+Se observa un pico en el flanco de bajada. 
+
 % 6) Corriente en el primario del transformador del driver
+
+La forma de onda del prototipo está deformada y posee levemente mayor amplitud. 
+
 % 7) Corriente en la resistencia entre gate y source del driver
+
+La amplitud y la forma de onda de la señal del prototipo coinciden respecto a la simulación. 
+Presenta la oscilación de $f_{osc}=1.25MHz$. 
+
 % 8) Corriente que circula por el gate del MOSFET 1 (high side)
+
+El prototipo presenta una segunda onda triangular negativa indeseada. 
+Además, sus picos de amplitud son mayores. 
+
 % 9) Corriente que circula por el gate del MOSFET 2 (low side)
+
+El prototipo presenta un pico negativo indeseado. 
+Presenta la oscilación de $f_{osc}=1.25MHz$. 
+
 % 10) Corriente que circula por el drain del MOSFET 1 (high side)
+
+La amplitud del prototipo es 1A menor respecto a la simulada debido a que las puntas de corriente desacoplan la continua. 
+
 % 11) Corriente que circula por el drain del MOSFET 2 (low side)
+
+La amplitud del prototipo es 1A menor respecto a la simulada debido a que las puntas de corriente desacoplan la continua. 
+
 % 12) Corriente en el primario del transformador de potencia 
+
+La amplitud del prototipo es menor respecto a la simulada debido a que las puntas de corriente desacoplan la continua. 
+
 % 13) Corriente en el inductor del filtro de salida 
+
+La amplitud de la forma de onda del prototipo es 30mA menor a la simulada. 
+Además, presenta una oscilación de $f=3.68MHz$ en la rampa de subida y de $f=38.5MHz$ en la de bajada. 
+
 % 14) Corriente por la carga y su ripple
+% Revisar valor
+
+Su amplitud es 30mA menor a la simulada y presenta una oscilación de $f=34MHz$.
+
 % 15) Tensión entre gate y source del MOSFET 1 (high side)
+
+La amplitud y la forma de onda de la señal del prototipo coinciden respecto a la simulación.
+Presenta la oscilación de $f_{osc}=1.25MHz$. 
+
 % 16) Tensión entre drain y source del MOSFET 1 (high side)
+
+Exceptuando el pico, la amplitud y la forma de onda de la señal del prototipo coinciden respecto a la simulación.
+Presenta la oscilación de $f_{osc}=1.25MHz$. 
+
 % 17) Tensión entre gate y source del MOSFET 2 (low side)
+% REPETIDA
+
+Es la tensión de salida de la etapa de ganancia de corriente.
+
 % 18) Tensión entre drain y source del MOSFET 2 (low side)
+
+Exceptuando el pico, la amplitud y la forma de onda de la señal del prototipo coinciden respecto a la simulación.
+Presenta la oscilación de $f_{osc}=1.25MHz$. 
+
 % 19) Tensión en el primario del transformador de potencia 
+
+La forma de onda del prototipo difiere de la simulada. 
+Tiene un pico en el flanco de bajada. 
+Presenta la oscilación de $f_{osc}=1.25MHz$. 
+
 % 20) Tensión en el secundario del transformador de potencia 
+% ADJUNTAR AMBAS IMÁGENES 
+
+Con una relación 1:1, la tensión en el secundario era de 44V, mucho menor a la tensión en el primario. 
+Con una relación 1:2, la tensión en el secundario es de 68V, aproximadamente igual a la del primario.
+Presenta oscilaciones de $f_{osc_{1}}=3.23MHz$ en la subida y en la bajada y de $f_{osc_{2}}=2.63MHz$ anterior a la subida. 
+
 % 21) Tensión de salida sobre la carga y su ripple 
+
+El ripple del prototipo es de 80mV fino y 200mV grueso. 
+Luego de 120mV. Presenta una oscilación de 2MHz. 
+
 % 22) Tensión en el inductor del filtro de salida
+
+El prototipo presenta una oscilación de $f_{osc}=3.03MHz$. 
+
 % 23) Corriente de salida por colector del TL494 
 % 24) Tensión cátodo ánodo en el diodo D1
 % 25) Tensión cátodo ánodo en el diodo D2
 % 26) Tensión cátodo ánodo en el diodo D3
+
+El prototipo presenta una oscilación de $f_{osc}=3.03MHz$. 
+
 % 27) Tensión cátodo ánodo en el diodo D4
+
+El prototipo presenta una oscilación de $f_{osc}=3.03MHz$. 
+
 % 28) Corriente en el secundario del transformador de potencia
+
+El prototipo presenta una oscilación de $f_{osc}=5.26MHz$.
 
 \subsection{Generador de señal PWM}
 
-Por cuestiones de costo computacional y de falta de un modelo representativo del TL494,
-su circuito no fue simulado y se probó directamente en una protoboard,
-por lo que no se harán comparaciones con las simulaciones.
-
-Aun así, a continuación se mostrarán las formas de onda mas importantes del circuito implementado,
-comparando con las indicadas en la hoja de datos del fabricante.
+No se realizarán comparaciones ya que su circuito no fue simulado debido a la ausencia de un correcto modelo del TL494.
+El mismo fue implementado en una protoboard y sus formas de onda más importantes se comparan con las indicadas en la hoja de datos del fabricante.
 
 En la figura \ref{fig:osc_pwm_vout_disconnected} se muestra la forma de onda de la tensión de salida de la etapa de ganancia de corriente.
 Esta debería ser una señal PWM con un período de $8\mu s$ y un ancho de pulso de aproximadamente 40\%
