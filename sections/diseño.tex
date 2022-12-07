@@ -34,7 +34,7 @@ $$ C=\frac{(1-D)V_o}{8\times L\times\Delta V_o\times f^2}=\frac{(1-0)\times12.6V
 Los dispositivos semiconductores fueron elegidos en base a su disponibilidad en el ATEI,
 comprobando que puedan ser utilizados en el prototipo con los parámetros especificados en sus hojas de datos.  
 
-Se eligieron diodos rectificadores para alta frecuencia modelo UF4007. 
+Se eligieron diodos rectificadores para alta frecuencia modelo UF4007 \cite{uf4007}. 
 Presenta tiempo de recuperación inversa ultra rápido, una baja caída de tensión directa, alta capacidad de sobretensión, bajas pérdidas de conmutación y alta eficiencia.
 Sus características principales son: 
 
@@ -45,7 +45,7 @@ Sus características principales son:
     \item Tensión directa instantánea máxima: $V_f=1.7V$
 \end{itemize}
 
-Para los transistores se eligieron MOSFETs para switching de alta velocidad modelo IRF840. 
+Para los transistores se eligieron MOSFETs para switching de alta velocidad modelo IRF840 \cite{IRF840}. 
 Sus características principales son: 
 
 \begin{itemize}
@@ -102,7 +102,7 @@ donde $K_u$ es el factor de relleno que varía entre 0.4 y 0.6 y $B_m$ es la den
 
 La cantidad de alambre de cobre y la cantidad de material del núcleo (por lo general ferrita de hierro) determinan la capacidad de potencia del transformador. 
 Existen distintos tipos de núcleo como toroidal, pot, power, E-laminated, EI, C, single-coil, tape-wound, etc. 
-En este proyecto se trabajará con los núcleos disponibles provistos por la cátedra: E70, E42 y E30. 
+En este proyecto se trabajará con los núcleos disponibles provistos por la cátedra: E70, E42 y E30 \cite{trafos}. 
 
 Las especificaciones obtenidas por simulación son las siguientes:
 \begin{itemize}
@@ -180,36 +180,36 @@ $$ A_{ws}=\frac{I_o}{J}=\frac{1A}{630.7 \frac{A}{cm^2}}=1.6cm^2\times10^{-3} $$
 % AGREGAR IMÁGEN DE TABLA y COMPLETAR TEXTO DE ABAJO
 \begin{table}[H]
     \centering
-    \begin{tabular}{cccc}
+    \begin{tabular}{ccc}
         \hline
-                & \multicolumn{2}{c}{Área}          & Resistencia          \\ \cline{2-4} 
-        Tamaño AWG & $[cm^2\times10^{-3}]$ & $Cir-Mil$ & $[10^{-6}\Omega/cm]$ \\ \hline
-        10         & 52.61                 & 10384     & 32.70                \\
-        11         & 41.68                 & 8226      & 41.37                \\
-        12         & 33.08                 & 6529      & 52.09                \\
-        13         & 26.26                 & 5184      & 65.64                \\
-        14         & 20.82                 & 4109      & 82.80                \\
-        15         & 16.51                 & 3260      & 104.3                \\
-        16         & 13.07                 & 2581      & 131.8                \\
-        17         & 10.39                 & 2052      & 165.8                \\
-        18         & 8.228                 & 1624      & 209.5                \\
-        19         & 6.531                 & 1289      & 263.9                \\
-        20         & 5.188                 & 1024      & 332.3                \\
-        21         & 4.116                 & 812.3     & 418.9                \\
-        22         & 3.243                 & 640.1     & 531.4                \\
-        23         & 2.588                 & 510.8     & 666.0                \\
-        24         & 2.047                 & 404.0     & 842.1                \\
-        25         & 1.623                 & 320.4     & 1062.0               \\
-        26         & 1.280                 & 252.8     & 1345.0               \\
-        27         & 1.021                 & 201.6     & 1687.6               \\
-        28         & 0.8046                & 158.8     & 2142.7               \\
-        29         & 0.6470                & 127.7     & 2664.3               \\
-        30         & 0.5067                & 100.0     & 3402.2               \\
-        31         & 0.4013                & 79.21     & 4294.6               \\
-        32         & 0.3242                & 64.00     & 5314.9               \\
-        33         & 0.2554                & 50.41     & 6748.6               \\
-        34         & 0.2011                & 39.69     & 3572.8               \\ \hline
-    \end{tabular}
+                   & Área                  & Resistencia          \\ \cline{2-3} 
+        Tamaño AWG & $[cm^2\times10^{-3}]$ & $[10^{-6}\Omega/cm]$ \\ \hline
+        10         & 52.61                 & 32.70                \\
+        11         & 41.68                 & 41.37                \\
+        12         & 33.08                 & 52.09                \\
+        13         & 26.26                 & 65.64                \\
+        14         & 20.82                 & 82.80                \\
+        15         & 16.51                 & 104.3                \\
+        16         & 13.07                 & 131.8                \\
+        17         & 10.39                 & 165.8                \\
+        18         & 8.228                 & 209.5                \\
+        19         & 6.531                 & 263.9                \\
+        20         & 5.188                 & 332.3                \\
+        21         & 4.116                 & 418.9                \\
+        22         & 3.243                 & 531.4                \\
+        23         & 2.588                 & 666.0                \\
+        24         & 2.047                 & 842.1                \\
+        25         & 1.623                 & 1062.0               \\
+        26         & 1.280                 & 1345.0               \\
+        27         & 1.021                 & 1687.6               \\
+        28         & 0.8046                & 2142.7               \\
+        29         & 0.6470                & 2664.3               \\
+        30         & 0.5067                & 3402.2               \\
+        31         & 0.4013                & 4294.6               \\
+        32         & 0.3242                & 5314.9               \\
+        33         & 0.2554                & 6748.6               \\
+        34         & 0.2011                & 3572.8               \\ \hline
+        \end{tabular}
     \caption{Tabla de valores AWG}
     \label{table:awg}
 \end{table}
@@ -227,7 +227,7 @@ Sus parámetros principales son:
 \end{itemize}
 
 En corriente continua, la densidad de corriente es similar en todo el conductor, pero en corriente alterna se observa que hay una mayor densidad de corriente en la superficie que en el centro. 
-Este fenómeno se conoce como efecto pelicular y provoca una variación de la resistencia eléctrica de un conductor en corriente alterna debido al cambio de la frecuencia $f$ de la corriente eléctrica que circula por el mismo.
+Este fenómeno se conoce como efecto pelicular\cite{skin} y provoca una variación de la resistencia eléctrica de un conductor en corriente alterna debido al cambio de la frecuencia $f$ de la corriente eléctrica que circula por el mismo.
 Por lo tanto, para corriente alterna la mayor parte de la corriente eléctrica fluye entre la superficie y la profundidad superficial de los conductores $\delta$.
 Esta última depende de la frecuencia de la corriente y de las propiedades eléctricas y magnéticas del conductor.
 
@@ -273,7 +273,7 @@ Especificaciones:
     \item Corriente continua: $I_{dc}=1A$
 \end{itemize}
 
-Procedimiento de diseño:
+Procedimiento de diseño \cite{diseno-trafo-kike}:
 
 \begin{enumerate}
 \item{Cálculo de la energía que debe almacenar el inductor}
@@ -382,7 +382,7 @@ $$ Q_g=26nC $$
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.8\textwidth]{images/irf840/vgs-vs-qg.png}
-    \caption{Curva típica de tensión entre gate y source vs. carga del terminal gate}
+    \caption{Curva típica de tensión entre \textit{gate} y \textit{source} vs. carga del terminal gate}
     \label{fig:vgs-vs-qg}
 \end{figure}
 
@@ -480,9 +480,14 @@ $$ N_{1}=\frac {V_{tr}\times t}{\Delta B \times A_{e}} $$
 donde $V_{tr}$ es la tensión en el bobinado primario, $t$ es la duración del pulso, 
 $\Delta B$ es la variación en el flujo pico a pico durante el tiempo $t$ y $A_{e}$ es la sección transversal equivalente del núcleo. 
 
-%INSERTAR IMÁGEN 36: Gate-Drive Transformer Volt-second Product vs. Duty Ratio
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/VS-product-vs-duty-ratio.png}
+    \caption{Producto volt-segundo en función del ciclo de trabajo.}
+    \label{fig:producto-vs}
+\end{figure}
 
-Primero se halla el máximo producto volt-segundo del numerador mediante la figura X.
+Primero se halla el máximo producto volt-segundo del numerador mediante la figura \ref{fig:producto-vs}.
 Para un transformador acoplado en alterna, el peor de los casos se da para el ciclo de trabajo máximo $D=0.5$, por lo tanto se obtiene un valor de 0.25. 
 Dado que el valor está normalizado, se lo debe multiplicar por la tensión de entrada $V_{drv}=8V$ y por el período de conmutación $T_{drv}=8\mu s$.
 De la hoja de datos del núcleo elegido la sección transversal equivalente es $A_{e}=60mm^2$. 

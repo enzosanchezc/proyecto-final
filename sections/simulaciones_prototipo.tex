@@ -8,7 +8,7 @@ Las condiciones de simulación y ensayo fueron:
     \item Ciclo de trabajo: $D=0.4$
     \item Resistencia de carga: $R=88.5\Omega$
 \end{itemize}
- 
+
 % % 1) Tensión de salida en el colector del TL494 <<< DONE
 
 % Se verifica que el ciclo de trabajo es de $D=0.4$ y la frecuencia de conmutación es de aproximadamente $f=125kHz$. 
@@ -55,11 +55,11 @@ Las condiciones de simulación y ensayo fueron:
 % El prototipo presenta un pico negativo indeseado. 
 % Presenta la oscilación de $f_{osc}=1.25MHz$. 
 
-% % 10) Corriente que circula por el drain del MOSFET 1 (high side)
+% % 10) Corriente que circula por el drain del MOSFET 1 (high side) <<< DONE
 
 % La amplitud del prototipo es 1A menor respecto a la simulada debido a que las puntas de corriente desacoplan la continua. 
 
-% % 11) Corriente que circula por el drain del MOSFET 2 (low side)
+% % 11) Corriente que circula por el drain del MOSFET 2 (low side) <<< DONE
 
 % La amplitud del prototipo es 1A menor respecto a la simulada debido a que las puntas de corriente desacoplan la continua. 
 
@@ -455,7 +455,7 @@ En las figuras \ref{fig:osc:20} y \ref{fig:osc:22} puede verse la corriente por 
     \includegraphics[width=\textwidth]{images/sim/10.pdf}
     \caption{Simulación de la corriente que circula por el \textit{drain} del MOSFET de lado alto}
     \label{fig:sim:10}
-\end{figure}
+\end{figure} 
 
 \begin{figure}[H]
     \centering
@@ -471,8 +471,39 @@ En las figuras \ref{fig:osc:20} y \ref{fig:osc:22} puede verse la corriente por 
     \label{fig:sim:11}
 \end{figure}
 
-El prototipo presenta un sobrepico negativo en el flanco de bajada del MOSFET del lado bajo. 
+El prototipo presenta un sobrepico negativo en el flanco de bajada del MOSFET de lado bajo. 
 También se observa que la amplitud de la señal simulada es mucho mayor.
+
+Como último punto de los MOSFETs, se muestran en las figuras \ref{fig:osc:15} y \ref{fig:osc:17} las corrientes por \textit{gate} del MOSFET de lado alto y bajo, respectivamente.
+Sus simulaciones pueden verse en las figuras \ref{fig:sim:8} y \ref{fig:sim:9}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/15.png}
+    \caption{Corriente que circula por el gate del MOSFET de lado alto}
+    \label{fig:osc:15}
+\end{figure}
+ 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/8.pdf}
+    \caption{Simulación de la crriente que circula por el gate del MOSFET de lado alto}
+    \label{fig:sim:8}
+\end{figure}
+ 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/17.png}
+    \caption{Corriente que circula por el gate del MOSFET lado bajo}
+    \label{fig:osc:17}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/9.pdf}
+    \caption{Simulación de la crriente que circula por el gate del MOSFET de lado bajo}
+    \label{fig:sim:9}
+\end{figure}
 
 \subsubsection{Transformador de potencia}
 % 4) Tensiones en el E70

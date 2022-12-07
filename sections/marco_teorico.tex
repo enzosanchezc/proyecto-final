@@ -6,7 +6,7 @@
 \subsection{Rectificador de entrada AC-DC}
 
 Los circuitos rectificadores AC-DC convierten una tensión alterna en una tensión continua.
-Esta etapa es necesaria para poder alimentar con una tensión continua al convertidor DC-DC.
+Esta etapa es necesaria para poder alimentar con una tensión continua al convertidor DC-DC. \cite{hart_espanol}
 
 \subsubsection{Rectificador de media onda u onda completa}
 
@@ -70,7 +70,7 @@ un capacitor, cuya capacidad sea la suficiente para obtener una tensión continu
 
 Las fuentes de alimentación otorgan una alta densidad de potencia en un tamaño mediano y con un peso reducido.  
 Permiten aislar eléctricamente a la carga de la red de alimentación con una alta eficiencia de conversión.  
-En base a la tensión de salida requerida existen fuentes de alimentación AC y DC.
+En base a la tensión de salida requerida existen fuentes de alimentación AC y DC \cite{rashid}.
 Dado el requisito de tensión de salida continua, se debe diseñar una fuente de alimentación DC, las cuales se clasifican en:
 
 \paragraph{Conmutadas}
@@ -107,7 +107,7 @@ Como se requiere una única tensión de salida no se utilizan múltiples devanad
 Aunque la mayor parte de los convertidores se pueden utilizar para cumplir con los requerimientos de salida, 
 los valores nominales del dispositivo de conmutación y el tamaño del transformador limitan sus aplicaciones a una potencia de salida específica. 
 Por lo tanto, la elección del convertidor depende del requisito de potencia de salida y de la complejidad que se desea afrontar.
-Para el cargador de baterías, el convertidor debe alcanzar una potencia máxima de 300W y debe ser lo más sencillo posible para evitar un costo elevado. 
+Para el cargador de baterías, el convertidor debe alcanzar una potencia máxima de 300W y debe ser lo más sencillo posible para evitar un costo elevado \cite{hart}.
 
 La topología flyback es la más sencilla al estar integrada por muy pocos componentes. 
 La energía se almacena en el primario cuando el conmutador está cerrado y se transfiere a la carga cuando está abierto.
@@ -120,7 +120,7 @@ En esta topología, la energía del generador se transfiere a la carga cuando el
 Como desventajas, al igual que la flyback presenta alta tensión en bornes del interruptor y se eleva el costo debido al agregado de la bobina de filtrado.
 La topología forward con dos switches reduce la tensión en bornes del interruptor a la mitad respecto a la de un solo switch (y con ello la disipación de potencia por switch), 
 pero el circuito de excitación de uno de los transistores queda flotante respecto a masa. 
-La topología con un solo switch admite una potencia de salida entre 150-250W y con 2 switches se eleva a 500W \cite{hart}. 
+La topología con un solo switch admite una potencia de salida entre 150-250W y con 2 switches se eleva a 500W. 
 Por lo tanto, en base a los criterios definidos inicialmente se eligió al convertidor forward con dos switches como topología de conversión DC-DC. 
 
 \subsubsection{Convertidor Forward}
@@ -392,7 +392,7 @@ Por esto mismo, el capacitor de salida puede ser más pequeño.
 
 El convertidor forward se utiliza para potencias de salida de hasta 250W ya que se encuentra limitado 
 por los esfuerzos de tensión y corriente a los que se somete el transistor de potencia durante su funcionamiento. 
-El convertidor forward de doble switch puede ser utilizado con potencias de hasta 500W \cite{hart}.
+El convertidor forward de doble switch puede ser utilizado con potencias de hasta 500W.
 En la figura \ref{fig:forward_doble_switch} se muestra el esquema de éste último.
 A partir de los diodos $D_3$ y $D_4$ en el primario se reduce la tensión de colector en los transistores cuando los mismos 
 se encuentran apagados, lo cual permite utilizar transistores de menores prestaciones.
@@ -527,7 +527,7 @@ Las señales de tensión y corriente están normalizadas con respecto a sus valo
 \subsubsection{Generador PWM}
 
 Por lo general se utilizan circuitos integrados controladores PWM que sólo requieren de unos pocos componentes pasivos adicionales para su funcionamiento. 
-Se utilizó el TL494 como generador de señal PWM de frecuencia fija. 
+Se utilizó el TL494 como generador de señal PWM de frecuencia fija \cite{tl494}. 
 Internamente presenta 4 componentes principales:
 \begin{enumerate}
     \item Un reloj ajustable que permite configurar la frecuencia de conmutación
@@ -590,7 +590,7 @@ La etapa permite acoplar la carga en continua.
 Se compone de un transistor NPN y otro PNP, ambos dispositivos de potencia y no de señal. 
 Cada dispositivo de amplificación conduce durante medio ciclo de la señal de entrada, 
 excitándolos mediante el ingreso de corriente por su base y lo hacen de forma alternativa. 
-En el semiciclo positivo de la señal conduce el NPN y el PNP se corta, y en el semiciclo negativo conduce el PNP y el NPN se corta.
+En el semiciclo positivo de la señal conduce el NPN y el PNP se corta, y en el semiciclo negativo conduce el PNP y el NPN se corta \cite{Gi}.
 
 Los transistores se alimentan de forma inversa: el NPN requiere de una tensión positiva en su colector y el PNP requiere de una tensión negativa en su colector.
 Además, requieren de una tensión $V_{be}$ en sus junturas ya que entre base y emisor existe una juntura PN similar a un diodo. 
@@ -638,7 +638,7 @@ Los circuitos integrados, si bien son más pequeños y ocupan menor espacio en l
 poseen tiempos significativos de encendido y apagado. 
 El transformador es de un tamaño mucho mayor, requiere de un diseño apropiado y de componentes adicionales,
 pero sus tiempos de encendido y apagado son despreciables y permite operar con diferencias de tensión más elevadas.
-En base a ello, se optó por implementar un transformador como driver para el MOSFET de lado alto. 
+En base a ello, se optó por implementar un transformador como driver para el MOSFET de lado alto \cite{gatedrivers}. 
 
 Los transformadores poseen al menos 2 bobinados acoplados magnéticamente, 
 lo cual permite generar aislación entre el circuito primario y secundario. 
@@ -758,7 +758,7 @@ Hasta ahora se ha analizado el convertidor forward sin tener en cuenta los eleme
 Algunos ejemplos de estos son la resistencia serie equivalente e inductancia serie equivalente de los capacitores, 
 la capacidad parásita de los transistores o la resistencia e inductancia parásita de las conexiones realizadas. 
 La energía acumulada en las inductancias parásitas mientras los transistores conmutan provoca una resonancia con el capacitor de filtrado en la entrada. 
-La red snubber conforma un camino de baja impedancia para el drenaje de esta energía. 
+La red snubber conforma un camino de baja impedancia para el drenaje de esta energía \cite{snubber}. 
 Valores pequeños de estos elementos parásitos generan resonancias del orden de los MHz. 
 
 \subsubsection{Funcionamiento}
