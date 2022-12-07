@@ -1,5 +1,8 @@
 \section{Marco teórico}
 
+\input{sections/perfil_de_carga.tex}
+\input{sections/bms.tex}
+
 \subsection{Rectificador de entrada AC-DC}
 
 Los circuitos rectificadores AC-DC convierten una tensión alterna en una tensión continua.
@@ -431,7 +434,7 @@ La tensión de salida es la misma que en el convertidor forward con un interrupt
 La principal ventaja de esta topología es que la tensión de colector en los transistores cuando los mismos se encuentran apagados 
 es $V_s$ y no $V_s\left(1+N_1/N_3\right)$ como en el forward de un único switch.
 
-\subsection{Diseño del circuito de control}
+\subsection{Circuito de control}
 % El diseño se realizó en bloques según la figura \ref{fig:marco_teorico:control} y puede ser dividido en tres partes:
 
 % \begin{enumerate}
@@ -439,8 +442,6 @@ es $V_s$ y no $V_s\left(1+N_1/N_3\right)$ como en el forward de un único switch
 %     \item Selector de modo de funcionamiento
 %     \item Controlador para los switches
 % \end{enumerate}
-
-
 
 % Para la selección de un controlador para los MOSFETs se tuvieron en cuenta algunos parámetros como
 % la tensión máxima de entrada, frecuencia de switching y sincronización de las señales,
@@ -451,7 +452,8 @@ es $V_s$ y no $V_s\left(1+N_1/N_3\right)$ como en el forward de un único switch
 
 \subsubsection{Modos de control}
 
-Para controlar la tensión de salida, los convertidores funcionan con un circuito de realimentación,
+La tensión de salida del convertidor puede ser controlada variando el ciclo de trabajo $D$. 
+Para controlarlo los convertidores funcionan con un circuito de realimentación,
 en un control por tensión o corriente, dependiendo de la señal realimentada. 
 
 \begin{figure}[ht]
@@ -464,18 +466,16 @@ en un control por tensión o corriente, dependiendo de la señal realimentada.
 \paragraph{Control por tensión}
 
 %COMPLETAR CON LIBRO
-El bloque de control mide la tensión a la salida del convertidor, la escala y la compara con la tensión deseada.
+Se mide la tensión a la salida del convertidor, se la escala a partir de un divisor resistivo y compara con la tensión deseada.
 Esto genera una señal de error, la cual alimenta a un controlador PI.
-El tiempo de encendido de la forma de onda PWM inicia cuando se reestablece el generador de dientes de sierra 
-y finaliza cuando su rampa positiva se intersecta con la señal de tensión de error. 
-Cuando la tensión de salida es inferior al valor nominal se genera una tensión de error. 
-El ciclo de trabajo aumenta para causar un aumento posterior en el voltaje de salida. 
+El tiempo de encendido de la forma de onda PWM inicia cuando se reestablece el generador de dientes de sierra y finaliza cuando su rampa positiva se intersecta con la señal de tensión de error. 
+Cuando la tensión de salida es inferior al valor nominal, la señal de error generada incrementa su duración y provoca un aumento en el ciclo de trabajo y, en consecuencia, en la tensión de salida. En el caso de que la tensión de salida sea superior a la nominal, el proceso es análogo causando una disminución del ciclo de trabajo. 
 %La dinámica de retroalimentación está determinada por el circuito amplificador de error que consta de Z1 y Z2.
 
 \paragraph{Control por corriente}
 La corriente a la salida del convertidor es medida con una resistencia de bajo valor conectada en serie con la carga.
 Esta resistencia actúa como un transductor de corriente a tensión.
-Esta señal es muestreada y el resto del proceso es análogo al control por tensión.\\
+La señal es muestreada y el resto del proceso es análogo al control por tensión.\\
 
 % Consiste en un lazo interno que muestrea el valor de la corriente primaria y apaga los interruptores tan pronto como la corriente alcanza cierto valor establecido por el lazo de voltaje externo. 
 % De esta manera, el control de corriente logra una respuesta más rápida que el modo de voltaje. 
@@ -490,33 +490,23 @@ Esta señal es muestreada y el resto del proceso es análogo al control por tens
 
 \subsubsection{Generador PWM}
 
-La tensión de salida del convertidor puede ser controlada variando el ciclo de trabajo D. 
-Para ello se utilizan circuitos integrados controladores PWM que sólo requieren de unos pocos componentes pasivos adicionales para su funcionamiento. 
-En la figura \ref{fig:marco_teorico:control} se muestra un diagrama de bloques del circuito de control.
-Internamente presenta 4 componentes principales:
-\begin{enumerate}
-    \item Un reloj ajustable que permite configurar la frecuencia de conmutación
-    \item Amplificador de error para la tensión de salida
-    \item Generador de forma de onda de dientes de sierra sincronizado con el reloj
-    \item Un comparador para comparar la señal de error de salida con la señal de dientes de sierra
-\end{enumerate}
+Por lo general se utilizan circuitos integrados controladores PWM que sólo requieren de unos pocos componentes pasivos adicionales para su funcionamiento. 
+En la figura \ref{fig:marco_teorico:control} se muestra un diagrama en bloques del circuito de control.
 
+El amplificador de error es un amplificador operacional que compara la señal de entrada con una referencia y
+amplifica la diferencia entre ambas.
+
+El controlador proporcional-integrador (PI) está conformado por dos amplificadores operacionales. Uno de ellos integra la señal de entrada y el otro la escala.
+Las salidas de estos dos bloques se suman y se obtiene la señal de entrada del comparador.
+
+El comparador, como su nombre lo indica, compara la señal de entrada con una señal diente de sierra y en base a esto genera la señal PWM.
 La señal de salida del comparador es la que controla a los transistores. 
 
-El amplificador de error es un operacional que compara la señal de entrada con una referencia y, como su nombre lo indica,
-amplifica la diferencia entre ambas. Se encarga de generar la señal que entra al bloque PI.
-
-El controlador PI está formado por dos amplificadores operacionales. Uno integra la señal de entrada, mientras que el otro la escala.
-Las salidas de estos dos bloques se suman y se obtiene la señal de entrada del comparador.
-Los parámetros del bloque proporcional-integrador (PI) fueron definidos a partir de valores típicos
-y posteriormente ajustados para que el circuito funcione en las condiciones de la aplicación.
-La frecuencia de switching es definida por la frecuencia de la señal de diente de sierra y también se tomó un valor típico.
-
-Tanto el amplificador de error como el controlador PI se diseñaron y simularon, pero no se llegaron a implementar.
+La frecuencia de switching es definida por la frecuencia de la señal de diente de sierra y se eligió un valor típico de $f=125kHz$.
 
 \subsubsection{Selector de modo de funcionamiento}
 
-Una vez diseñado el compensador, se procedió a diseñar el circuito de cambio de modo (Precarga, tensión constante y corriente constante).
+Permite alternar entre los diferentes modos de carga: precarga, corriente constante y tensión constante. 
 En la figura \ref{fig:esquema_selector} se puede observar el esquema de este circuito.
 
 \begin{figure}[H]
@@ -526,17 +516,21 @@ En la figura \ref{fig:esquema_selector} se puede observar el esquema de este cir
     \label{fig:esquema_selector}
 \end{figure}
 
-Las señales de tensión y corriente están normalizadas con respecto a sus valores nominales.
-Un amplificador de ganancia variable actúa como selector de corriente de salida,
-modificando la amplitud de la señal de control de dicha variable.
-La selección entre el modo de precarga y el modo de corriente constante se hace comparando el nivel de tensión de la batería
-con una señal de referencia, siendo el segundo modo activado una vez que la tensión supera los 30V.
-El bloque de ganancia 5 tiene como objetivo amplificar la señal de control, ya que la corriente de salida para el modo
-de precarga es 5 veces mas chica que la de corriente constante.
+% Un amplificador de ganancia variable actúa como selector de corriente de salida,
+% modificando la amplitud de la señal de control de dicha variable.
+El amplificador de ganancia variable de la izquierda es el encargado de seleccionar la corriente de salida.
+Esto se logra variando la ganancia del operacional.
 
-La normalización de las señales nombrada anteriormente permite que la selección de la señal del último multiplexor
-se haga en base a cual es la mayor de las dos. Esto, visto desde una perspectiva general, permite establecer un límite
-tanto de tensión como de corriente de salida, lo cual es importante porque representa la base del método de carga.
+La selección entre el modo de precarga y el modo de corriente constante se realiza comparando el nivel de tensión de la batería con una señal de referencia.
+El modo de precarga se activa una vez que la tensión supera los 30V.
+
+% El bloque de ganancia 5 amplifica la señal de control, ya que la corriente de salida para el modo de precarga es 5 veces inferior a la de la etapa de corriente constante.
+%Aumentar la amplitud de la señal de control causará una disminución proporcional de la corriente de salida,
+El bloque de ganancia en la bifurcación superior posterior al selector de corriente permite tener una señal de control 5 veces mas grande para el modo de precarga.
+La amplitud de la señal de control es inversamente proporcional a la señal de salida,
+por lo que la corriente de salida será 5 veces mas chica cuando se cierre el lazo por esa rama.
+
+Las señales de tensión y corriente están normalizadas con respecto a sus valores nominales, lo cual permite que el último multiplexor seleccione la señal de mayor amplitud. De esta forma se pueden establecer los límites de tensión y corriente de salida para seguir el perfil de carga deseado.
 
 \subsubsection{TL494}
 
@@ -546,6 +540,14 @@ La modulación de los pulsos de salida se logra comparando la forma de onda de d
 La etapa de salida se habilita durante el tiempo en el cual la tensión de diente de sierra es mayor que las señales de control de voltaje. 
 A medida que aumenta la señal de control, disminuye el tiempo durante el cual la entrada en diente de sierra es mayor; por lo tanto, la duración del pulso de salida disminuye. 
 Un flip-flop de dirección de pulso dirige alternativamente el pulso modulado a cada uno de los dos transistores de salida.
+
+Internamente presenta 4 componentes principales:
+\begin{enumerate}
+    \item Un reloj ajustable que permite configurar la frecuencia de conmutación
+    \item Amplificador de error para la tensión de salida
+    \item Generador de forma de onda de dientes de sierra sincronizado con el reloj
+    \item Un comparador para comparar la señal de error de salida con la señal de dientes de sierra
+\end{enumerate}
 
 Dentro de sus características principales, se encuentran:
 \begin{itemize}

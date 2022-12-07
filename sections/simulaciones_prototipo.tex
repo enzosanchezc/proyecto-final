@@ -40,7 +40,7 @@ Condiciones de simulación y ensayo:
 
 % La forma de onda del prototipo está deformada y posee levemente mayor amplitud. 
 
-% % 7) Corriente en la resistencia entre gate y source del driver
+% % 7) Corriente en la resistencia entre gate y source del driver <<< DONE
 
 % La amplitud y la forma de onda de la señal del prototipo coinciden respecto a la simulación. 
 % Presenta la oscilación de $f_{osc}=1.25MHz$. 
@@ -224,7 +224,7 @@ la cual estará presente en muchas de las formas de onda que se analizarán a co
 
 % Puede observarse que las oscilaciones aumentan. %WHAT?
 
-En la figura \ref{fig:osc_pwm_vout_disconnected} se muestra la forma de onda de la tensión de salida de la etapa de ganancia de corriente.
+En la figura \ref{fig:osc:3} se muestra la forma de onda de la tensión de salida de la etapa de ganancia de corriente.
 Esta debería ser una señal PWM con un período de $8\mu s$ y un ancho de pulso de aproximadamente 40\%.
 
 % Dado que la etapa posee ganancia de tensión unitaria, su forma de onda es aproximadamente igual a la tensión de salida del TL494. 
@@ -234,14 +234,14 @@ Esta debería ser una señal PWM con un período de $8\mu s$ y un ancho de pulso
     \centering
     \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/3.png}
     \caption{Tensión a la salida de la etapa de ganancia de corriente}
-    \label{fig:osc_pwm_vout_disconnected}
+    \label{fig:osc:3}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/sim/3.pdf}
     \caption{Simulación de la tensión a la salida de la etapa de ganancia de corriente}
-    \label{fig:sim:osc_pwm_vout}
+    \label{fig:sim:3}
 \end{figure}
 
 Se observa una mejora considerable en la forma de onda de la señal, incluso dando mejores resultados que el simulador. %Porque estamos re masa.
@@ -470,6 +470,9 @@ En las figuras \ref{fig:osc:20} y \ref{fig:osc:22} puede verse la corriente por 
     \caption{Simulación de la corriente que circula por el \textit{drain} del MOSFET de lado bajo}
     \label{fig:sim:11}
 \end{figure}
+
+El prototipo presenta un sobrepico negativo en el flanco de bajada del MOSFET del lado bajo. 
+También se observa que la amplitud de la señal simulada es mucho mayor.
 
 \subsubsection{Transformador de potencia}
 % 4) Tensiones en el E70

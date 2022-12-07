@@ -52,3 +52,21 @@ Se varió la resistencia de carga conectada al convertidor y se midieron la tens
 
 Se evidencia como la tensión de salida varía con la carga conectada y, en consecuencia, la tensión de salida deseada de $V_{o}=12.6V$ sólo se logra para una resistencia de $R=88.5\Omega$.
 Respecto a las simulaciones, la variación de carga si bien modifica levemente la tensión de salida, no disminuye notablemente su valor y presenta una corriente de salida mucho mayor especialmente en las resistencias de carga más bajas.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lllllll}
+    \hline
+    $R[\Omega]$ & $I_i[A]$ & $V_o[V]$ & $I_o[A]$ & \multicolumn{1}{c}{$P_i[W]$} & \multicolumn{1}{c}{$P_o[W]$} & \multicolumn{1}{c}{$\eta[\%]$} \\ \hline
+    12.6        & 1.46     & 12.49    & 0.99     & 17.65                        & 12.39                        & 70.19                          \\
+    18          & 1.33     & 12.70    & 0.71     & 13.72                        & 8.96                         & 65.31                          \\
+    24.3        & 1.24     & 12.84    & 0.51     & 10.80                        & 6.60                         & 61.11                          \\
+    30.6        & 1.17     & 12.98    & 0.35     & 8.07                         & 4.56                         & 56.51                          \\
+    40          & 1.16     & 13.00    & 0.33     & 7.68                         & 4.23                         & 55.08                          \\
+    58          & 1.12     & 13.09    & 0.23     & 6.14                         & 2.95                         & 48.05                          \\
+    80.7        & 1.10     & 13.17    & 0.16     & 5.11                         & 2.15                         & 42.07                          \\
+    88.5        & 1.10     & 13.24    & 0.15     & 4.89                         & 1.95                         & 39.88                          \\ \hline
+    \end{tabular}
+    \caption{Resultados de las mediciones en la simulación}
+    \label{tab:mediciones_sim}
+\end{table}
