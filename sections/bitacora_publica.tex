@@ -1,36 +1,34 @@
 \section{Problemas afrontados}
 
-Una incorrecta elección de $R_t$ y $C_t$ para el TL494 fuera de los valores recomendados por el fabricante generaba variaciones muy grandes de la frecuencia de switching, 
+Una incorrecta elección de $R_t$ y $C_t$ para el TL494 fuera de los valores recomendados por el fabricante generaba variaciones muy grandes de la frecuencia de conmutación, 
 lo cual causaba inestabilidad en la tensión de salida. 
-
-La frecuencia de conmutación ajustada mediante el potenciómetro posee una gran estabilidad.
-
-La amplitud de la forma de onda PWM disminuye al aumentar el ciclo de trabajo con el convertidor conectado a la salida del TL494. 
+Utilizando valores recomendados para ambos componentes se logró que la frecuencia posea una gran estabilidad.
 
 Dado que la carga que genera el convertidor sobre el TL494 es muy alta, sin una etapa de ganancia de corriente, la forma de onda PWM 
 se distorsionaba y disminuía notablemente su amplitud, lo que causaba que los MOSFETs no se saturaran y aumentaran demasiado su temperatura.
 Los resultados obtenidos con la inclusión de esta etapa fueron una mejora en la forma de onda de la señal PWM y un incremento notorio en su amplitud.
+Sin embargo, actualmente su amplitud disminuye al aumentar el ciclo de trabajo.
 
-Las oscilaciones de alta frecuencia (superior a 125kHz) observadas en las formas de onda se pueden deber a cualquier tanque LC. 
-
-Se evidenció un problema con la tierra de la PCB ya que al realizar las mediciones de tensión, la fuente regulable de 36V eleva notablemente su corriente entregada al circuito 
+Al realizar las mediciones de tensión se evidenció un problema con la tierra de la PCB. 
+La fuente regulable de 36V eleva notablemente su corriente entregada al circuito 
 cuando se conecta la tierra de la punta del osciloscopio en ciertos puntos de la placa. 
-Estas mediciones fueron tomadas estableciendo un correcto límite de corriente en la fuente. 
+Estas mediciones fueron tomadas estableciendo en la fuente un correcto límite de corriente. 
 Además, en otros puntos como el transformador de potencia disminuye la tensión entregada por la fuente regulable de 12V. 
 
-Al utilizar resistencias de $1\Omega$ y potencia nominal $2Watts$ para medir corrientes en el circuito, 
+Al utilizar resistencias de $1\Omega$ y potencia nominal $2W$ para medir corrientes en el circuito, 
 se detectaron oscilaciones indeseadas en sus formas de onda con una frecuencia de $f_{osc}=1.1MHz$. 
-En consecuencia, se quitaron dichas resistencias y se soldaron cables con un largo tal que se pueda medir 
+Por lo tanto, se quitaron dichas resistencias y se soldaron cables con un largo tal que se pueda medir 
 la corriente a través de los mismos utilizando puntas de corriente para el osciloscopio TEKTRONIX modelo P6021. 
-Pueden variar su sensibilidad seleccionando 2mA/mV o 10mA/mV y están conformadas por un transformador de corriente.
-En consecuencia, sólo miden la componente alterna de la señal y las formas de onda que presentan una componente continua deben ajustarse.
+Las mismas están conformadas por un transformador de corriente y, en consecuencia, sólo miden la componente alterna de la señal.
 El cable que se introduce es el primario, por lo que consta de una única vuelta, y el secundario está adentro de la punta. 
+Pueden variar su sensibilidad seleccionando $2mA/mV$ o $10mA/mV$.
 Al medir corriente con las mismas no se detectaron las oscilaciones,
 con lo cual se concluye que a la frecuencia de trabajo las resistencias presentan una alta componente inductiva que genera las oscilaciones indeseadas. 
 Además, al quitar las resistencias se incrementó levemente la tensión de salida y la eficiencia. 
 
-La mayor diferencia del prototipo implementado respecto a las simulaciones se dio en la tensión de salida. 
+La mayor diferencia del prototipo implementado respecto a las simulaciones se obtuvo en la tensión de salida. 
 Se varió la resistencia de carga conectada al convertidor y se midieron la tensión y corriente de entrada y de salida para calcular la eficiencia del circuito.
+Para todas las mediciones realizadas, la tensión de entrada del convertidor fue de $36V$.
 
 \begin{table}[H]
     \centering
@@ -50,8 +48,10 @@ Se varió la resistencia de carga conectada al convertidor y se midieron la tens
     \label{tab:mediciones}
 \end{table}
 
-Se evidencia como la tensión de salida varía con la carga conectada y, en consecuencia, la tensión de salida deseada de $V_{o}=12.6V$ sólo se logra para una resistencia de $R=88.5\Omega$.
-Respecto a las simulaciones, la variación de carga si bien modifica levemente la tensión de salida, no disminuye notablemente su valor y presenta una corriente de salida mucho mayor especialmente en las resistencias de carga más bajas.
+En base a la tabla \ref{tab:mediciones}, se evidencia como la tensión de salida varía con la carga conectada y, en consecuencia, la tensión de salida deseada de $V_{o}=12.6V$ sólo se logra para una resistencia de $R=88.5\Omega$.
+Respecto a las simulaciones, como se observa en la tabla \ref{tab:mediciones_sim}, la variación de carga modifica levemente la tensión de salida pero el cambio no es tan amplio. 
+Si bien la fuente regulable de $36V$ tiene una corriente máxima de $1A$, nunca entregó la corriente esperada por simulación. 
+Además, presenta una corriente de salida mucho mayor en las resistencias de carga más bajas y una mayor eficiencia. 
 
 \begin{table}[H]
     \centering

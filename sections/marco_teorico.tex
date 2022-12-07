@@ -472,6 +472,7 @@ amplifica la diferencia entre ambas. Su señal de salida es una señal de error,
 El mismo está conformado por dos amplificadores operacionales, uno de ellos integra la señal de entrada y el otro la escala.
 Las salidas de ambos amplificadores se suman y se obtiene la señal de entrada del comparador.
 Éste último compara la señal de entrada con una señal diente de sierra, y en base a esto genera la señal PWM que controla a los transistores.
+
 La frecuencia de switching es definida por la frecuencia de la señal de diente de sierra y se eligió un valor típico de $f=125kHz$.
 El tiempo de encendido de la forma de onda PWM inicia cuando se reestablece el generador de dientes de sierra y finaliza cuando su rampa positiva se intersecta con la señal de tensión de error.
 Cuando la tensión de salida es inferior al valor nominal, la señal de error generada incrementa su duración y provoca un aumento en el ciclo de trabajo y, en consecuencia, en la tensión de salida. 
@@ -517,9 +518,9 @@ El modo de precarga se activa una vez que la tensión supera los 30V.
 
 % El bloque de ganancia 5 amplifica la señal de control, ya que la corriente de salida para el modo de precarga es 5 veces inferior a la de la etapa de corriente constante.
 %Aumentar la amplitud de la señal de control causará una disminución proporcional de la corriente de salida,
-El bloque de ganancia en la bifurcación superior posterior al selector de corriente permite tener una señal de control 5 veces mas grande para el modo de precarga.
+Posterior al selector de corriente, el bloque de ganancia en la bifurcación superior permite tener una señal de control 5 veces mayor para el modo de precarga.
 La amplitud de la señal de control es inversamente proporcional a la señal de salida,
-por lo que la corriente de salida será 5 veces mas chica cuando se cierre el lazo por esa rama.
+por lo que la corriente de salida será 5 veces menor cuando se cierre el lazo por esa rama.
 
 Las señales de tensión y corriente están normalizadas con respecto a sus valores nominales, lo cual permite que el último multiplexor seleccione la señal de mayor amplitud. De esta forma se pueden establecer los límites de tensión y corriente de salida para seguir el perfil de carga deseado.
 
@@ -527,60 +528,46 @@ Las señales de tensión y corriente están normalizadas con respecto a sus valo
 
 Por lo general se utilizan circuitos integrados controladores PWM que sólo requieren de unos pocos componentes pasivos adicionales para su funcionamiento. 
 Se utilizó el TL494 como generador de señal PWM de frecuencia fija. 
-La modulación de los pulsos de salida se logra comparando la forma de onda de diente de sierra creada por el oscilador interno en el capacitor de temporización (CT) con cualquiera de las dos señales de control. 
-La etapa de salida se habilita durante el tiempo en el cual la tensión de diente de sierra es mayor que las señales de control de voltaje. 
-A medida que aumenta la señal de control, disminuye el tiempo durante el cual la entrada en diente de sierra es mayor; por lo tanto, la duración del pulso de salida disminuye. 
-Un flip-flop de dirección de pulso dirige alternativamente el pulso modulado a cada uno de los dos transistores de salida.
-
 Internamente presenta 4 componentes principales:
 \begin{enumerate}
     \item Un reloj ajustable que permite configurar la frecuencia de conmutación
-    \item Amplificador de error para la tensión de salida
-    \item Generador de forma de onda de dientes de sierra sincronizado con el reloj
+    \item Dos amplificadores de error para la tensión de salida sensada y la deseada
+    \item Un generador de forma de onda de dientes de sierra sincronizado con el reloj
     \item Un comparador para comparar la señal de error de salida con la señal de dientes de sierra
 \end{enumerate}
+ 
+El rango de suministro de la tensión de entrada va desde los 7V hasta los 40V. 
+Presenta un regulador interno de 5V con precisión del 5\% para la alimentación de sus componentes internos.
+Posee dos transistores de salida que pueden trabajar tanto en emisor común como en colector común. 
+Un flip-flop de dirección de pulso dirige alternativamente el pulso modulado a cada uno de los dos transistores de salida. 
+La corriente de salida máxima de estos transistores es de $250mA$.
 
-Dentro de sus características principales, se encuentran:
-\begin{itemize}
-    \item Rango de suministro de voltaje de entrada entre 7 V y 40 V
-    \item Regulador interno de 5V con precisión del 5\%
-    \item Oscilador interno ajustable mediante un filtro RC externo
-    \item Control de tiempo muerto
-    \item Comparador interno con tiempo de respuesta de $400ns$
-\end{itemize}
-
-%Feedback: sin conexión ya que se trabaja a lazo abierto <<< Esto lo decimos despues, no?
-
-\paragraph{El oscilador interno} provee la forma de onda de diente de sierra al tiempo muerto y al comparador PWM. 
+Un oscilador interno provee la forma de onda de diente de sierra al comparador PWM. 
 Su frecuencia se programa mediante la selección de una resistencia $R_t$ y un capacitor $C_t$. 
-El oscilador carga al $C_t$ con una corriente constante determinada por $R_t$ produciendo una rampa de tensión sobre $C_t$.
+El oscilador carga al capacitor con una corriente constante $I_{carga}$ determinada por la resistencia produciendo una rampa de tensión sobre el mismo.
 
 $$ I_{carga}=\frac{3V}{R_t} $$
 
 Cuando la tensión sobre el mismo llega a $3V$, el circuito se descarga y se reinicia el ciclo. 
-La frecuencia es $f=\frac{1}{R_t\times C_t}$ para el modo single ended.
+La frecuencia está definida por la siguiente fórmula:
 
-Según la hoja de datos, los valores recomendados para $R_t$ y $C_t$ son:
+$$ f=\frac{1}{R_t\times C_t} $$
 
-$$470pF\leq C_t\leq 10\mu F$$
-$$1.8k\Omega\leq R_t\leq 500k\Omega$$
+Según la hoja de datos, los valores recomendados para el filtro RC externo son:
 
-Para lograr la $f=125kHz$ se eligió un capacitor de $1nF$ y para lograr la resistencia de $8k\Omega$ se ajustó un potenciómetro de $10k\Omega$. 
+$$ 470pF\leq C_t\leq 10\mu F$$
+$$ 1.8k\Omega\leq R_t\leq 500k\Omega $$
 
-\paragraph{El control de tiempo muerto (DTC)} permite controlar el ciclo de trabajo. 
-Es una entrada de alta impedancia que controla el tiempo de apagado mínimo. Con DTC a tierra, este es del 3\%.
-Si se aplica tensión en este puerto se le puede adicionar.
+Para lograr la frecuencia de $f=125kHz$ se eligió un capacitor de $1nF$ y para la resistencia de $8k\Omega$ se ajustó un potenciómetro de $10k\Omega$. 
 
-El tiempo muerto o de apagado se controla linealmente desde su mínimo de 3\% hasta su máximo de 100\%, 
-variando su tensión de entrada entre $0$ y $3.3V$ respectivamente. 
+El comparador permite la modulación de los pulsos de salida, comparando la rampa de tensión sobre el capacitor $C_t$ con cualquiera de las dos señales de control presentes en las salidas de los amplificadores de error.
+La etapa de salida se habilita durante el tiempo en el cual la tensión de diente de sierra es mayor que las señales de control de voltaje. 
+A medida que aumenta la señal de control, disminuye el tiempo durante el cual la entrada de diente de sierra es mayor, y en consecuencia también decrece la duración del pulso de salida. 
+Su tiempo de respuesta es de $400ns$.
 
-\paragraph{El comparador} modula el ancho de pulso de la salida.
-Para esto se compara la rampa de tensión sobre el capacitor $C_t$ con la señal de control
-presente en la salida de los amplificadores de error.\\
-
-Otros puntos a destacar de este integrado son la presencia de dos amplificadores de error y de dos transistores de salida,
-que pueden trabajar tanto en emisor común como en colector común. La corriente de salida máxima de estos transistores es de $200mA.$
-
+El control de tiempo muerto (DTC) permite controlar el ciclo de trabajo. 
+Es una entrada de alta impedancia que controla el tiempo de apagado mínimo. Con DTC a tierra, este es del 3\%, pero si se aplica tensión en este puerto se le puede adicionar.
+El tiempo muerto se controla linealmente variando su tensión de entrada entre $0$ y $3.3V$, desde su mínimo de 3\% hasta su máximo de 100\% respectivamente. 
 % Dos amplificadores de error:
 % Presentan alta ganancia y se alimentan mediante su entrada $V_i$. 
 % Tensión de MC de entrada: -0.3V a $V_{cc}-2V$
@@ -603,7 +590,8 @@ La etapa permite acoplar la carga en continua.
 Se compone de un transistor NPN y otro PNP, ambos dispositivos de potencia y no de señal. 
 Cada dispositivo de amplificación conduce durante medio ciclo de la señal de entrada, 
 excitándolos mediante el ingreso de corriente por su base y lo hacen de forma alternativa. 
-En el semiciclo positivo de la señal conduce el NPN y el PNP se corta, y en el semiciclo negativo conduce el PNP y el NPN se corta. 
+En el semiciclo positivo de la señal conduce el NPN y el PNP se corta, y en el semiciclo negativo conduce el PNP y el NPN se corta.
+
 Los transistores se alimentan de forma inversa: el NPN requiere de una tensión positiva en su colector y el PNP requiere de una tensión negativa en su colector.
 Además, requieren de una tensión $V_{be}$ en sus junturas ya que entre base y emisor existe una juntura PN similar a un diodo. 
 Si no se polariza de forma correcta, no circula corriente por su base y en consecuencia tampoco por su colector. 
@@ -621,7 +609,6 @@ Por lo tanto, la etapa amplificadora permite que por la salida circule la misma 
 
 Para encender los MOSFETs de canal N necesarios en el convertidor se debe aplicar una tensión positiva entre \textit{gate} y \textit{source}. 
 Debido a la topología elegida, se requiere un driver para controlar el MOSFET cuyo terminal de \textit{source} no está a tierra.
-
 Existen 2 posibles configuraciones para un transistor según su posición respecto a la carga:
 
 \paragraph{Lado bajo} Utiliza comúnmente el MOSFET de canal N. 
@@ -730,7 +717,6 @@ Si la resistencia es muy chica, las resonancias provocadas generan una tensión 
 
 Su función es transmitir el pulso de accionamiento de puerta referenciado a tierra a través de grandes diferencias de potencial para adaptarse a las implementaciones de accionamiento flotante. 
 Para hacerlo maneja muy poca potencia pero requiere de elevados picos de corriente. 
-
 Está controlado por un ancho de pulso variable y de amplitud constante,
 acoplado en alterna y la inductancia de magnetización ve un pulso de amplitud variable.
 Operan en el primer y tercer cuadrante del plano B-H.

@@ -1,12 +1,12 @@
 \section{Simulación del prototipo}
 
-Condiciones de simulación y ensayo:
+Las condiciones de simulación y ensayo fueron:
 
 \begin{itemize}
     \item Tensión de entrada: $V_s=36V$
     \item Frecuencia de conmutación: $f=125kHz$
     \item Ciclo de trabajo: $D=0.4$
-    \item Resistencia de carga: $R=88.6\Omega$
+    \item Resistencia de carga: $R=88.5\Omega$
 \end{itemize}
  
 % % 1) Tensión de salida en el colector del TL494 <<< DONE
@@ -598,7 +598,7 @@ Análogamente, en las figuras \ref{fig:osc:58} y \ref{fig:sim:21ripple} se muest
 \end{figure}
 
 La tensión de salida no se mantiene estable ante variaciones en la carga con ciclo de trabajo y tensión de alimentación fija. 
-Esto puede deberse a que se consideró el modelo ideal de todos los componentes del circuito al momento de realizar el análisis del conversor. 
+Esto puede deberse a que se consideró el modelo ideal de todos los componentes del circuito al momento de realizar el análisis del convertidor. 
 
 En la teoría analizada por la bibliografía se supone que todos los componentes del convertidor forward son ideales. 
 Esto se evidencia en el simulador donde al utilizar modelos reales de los semiconductores se comienza a evidenciar como la tensión de salida varía levemente con la carga. 
