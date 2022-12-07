@@ -453,7 +453,7 @@ es $V_s$ y no $V_s\left(1+N_1/N_3\right)$ como en el forward de un único switch
 \subsubsection{Modos de control}
 
 La tensión de salida del convertidor puede ser controlada variando el ciclo de trabajo $D$. 
-Para controlarlo los convertidores funcionan con un circuito de realimentación,
+Para ello, los convertidores funcionan con un circuito de realimentación,
 en un control por tensión o corriente, dependiendo de la señal realimentada. 
 
 \begin{figure}[ht]
@@ -464,12 +464,19 @@ en un control por tensión o corriente, dependiendo de la señal realimentada.
 \end{figure}
 
 \paragraph{Control por tensión}
-
 %COMPLETAR CON LIBRO
-Se mide la tensión a la salida del convertidor, se la escala a partir de un divisor resistivo y compara con la tensión deseada.
-Esto genera una señal de error, la cual alimenta a un controlador PI.
-El tiempo de encendido de la forma de onda PWM inicia cuando se reestablece el generador de dientes de sierra y finaliza cuando su rampa positiva se intersecta con la señal de tensión de error. 
-Cuando la tensión de salida es inferior al valor nominal, la señal de error generada incrementa su duración y provoca un aumento en el ciclo de trabajo y, en consecuencia, en la tensión de salida. En el caso de que la tensión de salida sea superior a la nominal, el proceso es análogo causando una disminución del ciclo de trabajo. 
+En la figura \ref{fig:marco_teorico:control} se muestra un diagrama en bloques del circuito de control.
+El circuito de control mide la tensión a la salida del convertidor, la escala a partir de un divisor resistivo y la compara con la tensión deseada.
+El amplificador de error es un amplificador operacional que compara la señal de entrada con una referencia y
+amplifica la diferencia entre ambas. Su señal de salida es una señal de error, la cual alimenta a un controlador controlador proporcional-integrador (PI).
+El mismo está conformado por dos amplificadores operacionales, uno de ellos integra la señal de entrada y el otro la escala.
+Las salidas de ambos amplificadores se suman y se obtiene la señal de entrada del comparador.
+Éste último compara la señal de entrada con una señal diente de sierra, y en base a esto genera la señal PWM que controla a los transistores.
+La frecuencia de switching es definida por la frecuencia de la señal de diente de sierra y se eligió un valor típico de $f=125kHz$.
+El tiempo de encendido de la forma de onda PWM inicia cuando se reestablece el generador de dientes de sierra y finaliza cuando su rampa positiva se intersecta con la señal de tensión de error.
+Cuando la tensión de salida es inferior al valor nominal, la señal de error generada incrementa su duración y provoca un aumento en el ciclo de trabajo y, en consecuencia, en la tensión de salida. 
+En el caso de que la tensión de salida sea superior a la nominal, el proceso es análogo causando una disminución del ciclo de trabajo. 
+
 %La dinámica de retroalimentación está determinada por el circuito amplificador de error que consta de Z1 y Z2.
 
 \paragraph{Control por corriente}
@@ -487,22 +494,6 @@ La señal es muestreada y el resto del proceso es análogo al control por tensi�
 % Debido a su capacidad inherente de limitación de corriente máxima, el control de modo de corriente puede mejorar la confiabilidad de los interruptores de alimentación. El rendimiento dinámico se mejora debido al uso de la información actual adicional. El control de modo de corriente reduce efectivamente el sistema a primer orden al obligar a que la corriente del inductor se relacione con el voltaje de salida, logrando así una respuesta más rápida. Las figuras 13.18b–e muestran las formas de onda.
 
 % COMPLETAR CON JUSTIFICACIÓN DE POR QUÉ NO ELEGIMOS CONTROL POR CORRIENTE QUE PARECERÍA SER MEJOR. 
-
-\subsubsection{Generador PWM}
-
-Por lo general se utilizan circuitos integrados controladores PWM que sólo requieren de unos pocos componentes pasivos adicionales para su funcionamiento. 
-En la figura \ref{fig:marco_teorico:control} se muestra un diagrama en bloques del circuito de control.
-
-El amplificador de error es un amplificador operacional que compara la señal de entrada con una referencia y
-amplifica la diferencia entre ambas.
-
-El controlador proporcional-integrador (PI) está conformado por dos amplificadores operacionales. Uno de ellos integra la señal de entrada y el otro la escala.
-Las salidas de estos dos bloques se suman y se obtiene la señal de entrada del comparador.
-
-El comparador, como su nombre lo indica, compara la señal de entrada con una señal diente de sierra y en base a esto genera la señal PWM.
-La señal de salida del comparador es la que controla a los transistores. 
-
-La frecuencia de switching es definida por la frecuencia de la señal de diente de sierra y se eligió un valor típico de $f=125kHz$.
 
 \subsubsection{Selector de modo de funcionamiento}
 
@@ -532,10 +523,10 @@ por lo que la corriente de salida será 5 veces mas chica cuando se cierre el la
 
 Las señales de tensión y corriente están normalizadas con respecto a sus valores nominales, lo cual permite que el último multiplexor seleccione la señal de mayor amplitud. De esta forma se pueden establecer los límites de tensión y corriente de salida para seguir el perfil de carga deseado.
 
-\subsubsection{TL494}
+\subsubsection{Generador PWM}
 
-Se utilizó el circuito integrado TL494 como generador de señal PWM.
-El TL494 es un circuito de control de modulación de ancho de pulso (PWM) de frecuencia fija. 
+Por lo general se utilizan circuitos integrados controladores PWM que sólo requieren de unos pocos componentes pasivos adicionales para su funcionamiento. 
+Se utilizó el TL494 como generador de señal PWM de frecuencia fija. 
 La modulación de los pulsos de salida se logra comparando la forma de onda de diente de sierra creada por el oscilador interno en el capacitor de temporización (CT) con cualquiera de las dos señales de control. 
 La etapa de salida se habilita durante el tiempo en el cual la tensión de diente de sierra es mayor que las señales de control de voltaje. 
 A medida que aumenta la señal de control, disminuye el tiempo durante el cual la entrada en diente de sierra es mayor; por lo tanto, la duración del pulso de salida disminuye. 
