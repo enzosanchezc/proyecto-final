@@ -1,32 +1,24 @@
 \section{Conclusiones}
 
-% Repetir el objetivo, describir el trabajo realizado. 
 % Destacar aspectos más importantes y concluir algo sobre ellos. 
 % Ejemplo: los aspectos más difíciles de resolver, algo que presentó inesperadas dificultades. 
-% Cambio de rumbo en cuanto a objetivos, razones y consecuencias. 
-% EMPEZAR CON LAS COSAS BUENAS: Se logró, se implementó, ...
-% Recomendaciones específicas. Descripción de problemas que quedaron abiertos. 
-
-% Completar
-
-% Se podría haber implementado el transformador del driver con un núcleo toroidal. 
-
-% Quedó pendiente por implementar el rectificador a la entrada del conver y el circuito de control.
-
-% Las oscilaciones de alta frecuencia (superior a 125kHz) observadas en las formas de onda se pueden deber a cualquier tanque LC. 
-
+  
 % Detección de carga completa por intensidad de corriente con corte automático. Limitación del tiempo de carga máximo por temporizador. El estado actual del cargador es indicado por un LED. Cuando el voltaje de entrada es el correcto, este LED se encenderá de forma permanente. Cuando el LED parpadee significa que la salida ha sido cortocircuitada. Si el mismo se encuentra apagado indica que la carga se ha completado o que no hay una batería conectada.
 
-% Las oscilaciones de alta frecuencia superiores a la frecuencia de conmutación observadas en las formas de onda se pueden deber a cualquier tanque LC. 
+Se adquirieron conocimientos de varias áreas de la electrónica, tales como diseño de transformadores e inductores, control, topologías de convertidores, diseño de circuitos impresos, seguridad en el manejo de baterías de litio, entre otros.
+Se cumplió el objetivo principal del proyecto, diseñando un dispositivo que recarga las celdas que componen a una batería de litio de 36V, siguiendo el perfil de carga establecido y permitiendo elegir la corriente de carga mediante un selector.
+Se obtuvieron buenos resultados en las simulaciones y manteniendo un nivel de complejidad aceptable.
 
-Se logro diseñar el cargador en su totalidad, logrando buenos resultados en las simulaciones y manteniendo un nivel de complejidad aceptable.
+Se implementó un prototipo que incluye el generador de señal PWM, el convertidor DC-DC y su driver.
+Se obtuvieron las señales de tensión y corriente sobre los elementos operando a lazo abierto con un ciclo de trabajo fijo, logrando resultados aceptables respecto a las simulaciones.
+Para que el prototipo tenga todas las etapas y funciones del cargador de 36V, resta implementar el rectificador a la entrada del convertidor, el selector de modo de funcionamiento y cerrar el lazo del circuito de control.
+El problema más importante que se debe resolver es la diferencia de tensión en la salida en comparación con las simulaciones.
+Esto se debe a una fuerte dependencia de la tensión de salida con la resistencia de carga,
+lo cual no es apreciable en la simulación.
 
-Se adquirieron conocimientos de varias áreas de la electrónica, tales como diseño de transformadores, control, electrónica de potencia, diseño de circuitos impresos, etc.
-Además, se aprendieron conceptos importantes de seguridad en el manejo de baterías de litio.
-
-Se logró implementar el convertidor de DC a DC como parte práctica del proyecto, logrando resultados aceptables en las mediciones.
-
-Como tareas a futuro, para finalizar el prototipo del cargador, quedaron a implementar el rectificador a la entrada del convertidor y el circuito de control.
-
-Dentro de los puntos a mejorar, se debería seguir con la investigación sobre las oscilaciones de alta frecuencia presentes en las formas de onda, ya que se cree que se deben a algún tanque LC.
-Otro punto de mejora sería mejorar la forma de onda de la salida del driver, ya que impacta directamente en la eficiencia del convertidor.
+Existen múltiples mejoras a implementar en una futura versión del prototipo.
+Primeramente se debe continuar con la investigación sobre las oscilaciones de alta frecuencia presentes en las formas de onda, ya que se cree que se deben a la resonancia de algún tanque LC.
+La segunda mejora implica aumentar la amplitud y mejorar la forma de onda de la señal de excitación de los MOSFETs, ya que la misma impacta directamente en la eficiencia del convertidor.
+También se debe elegir el núcleo adecuado para los transformadores y el inductor. Al estar limitados por la disponibilidad, los mismos quedaron sobre dimensionados. 
+Debido a esto, los transformadores se conectan mediante cables y borneras a la PCB. 
+Por lo tanto, el futuro diseño de la PCB debería incluirlos en el circuito impreso.
