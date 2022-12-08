@@ -164,22 +164,13 @@ En la figura \ref{fig:sim:osc_pwm_vout} se muestra la misma forma de onda simula
     \label{fig:sim:osc_pwm_vout}
 \end{figure}
 
-En las figuras \ref{fig:ct_v} y \ref{fig:dtc_v} se muestran las tensiones en el capacitor $C_t$ y el terminal DTC del TL494 respectivamente.
+En la figura \ref{fig:ct_v} se muestran la tensión en el capacitor $C_t$.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/capturas-osciloscopio/17-11-2022/5.png}
     \caption{Tensión en el capacitor $C_t$} %COMPLETAR
     \label{fig:ct_v}
-\end{figure}
-
-% La forma de onda de Ct es la esperada, pero la de DTC?
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{images/capturas-osciloscopio/TL494/DTC_v.png}
-    \caption{Tensión a la salida del pin DTC del TL494} %COMPLETAR
-    \label{fig:dtc_v}
 \end{figure}
 
 Se observa una disminución en la frecuencia de la forma de onda a aproximadamente $f=112kHz$. 
@@ -437,7 +428,7 @@ Para comparar, se muestra en las figuras \ref{fig:vds_simulation_high} y \ref{fi
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/sim/18.pdf}
-    \caption{Tensión $V_{DS}$ en el MOSFET de lado bajo side simulado en LTspice}
+    \caption{Tensión $V_{DS}$ en el MOSFET de lado bajo simulado en LTspice}
     \label{fig:vds_simulation_low}
 \end{figure}
 
@@ -548,7 +539,7 @@ Se ajustaron las vueltas del secundario para escalar a la tensión deseada.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/56.png}
-    \caption{Tensión en el secundario del transformador de potencia después de ajustar la relación de vueltas del transformador a 2:1}
+    \caption{Tensión en el secundario del transformador de potencia luego de ajustar la relación de vueltas del transformador a 2:1}
     \label{fig:osc:41}
 \end{figure}
 
