@@ -41,7 +41,7 @@ ax.grid(True)
 if len(sys.argv) == 4:
     ax.set_xlim(float(sys.argv[2])-260e-9, float(sys.argv[3])-260e-9)
 # Divide y values by 10.8
-y = [i * 0.0001 for i in y]
+y = [i /10000 for i in y]
 # Inverti y values
 #y = [-i for i in y]
 ax.plot(x,y,color='red', linewidth=0.7)

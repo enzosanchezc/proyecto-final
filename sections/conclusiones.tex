@@ -9,16 +9,24 @@
 
 % Completar
 
-Se podría haber implementado el transformador del driver con un núcleo toroidal. 
+% Se podría haber implementado el transformador del driver con un núcleo toroidal. 
 
-Quedó pendiente por implementar el rectificador a la entrada del conver y el circuito de control.
+% Quedó pendiente por implementar el rectificador a la entrada del conver y el circuito de control.
 
-Las oscilaciones de alta frecuencia (superior a 125kHz) observadas en las formas de onda se pueden deber a cualquier tanque LC. 
+% Las oscilaciones de alta frecuencia (superior a 125kHz) observadas en las formas de onda se pueden deber a cualquier tanque LC. 
 
-Detección de carga completa por intensidad de corriente con corte automático. Limitación del tiempo de carga máximo por temporizador. El estado actual del cargador es indicado por un LED. Cuando el voltaje de entrada es el correcto, este LED se encenderá de forma permanente. Cuando el LED parpadee significa que la salida ha sido cortocircuitada. Si el mismo se encuentra apagado indica que la carga se ha completado o que no hay una batería conectada.
+% Detección de carga completa por intensidad de corriente con corte automático. Limitación del tiempo de carga máximo por temporizador. El estado actual del cargador es indicado por un LED. Cuando el voltaje de entrada es el correcto, este LED se encenderá de forma permanente. Cuando el LED parpadee significa que la salida ha sido cortocircuitada. Si el mismo se encuentra apagado indica que la carga se ha completado o que no hay una batería conectada.
 
-Las oscilaciones de alta frecuencia superiores a la frecuencia de conmutación observadas en las formas de onda se pueden deber a cualquier tanque LC. 
+% Las oscilaciones de alta frecuencia superiores a la frecuencia de conmutación observadas en las formas de onda se pueden deber a cualquier tanque LC. 
 
-REFERENCIAS FALTANTES: 
+Se logro diseñar el cargador en su totalidad, logrando buenos resultados en las simulaciones y manteniendo un nivel de complejidad aceptable.
 
-RASHID 
+Se adquirieron conocimientos de varias áreas de la electrónica, tales como diseño de transformadores, control, electrónica de potencia, diseño de circuitos impresos, etc.
+Además, se aprendieron conceptos importantes de seguridad en el manejo de baterías de litio.
+
+Se logró implementar el convertidor de DC a DC como parte práctica del proyecto, logrando resultados aceptables en las mediciones.
+
+Como tareas a futuro, para finalizar el prototipo del cargador, quedaron a implementar el rectificador a la entrada del convertidor y el circuito de control.
+
+Dentro de los puntos a mejorar, se debería seguir con la investigación sobre las oscilaciones de alta frecuencia presentes en las formas de onda, ya que se cree que se deben a algún tanque LC.
+Otro punto de mejora sería mejorar la forma de onda de la salida del driver, ya que impacta directamente en la eficiencia del convertidor.

@@ -45,12 +45,12 @@ Las condiciones de simulación y ensayo fueron:
 % La amplitud y la forma de onda de la señal del prototipo coinciden respecto a la simulación. 
 % Presenta la oscilación de $f_{osc}=1.25MHz$. 
 
-% % 8) Corriente que circula por el gate del MOSFET 1 (high side)
+% % 8) Corriente que circula por el gate del MOSFET 1 (high side) <<< DONE
 
 % El prototipo presenta una segunda onda triangular negativa indeseada. 
 % Además, sus picos de amplitud son mayores. 
 
-% % 9) Corriente que circula por el gate del MOSFET 2 (low side)
+% % 9) Corriente que circula por el gate del MOSFET 2 (low side) <<< DONE
 
 % El prototipo presenta un pico negativo indeseado. 
 % Presenta la oscilación de $f_{osc}=1.25MHz$. 
@@ -63,59 +63,59 @@ Las condiciones de simulación y ensayo fueron:
 
 % La amplitud del prototipo es 1A menor respecto a la simulada debido a que las puntas de corriente desacoplan la continua. 
 
-% % 12) Corriente en el primario del transformador de potencia 
+% % 12) Corriente en el primario del transformador de potencia  <<< DONE
 
 % La amplitud del prototipo es menor respecto a la simulada debido a que las puntas de corriente desacoplan la continua. 
 
-% % 13) Corriente en el inductor del filtro de salida 
+% % 13) Corriente en el inductor del filtro de salida <<< DONE
 
 % La amplitud de la forma de onda del prototipo es 30mA menor a la simulada. 
 % Además, presenta una oscilación de $f=3.68MHz$ en la rampa de subida y de $f=38.5MHz$ en la de bajada. 
 
-% % 14) Corriente por la carga y su ripple
+% % 14) Corriente por la carga y su ripple <<< DONE
 % % Revisar valor
 
 % Su amplitud es 30mA menor a la simulada y presenta una oscilación de $f=34MHz$.
 
-% % 15) Tensión entre gate y source del MOSFET 1 (high side)
+% % 15) Tensión entre gate y source del MOSFET 1 (high side) <<< DONE
 
 % La amplitud y la forma de onda de la señal del prototipo coinciden respecto a la simulación.
 % Presenta la oscilación de $f_{osc}=1.25MHz$. 
 
-% % 16) Tensión entre drain y source del MOSFET 1 (high side)
+% % 16) Tensión entre drain y source del MOSFET 1 (high side) <<< DONE
 
 % Exceptuando el pico, la amplitud y la forma de onda de la señal del prototipo coinciden respecto a la simulación.
 % Presenta la oscilación de $f_{osc}=1.25MHz$. 
 
-% % 17) Tensión entre gate y source del MOSFET 2 (low side)
+% % 17) Tensión entre gate y source del MOSFET 2 (low side) <<< DONE
 % % REPETIDA
 
 % Es la tensión de salida de la etapa de ganancia de corriente.
 
-% % 18) Tensión entre drain y source del MOSFET 2 (low side)
+% % 18) Tensión entre drain y source del MOSFET 2 (low side) <<< DONE
 
 % Exceptuando el pico, la amplitud y la forma de onda de la señal del prototipo coinciden respecto a la simulación.
 % Presenta la oscilación de $f_{osc}=1.25MHz$. 
 
-% % 19) Tensión en el primario del transformador de potencia 
+% % 19) Tensión en el primario del transformador de potencia  <<< DONE
 
 % La forma de onda del prototipo difiere de la simulada. 
 % Tiene un pico en el flanco de bajada. 
 % Presenta la oscilación de $f_{osc}=1.25MHz$. 
 
-% % 20) Tensión en el secundario del transformador de potencia 
+% % 20) Tensión en el secundario del transformador de potencia  <<< DONE
 % % ADJUNTAR AMBAS IMÁGENES 
 
 % Con una relación 1:1, la tensión en el secundario era de 44V, mucho menor a la tensión en el primario. 
 % Con una relación 1:2, la tensión en el secundario es de 68V, aproximadamente igual a la del primario.
 % Presenta oscilaciones de $f_{osc_{1}}=3.23MHz$ en la subida y en la bajada y de $f_{osc_{2}}=2.63MHz$ anterior a la subida. 
 
-% % 21) Tensión de salida sobre la carga y su ripple 
+% % 21) Tensión de salida sobre la carga y su ripple  <<< DONE
 
-% El ripple del prototipo es de 80mV fino y 200mV grueso. 
+% El ripple del prototipo es de 80mV fino y 200mV grueso. Dio peor la captura
 % Luego de 120mV. Presenta una oscilación de 2MHz. 
 
-% % 22) Tensión en el inductor del filtro de salida
+% % 22) Tensión en el inductor del filtro de salida <<< Da como el culo
 
 % El prototipo presenta una oscilación de $f_{osc}=3.03MHz$. 
 
@@ -280,7 +280,8 @@ Se puede ver que también están presentes las oscilaciones de alta frecuencia q
     \label{fig:driver_vout_connected}
 \end{figure}
 
-En la figura \ref{fig:sim:driver_vout_connected} puede verse los resultados de la simulación.
+En la figura \ref{fig:sim:driver_vout_connected} puede verse los resultados de la simulación,
+que coincide con la tensión entre \textit{gate} y \textit{source} del MOSFET de lado alto.
 
 \begin{figure}[H]
     \centering
@@ -289,6 +290,7 @@ En la figura \ref{fig:sim:driver_vout_connected} puede verse los resultados de l
     \label{fig:sim:driver_vout_connected}
 \end{figure}
 % HAY QUE ORDENAR ESTAS 2
+La amplitud y la forma de onda de la señal del prototipo coinciden respecto a la simulación. Presenta la oscilación de $f_{osc}=1.25MHz$.
 
 En la figura \ref{fig:driver_expected_waveforms} se muestran algunas formas de onda del circuito del driver con las que se hicieron comparaciones para verificar su correcto funcionamiento.
 
@@ -475,7 +477,8 @@ El prototipo presenta un sobrepico negativo en el flanco de bajada del MOSFET de
 También se observa que la amplitud de la señal simulada es mucho mayor.
 
 Como último punto de los MOSFETs, se muestran en las figuras \ref{fig:osc:15} y \ref{fig:osc:17} las corrientes por \textit{gate} del MOSFET de lado alto y bajo, respectivamente.
-Sus simulaciones pueden verse en las figuras \ref{fig:sim:8} y \ref{fig:sim:9}
+Sus simulaciones pueden verse en las figuras \ref{fig:sim:8} y \ref{fig:sim:9}.
+A partir de estas mediciones, las formas de onda de corriente no presentan componente continua ya que se utilizaron las puntas de corriente. En consecuencia, en las comparaciones se analizarán las formas de onda y las posibles oscilaciones. 
 
 \begin{figure}[H]
     \centering
@@ -487,7 +490,7 @@ Sus simulaciones pueden verse en las figuras \ref{fig:sim:8} y \ref{fig:sim:9}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/sim/8.pdf}
-    \caption{Simulación de la crriente que circula por el gate del MOSFET de lado alto}
+    \caption{Simulación de la corriente que circula por el gate del MOSFET de lado alto}
     \label{fig:sim:8}
 \end{figure}
  
@@ -501,7 +504,7 @@ Sus simulaciones pueden verse en las figuras \ref{fig:sim:8} y \ref{fig:sim:9}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/sim/9.pdf}
-    \caption{Simulación de la crriente que circula por el gate del MOSFET de lado bajo}
+    \caption{Simulación de la corriente que circula por el gate del MOSFET de lado bajo}
     \label{fig:sim:9}
 \end{figure}
 
@@ -512,7 +515,7 @@ Las figuras \ref{fig:osc:38} y \ref{fig:osc:40} muestran las tensiones en el pri
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/38.png}
+    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/55.png}
     \caption{Tensión en el primario del transformador de potencia}
     \label{fig:osc:38}
 \end{figure}
@@ -536,6 +539,17 @@ Las figuras \ref{fig:osc:38} y \ref{fig:osc:40} muestran las tensiones en el pri
     \includegraphics[width=\textwidth]{images/sim/20.pdf}
     \caption{Simulación de la tensión en el secundario del transformador de potencia}
     \label{fig:sim:20}
+\end{figure}
+
+Se observa que en el secundario del transformador, con una relación 1 a 1,
+la tensión se ve reducida en gran medida.
+Se ajustaron las vueltas del secundario para escalar a la tensión deseada.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/56.png}
+    \caption{Tensión en el secundario del transformador de potencia después de ajustar la relación de vueltas del transformador a 2:1}
+    \label{fig:osc:41}
 \end{figure}
 
 % 5) Corriente en el primario %Del e70?
@@ -576,6 +590,9 @@ La corriente por el inductor de salida se muestra en la figura \ref{fig:osc:66}.
     \label{fig:sim:13}
 \end{figure}
 
+La amplitud de la forma de onda del prototipo es $30mA$ menor a la simulada. 
+Además, presenta una oscilación de $f=3.68MHz$ en la rampa de subida y de $f=38.5MHz$ en la de bajada, la cual causa que la captura del osciloscopio se vea recortada. 
+
 En las figuras \ref{fig:osc:67} y \ref{fig:sim:14ripple} se muestra la corriente por la resistencia de carga y su simulación, respectivamente. Se puede observar que el ripple obtenido es mayor al simulado.
 
 La figura \ref{fig:sim:14} muestra la simulación de la corriente de salida durante el encendido.
@@ -604,7 +621,9 @@ La figura \ref{fig:sim:14} muestra la simulación de la corriente de salida dura
     \label{fig:sim:14}
 \end{figure}
 
-Análogamente, en las figuras \ref{fig:osc:58} y \ref{fig:sim:21ripple} se muestra el ripple de tensión en la salida salida y su simulación. En la figura \ref{fig:sim:21} se muestra la simulación de la tensión de salida durante el encendido.<
+El ripple de la simulación es de 0.2mA pico a pico, mientras que el prototipo da al rededor de 5mA pico a pico máximo.
+
+Análogamente, en las figuras \ref{fig:osc:58} y \ref{fig:sim:21ripple} se muestra el ripple de tensión en la salida salida y su simulación. En la figura \ref{fig:sim:21} se muestra la simulación de la tensión de salida durante el encendido.
 % 9) Tensión de salida junto con su ripple 
 
 \begin{figure}[H]
@@ -633,8 +652,9 @@ Esto puede deberse a que se consideró el modelo ideal de todos los componentes 
 
 En la teoría analizada por la bibliografía se supone que todos los componentes del convertidor forward son ideales. 
 Esto se evidencia en el simulador donde al utilizar modelos reales de los semiconductores se comienza a evidenciar como la tensión de salida varía levemente con la carga. 
-Esta suposición realizada para simplificar el análisis lleva a tener diferencias en la práctica principalmente con el comportamiento de la tensión de salida. 
-Ejemplos: resistencia del inductor del filtro de salida, pérdidas en los MOSFETs,
+Esta suposición realizada para simplificar el análisis lleva a tener diferencias en la práctica principalmente con el comportamiento de la tensión de salida,
+como por ejemplo la resistencia del inductor del filtro de salida y pérdidas en los MOSFETs.
+
 Se evidencia como ante el aumento de la corriente de carga la tensión de salida obtenida disminuye y se aleja del comportamiento semi-ideal del simulador. 
-Como las pérdidas en todos los componentes aumentan con la corriente de carga. 
+Las pérdidas en todos los componentes aumentan con la corriente de carga. 
 Es por ello que en la práctica los convertidores funcionan a lazo cerrado sensando la tensión o corriente de salida, y por medio de un sistema de realimentación ajustan el ciclo de trabajo para obtener una tensión de salida constante ante los cambios de carga o la tensión de entrada del convertidor.
