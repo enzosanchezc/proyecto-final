@@ -9,6 +9,25 @@ Las condiciones de simulación y ensayo fueron:
     \item Resistencia de carga: $R=88.5\Omega$
 \end{itemize}
 
+Las formas de onda con color rojo corresponden a las señales medidas mediante el osciloscopio y las de color negro corresponden a las simuladas en LTSpice. 
+
+Previo al análisis se detallan dos problemas encontrados al momento de realizar las mediciones.
+En primer lugar, al realizar las mediciones de tensión se evidenció un inconveniente con la tierra de la PCB. 
+La fuente regulable de $36V$ eleva notablemente su corriente entregada al circuito 
+cuando se conecta la tierra de la punta del osciloscopio en ciertos puntos de la placa. 
+Estas mediciones fueron tomadas estableciendo en la fuente un correcto límite de corriente. 
+Además, en otros puntos como el transformador de potencia disminuye la tensión entregada por la fuente regulable de $12V$.
+
+En segundo lugar, al utilizar resistencias de $1\Omega$ y potencia nominal $2W$ para medir corrientes en el circuito, 
+se detectaron oscilaciones indeseadas en sus formas de onda con una frecuencia de $f_{osc}=1.1MHz$. 
+Por lo tanto, se quitaron dichas resistencias y se soldaron cables con un largo tal que se pueda medir 
+la corriente a través de los mismos utilizando puntas de corriente para el osciloscopio TEKTRONIX modelo P6021. 
+Las mismas están conformadas por un transformador de corriente y, en consecuencia, sólo miden la componente alterna de la señal.
+El cable que se introduce es el primario, por lo que consta de una única vuelta, y el secundario está adentro de la punta. 
+Pueden variar su sensibilidad seleccionando $2mA/mV$ o $10mA/mV$.
+Al medir corriente con las mismas no se detectaron las oscilaciones,
+con lo cual se concluye que a la frecuencia de trabajo las resistencias presentan una alta componente inductiva que genera las oscilaciones indeseadas. 
+Además, al quitar las resistencias se incrementó levemente la tensión de salida y la eficiencia. 
 % % 1) Tensión de salida en el colector del TL494 <<< DONE
 
 % Se verifica que el ciclo de trabajo es de $D=0.4$ y la frecuencia de conmutación es de aproximadamente $f=125kHz$. 
@@ -140,12 +159,12 @@ No se realizarán comparaciones ya que su circuito no fue simulado debido a la a
 El mismo fue implementado primero en una protoboard y luego en un circuito impreso.
 Sus formas de onda más importantes se compararán con las indicadas en la hoja de datos del fabricante.
 
-En las figuras \ref{fig:osc_pwm_vout_no_snubber} y \ref{fig:osc_pwm_vout_disconnected} se observa la tensión a la salida del TL494 medida del prototipo sin la red snubber y con su inclusión respectivamente.
+En las figuras \ref{fig:osc_pwm_vout_no_snubber} y \ref{fig:osc_pwm_vout_disconnected} se observa la tensión a la salida del TL494 sin la red snubber y con su inclusión respectivamente.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/TL494/pwm_vout_connected.png}
-    \caption{Tensión a la salida del TL494 previo a la implementación del circuito Snubber}
+    \caption{Tensión a la salida del TL494 previo a la implementación de la red snubber}
     \label{fig:osc_pwm_vout_no_snubber}
 \end{figure}
 
@@ -221,9 +240,14 @@ la cual estará presente en muchas de las formas de onda que se analizarán a co
 % \end{figure}
 
 % Puede observarse que las oscilaciones aumentan. %WHAT?
+Dado que la carga que genera el convertidor sobre el TL494 es muy alta, sin una etapa de ganancia de corriente, la forma de onda PWM 
+se distorsionaba y disminuía notablemente su amplitud, lo que causaba que los MOSFETs no se saturaran y aumentaran demasiado su temperatura.
+Los resultados obtenidos con la inclusión de esta etapa fueron una mejora en la forma de onda de la señal PWM y un incremento notorio en su amplitud.
+Sin embargo, actualmente su amplitud disminuye al aumentar el ciclo de trabajo.
 
 En la figura \ref{fig:osc:3} se muestra la forma de onda de la tensión de salida de la etapa de ganancia de corriente.
-Esta debería ser una señal PWM con un período de $8\mu s$ y un ancho de pulso de aproximadamente 40\%.
+Esta señal PWM que controla al MOSFET de lado bajo verifica las condiciones de funcionamiento con un período de $8\mu s$ y un ancho de pulso de aproximadamente 40\%.
+Además se observa un mejor resultado en la forma de onda respecto a la simulación de la figura \ref{fig:sim:3}. %Porque estamos re masa.
 
 % Dado que la etapa posee ganancia de tensión unitaria, su forma de onda es aproximadamente igual a la tensión de salida del TL494. 
 % Las oscilaciones fueron eliminadas mediante la red snubber. 
@@ -241,8 +265,6 @@ Esta debería ser una señal PWM con un período de $8\mu s$ y un ancho de pulso
     \caption{Simulación de la tensión a la salida de la etapa de ganancia de corriente}
     \label{fig:sim:3}
 \end{figure}
-
-Se observa una mejora considerable en la forma de onda de la señal, incluso dando mejores resultados que el simulador. %Porque estamos re masa.
 
 % La función más importante de esta etapa es la de mejorar la forma de onda de la señal PWM, que al comparar las figuras \ref{fig:osc_pwm_vout_disconnected} y \ref{fig:pwm_vout_sin_bjt} se puede observar que se ha mejorado considerablemente.
 
@@ -648,3 +670,92 @@ Análogamente, en las figuras \ref{fig:osc:58} y \ref{fig:sim:21ripple} se muest
     \caption{Simulación de la tensión en la carga}
     \label{fig:sim:21}
 \end{figure}
+
+La mayor diferencia del prototipo implementado respecto a las simulaciones se obtuvo en la tensión de salida. 
+Se varió la resistencia de carga conectada al convertidor y se midieron la tensión y corriente de entrada y de salida para calcular la eficiencia del circuito.
+Para todas las mediciones realizadas la tensión de entrada fue de $36V$.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lllllll}
+        \hline
+        \multicolumn{1}{c}{$R[\Omega]$} & \multicolumn{1}{c}{$I_i[A]$} & \multicolumn{1}{c}{$V_o[V]$} & \multicolumn{1}{c}{$I_o[A]$} & \multicolumn{1}{c}{$P_i[W]$} & \multicolumn{1}{c}{$P_o[W]$} & \multicolumn{1}{c}{$\eta[\%]$} \\ \hline
+        12.6                            & 0.23                         & 5.77                         & 0.47                         & 8.28                         & 2.71                         & 32.7                           \\
+        18                              & 0.23                         & 7                            & 0.4                          & 8.28                         & 2.8                          & 33.8                           \\
+        24.3                            & 0.23                         & 8.3                          & 0.35                         & 8.28                         & 2.91                         & 35.1                           \\
+        30.6                            & 0.23                         & 9.13                         & 0.3                          & 8.28                         & 2.74                         & 33.1                           \\
+        40                              & 0.2                          & 10.2                         & 0.25                         & 7.2                          & 2.7                          & 37.5                           \\
+        58                              & 0.18                         & 11.6                         & 0.2                          & 6.48                         & 2.32                         & 35.8                           \\
+        80.7                            & 0.16                         & 12.4                         & 0.15                         & 5.76                         & 1.86                         & 32.3                           \\
+        88.5                            & 0.16                         & 12.6                         & 0.14                         & 5.76                         & 1.76                         & 30.6                           \\ \hline
+    \end{tabular}
+    \caption{Resultados de las mediciones realizadas en el prototipo}
+    \label{tab:mediciones}
+\end{table}
+
+% ANÁLISIS MEDICIONES
+
+En base a la tabla \ref{tab:mediciones} se evidencia como, con ciclo de trabajo y tensión de alimentación fija, la tensión de salida varía con la carga conectada y, en consecuencia, la tensión de salida deseada de $V_{o}=12.6V$ sólo se logra para una resistencia de $R=88.5\Omega$.
+
+% COMPARACIÓN MEDICIONES VS SIMULACIONES
+
+En comparación con las simulaciones, como se observa en la tabla \ref{tab:mediciones_sim}, la variación de carga modifica levemente la tensión de salida pero el cambio no es tan amplio.
+Por otra parte, si bien la fuente regulable de $36V$ tiene una corriente máxima de $1A$, nunca entregó la corriente esperada por simulación. 
+Además, presenta una corriente de salida y una eficiencia mucho mayor en las resistencias de carga más bajas. 
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lllllll}
+    \hline
+    $R[\Omega]$ & $I_i[A]$ & $V_o[V]$ & $I_o[A]$ & \multicolumn{1}{c}{$P_i[W]$} & \multicolumn{1}{c}{$P_o[W]$} & \multicolumn{1}{c}{$\eta[\%]$} \\ \hline
+    12.6        & 1.46     & 12.49    & 0.99     & 17.65                        & 12.39                        & 70.19                          \\
+    18          & 1.33     & 12.70    & 0.71     & 13.72                        & 8.96                         & 65.31                          \\
+    24.3        & 1.24     & 12.84    & 0.51     & 10.80                        & 6.60                         & 61.11                          \\
+    30.6        & 1.17     & 12.98    & 0.35     & 8.07                         & 4.56                         & 56.51                          \\
+    40          & 1.16     & 13.00    & 0.33     & 7.68                         & 4.23                         & 55.08                          \\
+    58          & 1.12     & 13.09    & 0.23     & 6.14                         & 2.95                         & 48.05                          \\
+    80.7        & 1.10     & 13.17    & 0.16     & 5.11                         & 2.15                         & 42.07                          \\
+    88.5        & 1.10     & 13.24    & 0.15     & 4.89                         & 1.95                         & 39.88                          \\ \hline
+    \end{tabular}
+    \caption{Resultados de las mediciones en la simulación}
+    \label{tab:mediciones_sim}
+\end{table}
+
+% COMPARACIÓN VO: MARCO TEÓRICO Y SIMULACIÓN 
+
+Si bien según lo analizado en el marco teórico la tensión de salida resulta independiente de la carga, el leve cambio en la simulación puede deberse a que, con el objetivo de simplificar el análisis del convertidor forward, se consideró el modelo ideal de todos sus componentes. 
+Esto se evidencia en el simulador donde, al utilizar modelos reales de los semiconductores, la tensión de salida comienza a variar levemente con la carga.
+
+% COMPARACIÓN VO: SIMULACIÓN Y MEDICIONES
+
+En la figura \ref{fig:comparacion} se ilustran de manera gráfica los resultados obtenidos en la tensión de salida con la variación de la carga.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/comparacion-general.png}
+    \caption{Comparación entre los resultados de las simulaciones y las mediciones realizadas}
+    \label{fig:comparacion}
+\end{figure}
+
+La gran diferencia puede deberse a elementos parásitos del circuito, cuyas pérdidas aumentan con la corriente de carga y provocan caídas de tensión que no se han considerado en la simulación.
+Además, si bien en la teoría analizada y en las simulaciones del prototipo los transistores conmutan de forma simultánea, en las mediciones realizadas se aprecia un retardo entre la señal de excitación del MOSFET de lado bajo y la del lado alto. 
+Es decir, para la frecuencia de conmutación elegida, el transformador del driver no tiene un tiempo despreciable de encendido y apagado como se describió en la nota de aplicación \cite{gatedrivers}.  
+En consecuencia, como se observa en la tabla \ref{tab:estados}, se tiene un total de 4 estados en cada ciclo de conmutación.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccc}
+    \hline
+    Estado & MOSFET de lado bajo & MOSFET de lado alto \\ \hline
+    1      & OFF                 & OFF                 \\
+    2      & ON                  & OFF                 \\
+    3      & ON                  & ON                  \\
+    4      & OFF                 & ON                  \\ \hline
+    \end{tabular}
+    \caption{Estados de conmutación del convertidor forward}
+    \label{tab:estados}
+\end{table}
+
+Se corroboró con el simulador que la tensión a la salida del convertidor se ve afectada por los 2 estados adicionales a ambos MOSFETs encendidos y ambos MOSFETs apagados. Por lo tanto, se concluye que dichos estados indeseados y la existencia de elementos parásitos en el circuito que no fueron considerados en la simulación son las principales causas de la gran diferencia en la tensión de salida.  
+
+En base al análisis realizado, es de entender que en la práctica los convertidores funcionan a lazo cerrado sensando la tensión y/o corriente de salida, y por medio de un sistema de realimentación ajustan el ciclo de trabajo para obtener una tensión de salida constante ante los cambios de carga o la tensión de entrada del convertidor.
