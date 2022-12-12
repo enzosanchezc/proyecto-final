@@ -140,7 +140,14 @@ No se realizarán comparaciones ya que su circuito no fue simulado debido a la a
 El mismo fue implementado primero en una protoboard y luego en un circuito impreso.
 Sus formas de onda más importantes se compararán con las indicadas en la hoja de datos del fabricante.
 
-En la figura \ref{fig:osc_pwm_vout_disconnected} se observa la tensión a la salida del TL494 medida del prototipo.
+En las figuras \ref{fig:osc_pwm_vout_no_snubber} y \ref{fig:osc_pwm_vout_disconnected} se observa la tensión a la salida del TL494 medida del prototipo sin la red snubber y con su inclusión respectivamente.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/TL494/pwm_vout_connected.png}
+    \caption{Tensión a la salida del TL494 previo a la implementación del circuito Snubber}
+    \label{fig:osc_pwm_vout_no_snubber}
+\end{figure}
 
 \begin{figure}[H]
     \centering
@@ -237,14 +244,14 @@ Esta debería ser una señal PWM con un período de $8\mu s$ y un ancho de pulso
 
 Se observa una mejora considerable en la forma de onda de la señal, incluso dando mejores resultados que el simulador. %Porque estamos re masa.
 
-La función más importante de esta etapa es la de mejorar la forma de onda de la señal PWM, que al comparar las figuras \ref{fig:osc_pwm_vout_disconnected} y \ref{fig:pwm_vout_sin_bjt} se puede observar que se ha mejorado considerablemente.
+% La función más importante de esta etapa es la de mejorar la forma de onda de la señal PWM, que al comparar las figuras \ref{fig:osc_pwm_vout_disconnected} y \ref{fig:pwm_vout_sin_bjt} se puede observar que se ha mejorado considerablemente.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{images/capturas-osciloscopio/TL494/pwm_vout_sin_bjt.png}
-    \caption{Tensión a la salida del TL494 sin colocar la etapa intermedia de ganancia de corriente}
-    \label{fig:pwm_vout_sin_bjt}
-\end{figure}
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\textwidth]{images/capturas-osciloscopio/TL494/pwm_vout_sin_bjt.png}
+%     \caption{Tensión a la salida del TL494 sin colocar la etapa intermedia de ganancia de corriente}
+%     \label{fig:pwm_vout_sin_bjt}
+% \end{figure}
 
 % 1) Corriente sin la etapa 
 % DONE
@@ -543,6 +550,10 @@ Se ajustaron las vueltas del secundario para escalar a la tensión deseada.
     \label{fig:osc:41}
 \end{figure}
 
+También puede observarse, comparándolo con la imagen anterior, que la señal pasa de una tensión de 36V a 0V,
+y luego de 0V a -36V, mientras que con la relación original y en la simulación la tensión pasa de 36V a -36V directamente,
+el cual es el comportamiento esperado.
+
 % 5) Corriente en el primario %Del e70?
 
     % Medir la componente continua. IMPOSSIBLE
@@ -637,15 +648,3 @@ Análogamente, en las figuras \ref{fig:osc:58} y \ref{fig:sim:21ripple} se muest
     \caption{Simulación de la tensión en la carga}
     \label{fig:sim:21}
 \end{figure}
-
-La tensión de salida no se mantiene estable ante variaciones en la carga con ciclo de trabajo y tensión de alimentación fija. 
-Esto puede deberse a que se consideró el modelo ideal de todos los componentes del circuito al momento de realizar el análisis del convertidor. 
-
-En la teoría analizada por la bibliografía se supone que todos los componentes del convertidor forward son ideales. 
-Esto se evidencia en el simulador donde al utilizar modelos reales de los semiconductores se comienza a evidenciar como la tensión de salida varía levemente con la carga. 
-Esta suposición realizada para simplificar el análisis lleva a tener diferencias en la práctica principalmente con el comportamiento de la tensión de salida,
-como por ejemplo la resistencia del inductor del filtro de salida y pérdidas en los MOSFETs.
-
-Se evidencia como ante el aumento de la corriente de carga la tensión de salida obtenida disminuye y se aleja del comportamiento semi-ideal del simulador. 
-Las pérdidas en todos los componentes aumentan con la corriente de carga. 
-Es por ello que en la práctica los convertidores funcionan a lazo cerrado sensando la tensión o corriente de salida, y por medio de un sistema de realimentación ajustan el ciclo de trabajo para obtener una tensión de salida constante ante los cambios de carga o la tensión de entrada del convertidor.

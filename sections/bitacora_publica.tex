@@ -48,10 +48,42 @@ Para todas las mediciones realizadas, la tensión de entrada del convertidor fue
     \label{tab:mediciones}
 \end{table}
 
-En base a la tabla \ref{tab:mediciones}, se evidencia como la tensión de salida varía con la carga conectada y, en consecuencia, la tensión de salida deseada de $V_{o}=12.6V$ sólo se logra para una resistencia de $R=88.5\Omega$.
-Respecto a las simulaciones, como se observa en la tabla \ref{tab:mediciones_sim}, la variación de carga modifica levemente la tensión de salida pero el cambio no es tan amplio. 
-Si bien la fuente regulable de $36V$ tiene una corriente máxima de $1A$, nunca entregó la corriente esperada por simulación. 
+En base a la tabla \ref{tab:mediciones}, se evidencia como la tensión de salida varía con la carga conectada con ciclo de trabajo y tensión de alimentación fija y, en consecuencia, la tensión de salida deseada de $V_{o}=12.6V$ sólo se logra para una resistencia de $R=88.5\Omega$.
+Ante el aumento de la corriente de carga, la tensión de salida disminuye y se aleja del los resultados obtenidos en las simulaciones donde, como se observa en la tabla \ref{tab:mediciones_sim}, la variación de carga modifica levemente la tensión de salida pero el cambio no es tan amplio. Esto también puede verse en la figura \ref{fig:comparacion}.
+Por otra parte, si bien la fuente regulable de $36V$ tiene una corriente máxima de $1A$, nunca entregó la corriente esperada por simulación. 
 Además, presenta una corriente de salida mucho mayor en las resistencias de carga más bajas y una mayor eficiencia. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/comparacion-general.png}
+    \caption{Comparación entre los resultados de las simulaciones y las mediciones realizadas}
+    \label{fig:comparacion}
+\end{figure}
+
+La diferencia entre la simulación y lo analizado en el marco teórico puede deberse a que, con el objetivo de simplificar el análisis del convertidor forward, se consideró el modelo ideal de todos sus componentes. 
+Esto se evidencia en el simulador donde al utilizar modelos reales de los semiconductores la tensión de salida comienza a variar levemente con la carga. 
+Las pérdidas en todos los componentes aumentan con la corriente de carga. 
+Es por ello que en la práctica los convertidores funcionan a lazo cerrado sensando la tensión o corriente de salida, y por medio de un sistema de realimentación ajustan el ciclo de trabajo para obtener una tensión de salida constante ante los cambios de carga o la tensión de entrada del convertidor.
+
+Si bien en la teoría analizada y en las simulaciones del prototipo los transistores conmutan de forma simultánea, en las mediciones realizadas se aprecia un retardo entre la señal de excitación del MOSFET de lado bajo y la del lado alto. 
+Es decir, para la frecuencia de conmutación elegida el transformador del driver no tiene un tiempo despreciable de encendido y apagado como se describió en la nota de aplicación \cite{gatedrivers}.  
+En consecuencia, como se observa en la tabla \ref{tab:estados}, se tiene un total de 4 estados en cada ciclo de conmutación:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccc}
+    \hline
+    Estado & MOSFET de lado bajo & MOSFET de lado alto \\ \hline
+    1      & OFF                 & OFF                 \\
+    2      & ON                  & OFF                 \\
+    3      & ON                  & ON                  \\
+    4      & OFF                 & ON                  \\ \hline
+    \end{tabular}
+    \caption{Estados de conmutación del convertidor forward}
+    \label{tab:estados}
+\end{table}
+
+Se corroboró con el simulador que la tensión a la salida del convertidor se ve afectada por los 2 estados adicionales indeseados a ambos MOSFETs encendidos y ambos MOSFETs apagados.
 
 \begin{table}[H]
     \centering

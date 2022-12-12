@@ -474,10 +474,16 @@ Las salidas de ambos amplificadores se suman y se obtiene la señal de entrada d
 Éste último compara la señal de entrada con una señal diente de sierra, y en base a esto genera la señal PWM que controla a los transistores.
 
 La frecuencia de switching es definida por la frecuencia de la señal de diente de sierra y se eligió un valor típico de $f=125kHz$.
-El tiempo de encendido de la forma de onda PWM inicia cuando se reestablece el generador de dientes de sierra y finaliza cuando su rampa positiva se intersecta con la señal de tensión de error.
+Como se observa en la figura \ref{fig:pwm-nose}, el tiempo de encendido de la forma de onda PWM inicia cuando se reestablece el generador de dientes de sierra y finaliza cuando su rampa positiva se intersecta con la señal de tensión de error.
 Cuando la tensión de salida es inferior al valor nominal, la señal de error generada incrementa su duración y provoca un aumento en el ciclo de trabajo y, en consecuencia, en la tensión de salida. 
 En el caso de que la tensión de salida sea superior a la nominal, el proceso es análogo causando una disminución del ciclo de trabajo. 
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../images/hart/pwm-info.png}
+    \caption{Señales de entrada y de salida del comparador}
+    \label{fig:pwm-nose}
+\end{figure}
 %La dinámica de retroalimentación está determinada por el circuito amplificador de error que consta de Z1 y Z2.
 
 \paragraph{Control por corriente}
@@ -528,7 +534,7 @@ Las señales de tensión y corriente están normalizadas con respecto a sus valo
 
 Por lo general se utilizan circuitos integrados controladores PWM que sólo requieren de unos pocos componentes pasivos adicionales para su funcionamiento. 
 Se utilizó el TL494 como generador de señal PWM de frecuencia fija \cite{tl494}. 
-Internamente presenta 4 componentes principales:
+Como se observa en la figura \ref{fig:tl494-block-diagram}, internamente presenta 4 componentes principales:
 \begin{enumerate}
     \item Un reloj ajustable que permite configurar la frecuencia de conmutación
     \item Dos amplificadores de error para la tensión de salida sensada y la deseada
@@ -536,6 +542,13 @@ Internamente presenta 4 componentes principales:
     \item Un comparador para comparar la señal de error de salida con la señal de dientes de sierra
 \end{enumerate}
  
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/tl494-schematic.png}
+    \caption{Diagrama en bloques del TL494}
+    \label{fig:tl494-block-diagram}
+\end{figure}
+
 El rango de suministro de la tensión de entrada va desde los 7V hasta los 40V. 
 Presenta un regulador interno de 5V con precisión del 5\% para la alimentación de sus componentes internos.
 Posee dos transistores de salida que pueden trabajar tanto en emisor común como en colector común. 
@@ -587,7 +600,7 @@ El tiempo muerto se controla linealmente variando su tensión de entrada entre $
 \subsection{Amplificador clase B con transistores complementarios}
 
 La etapa permite acoplar la carga en continua. 
-Se compone de un transistor NPN y otro PNP, ambos dispositivos de potencia y no de señal. 
+Como se observa en la figura \ref{fig:complementarios}, se compone de un transistor NPN y otro PNP, ambos dispositivos de potencia y no de señal. 
 Cada dispositivo de amplificación conduce durante medio ciclo de la señal de entrada, 
 excitándolos mediante el ingreso de corriente por su base y lo hacen de forma alternativa. 
 En el semiciclo positivo de la señal conduce el NPN y el PNP se corta, y en el semiciclo negativo conduce el PNP y el NPN se corta \cite{Gi}.
@@ -598,6 +611,13 @@ Si no se polariza de forma correcta, no circula corriente por su base y en conse
 El transistor NPN conduce corriente en su emisor cuando $V_{be}>0$ mientras que el transistor PNP conduce corriente en su emisor cuando $V_{be}<0$ o $V_{eb}>0$.
 Cuando la tensión de entrada en la base de ambos transistores es 0 no conduce ningún transistor, es decir, no existe consumo de corriente ni de potencia. 
 % La $V_{ce}$ de ambos transistores va de $V_{cc}$ a 0.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/clase-b.png}
+    \caption{Amplificador con transistores complementarios}
+    \label{fig:complementarios}
+\end{figure}
 
 Ambos funcionan como seguidor por emisor o colector común, con su tensión de alimentación en colector, la señal de excitación en la base y la carga conectada al emisor. 
 La topología presenta una ganancia de tensión aproximadamente unitaria y una ganancia de corriente $hfe$. 
