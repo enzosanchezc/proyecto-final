@@ -5,17 +5,18 @@
   
 % Detección de carga completa por intensidad de corriente con corte automático. Limitación del tiempo de carga máximo por temporizador. El estado actual del cargador es indicado por un LED. Cuando el voltaje de entrada es el correcto, este LED se encenderá de forma permanente. Cuando el LED parpadee significa que la salida ha sido cortocircuitada. Si el mismo se encuentra apagado indica que la carga se ha completado o que no hay una batería conectada.
 
-Se adquirieron conocimientos de varias áreas de la electrónica, tales como diseño de transformadores e inductores, control, topologías de convertidores, diseño de circuitos impresos, seguridad en el manejo de baterías de litio, entre otros.
+Se adquirieron conocimientos de varias áreas de la electrónica, tales como seguridad en el manejo de baterías de litio, topologías de convertidores DC-DC, circuitos de control, diseño de transformadores, inductores, circuitos impresos y redes snubber, entre otros.
 Se cumplió el objetivo principal del proyecto, diseñando un dispositivo que recarga las celdas que componen a una batería de litio de 36V, siguiendo el perfil de carga establecido y permitiendo elegir la corriente de carga mediante un selector.
-Se obtuvieron buenos resultados en las simulaciones y manteniendo un nivel de complejidad aceptable.
+Se obtuvieron buenos resultados en las simulaciones con el modelo de batería utilizado. 
 
 Se implementó un prototipo que incluye el generador de señal PWM, el convertidor DC-DC y su driver.
-Se obtuvieron las señales de tensión y corriente sobre los elementos operando a lazo abierto con un ciclo de trabajo fijo, logrando resultados aceptables respecto a las simulaciones.
-Para que el prototipo tenga todas las etapas y funciones del cargador de 36V, resta implementar el rectificador a la entrada del convertidor, el selector de modo de funcionamiento y cerrar el lazo del circuito de control.
+Se obtuvieron las señales de tensión y corriente sobre los elementos operando a lazo abierto con un ciclo de trabajo fijo. 
+A partir de estas formas de onda se realizó un diagnóstico de los problemas encontrados, determinando sus posibles causas y soluciones para un futuro diseño. 
 El problema más importante que se debe resolver es la diferencia de tensión en la salida en comparación con las simulaciones, donde no se aprecia una fuerte dependencia de la misma con la resistencia de carga.
+Para que el prototipo tenga todas las etapas y funciones del cargador de 36V, resta implementar el rectificador AC-DC, el selector de modo de funcionamiento y cerrar el lazo del circuito de control.
 
 Existen múltiples mejoras a implementar en una futura versión del prototipo.
-Primeramente se debe continuar con la investigación sobre las oscilaciones de alta frecuencia presentes en las formas de onda, ya que se cree que se deben a la resonancia de elementos parásitos del circuito.
-En segundo lugar se debe aumentar la amplitud y mejorar la forma de onda de la señal de excitación de los MOSFETs, ya que la misma impacta directamente en la eficiencia del convertidor.
-También se debe elegir el núcleo adecuado para los transformadores y el inductor. Al estar limitados por la disponibilidad, los mismos quedaron sobre dimensionados. 
+Primeramente se debe aumentar la amplitud y mejorar la forma de onda de la señal de excitación de los MOSFETs, ya que la misma impacta directamente en la eficiencia del convertidor.
+En segundo lugar se debe elegir el núcleo adecuado para los transformadores y el inductor. Al estar limitados por la disponibilidad, los mismos quedaron sobre dimensionados. 
 Debido a esto, los transformadores se conectan mediante cables y borneras a la PCB, por lo tanto, el futuro diseño de la PCB debería incluirlos en el circuito impreso.
+También se debe continuar con la investigación sobre las oscilaciones de alta frecuencia presentes en las formas de onda, ya que se cree que se deben a la resonancia de elementos parásitos del circuito, como la inductancia parásita de los cables de conexión de los transformadores. 

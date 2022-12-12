@@ -33,8 +33,8 @@ plt.rc('font', family='serif')
 fig,ax = plt.subplots(nrows=1, ncols=1, figsize=(8, 4))
 ax.xaxis.set_major_formatter(EngFormatter(unit='s'))
 ax.yaxis.set_major_formatter(EngFormatter(unit='V'))
-ax.set_xlabel('Tiempo', fontsize=20)
-ax.set_ylabel('Tensión', fontsize=20)
+ax.set_xlabel('Tiempo')#, fontsize=20)
+ax.set_ylabel('Tensión')#, fontsize=20)
 #enable grid
 ax.grid(True)
 #ax.set_title(sys.argv[3])
@@ -46,8 +46,8 @@ if len(sys.argv) == 4:
 # Inverti y values
 #y = [-i for i in y]
 # increase plot font size
-ax.tick_params(axis='both', which='major', labelsize=20)
-ax.tick_params(axis='both', which='minor', labelsize=20)
+ax.tick_params(axis='both', which='major')#, labelsize=20)
+ax.tick_params(axis='both', which='minor')#, labelsize=20)
 ax.plot(x,y,color='red', linewidth=0.7)
 cursor = Cursor(ax, useblit=True, color='red', linewidth=2)
 plt.show()

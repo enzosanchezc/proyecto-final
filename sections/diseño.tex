@@ -499,6 +499,18 @@ Se establece una relación 1:1 para el transformador ya que no se requiere modif
 
 $$ N_{2}=N_{1}=9 $$
 
+\subsection{Etapa de ganancia de corriente}
+
+La selección de transistores se realizó en base a la disponibilidad de los mismos en el laboratorio. Se utilizó el par de transistores 2N3904 (NPN) y 2N3906 (PNP). Sus características principales son:
+
+\begin{itemize}
+    \item Tensión de saturación colector-emisor: $V_{CEmax}=0.3V$
+    \item Tensión de saturación base-emisor: $V_{BEmax}=0.95V$
+    \item Máxima corriente por colector: $I_{Cmax}=200mA$
+    \item Máxima tensión colector-emisor: $V_{CEmax}=40V$
+    \item Mínima ganancia de corriente: $h_{fe}=30$
+\end{itemize}
+
 \subsection{Red Snubber}
 
 Se agrega un capacitor de \textit{bypass} de $0.1uF$ para drenar la energía acumulada en la inductancia parásita del MOSFET de lado alto.   
