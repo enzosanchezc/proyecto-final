@@ -156,11 +156,9 @@ Además, al quitar las resistencias se incrementó levemente la tensión de sali
 \subsection{Generador de señal PWM}
 
 No se realizarán comparaciones ya que su circuito no fue simulado debido a la ausencia de un correcto modelo del TL494.
-El mismo fue implementado primero en una protoboard y luego en un circuito impreso.
-Sus formas de onda más importantes se compararán con las indicadas en la hoja de datos del fabricante.
-
+El mismo fue probado en una protoboard y luego incluido en el circuito impreso.
 En las figuras \ref{fig:osc_pwm_vout_no_snubber} y \ref{fig:osc_pwm_vout_disconnected} se observa la tensión a la salida del TL494 sin la red snubber y con su inclusión respectivamente.
-
+% Sus formas de onda más importantes se compararán con las indicadas en la hoja de datos del fabricante.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/TL494/pwm_vout_connected.png}
@@ -178,9 +176,9 @@ En las figuras \ref{fig:osc_pwm_vout_no_snubber} y \ref{fig:osc_pwm_vout_disconn
 % Se verifica que el ciclo de trabajo es de $D=0.4$ y la frecuencia de conmutación es de aproximadamente $f=125kHz$. 
 % Su amplitud se reduce considerablemente de los $12V$ que poseía sin la carga del convertidor a $8V$ con el mismo acoplado. 
 % La forma de onda presenta una leve deformación respecto a la señal sin carga. <<< Comparando con otras formas de onda, esta está casi identica
-Se puede observar que la señal cumple con los requisitos de frecuencia ($f=125kHz$) y ancho de pulso ($D=0.4$).
-La amplitud de la señal es de $8V$, lo cual es menor a la señal sin carga ($12V$).
-Durante la implementación se presentaron oscilaciones de alta frecuencia durante el ciclo de apagado de la señal PWM, las cuales son tratadas en la sección \ref{subsec:oscilaciones}.
+Se puede observar como la red snubber logra eliminar casi por completo la oscilación de alta frecuencia. 
+La señal obtenida posee un período $8\mu s$ y se mantiene encendida durante $3.2\mu s$, verificando la frecuencia de conmutación elegida de ($f=125kHz$) y un ancho de pulso ($D=0.4$).
+Respecto a la señal sin el convertidor conectado, la forma de onda se distorsiona y su amplitud disminuye de $12V$ a $8V$.
 En la figura \ref{fig:sim:osc_pwm_vout} se muestra la misma forma de onda simulada en LTspice.
 
 \begin{figure}[H]
@@ -191,6 +189,8 @@ En la figura \ref{fig:sim:osc_pwm_vout} se muestra la misma forma de onda simula
 \end{figure}
 
 En la figura \ref{fig:ct_v} se muestran la tensión en el capacitor $C_t$.
+La frecuencia de la forma de onda disminuye a aproximadamente $f=112kHz$ y se percibe la oscilación no deseada de $f_{osc}=1.25MHz$, 
+la cual fue eliminada de la señal PWM que excita al MOSFET de lado bajo mediante la red snubber, pero estará presente en muchas de las formas de onda que se analizarán a continuación. 
 
 \begin{figure}[H]
     \centering
@@ -198,10 +198,6 @@ En la figura \ref{fig:ct_v} se muestran la tensión en el capacitor $C_t$.
     \caption{Tensión en el capacitor $C_t$} %COMPLETAR
     \label{fig:ct_v}
 \end{figure}
-
-Se observa una disminución en la frecuencia de la forma de onda a aproximadamente $f=112kHz$. 
-En esta señal se observa mejor la oscilación no deseada de $f_{osc}=1.25MHz$, 
-la cual estará presente en muchas de las formas de onda que se analizarán a continuación. 
 
 % 1) Señal PWM
 
@@ -245,8 +241,8 @@ se distorsionaba y disminuía notablemente su amplitud, lo que causaba que los M
 Los resultados obtenidos con la inclusión de esta etapa fueron una mejora en la forma de onda de la señal PWM y un incremento notorio en su amplitud.
 Sin embargo, actualmente su amplitud disminuye al aumentar el ciclo de trabajo.
 
-En la figura \ref{fig:osc:3} se muestra la forma de onda de la tensión de salida de la etapa de ganancia de corriente.
-Esta señal PWM que controla al MOSFET de lado bajo verifica las condiciones de funcionamiento con un período de $8\mu s$ y un ancho de pulso de aproximadamente 40\%.
+En la figura \ref{fig:osc:3} se muestra la tensión de salida de la etapa de ganancia de corriente.
+Al igual que la tensión a la salida del TL494, esta señal PWM que controla al MOSFET de lado bajo verifica las condiciones de funcionamiento con un período de $8\mu s$ y un ancho de pulso de aproximadamente 40\%.
 Además se observa un mejor resultado en la forma de onda respecto a la simulación de la figura \ref{fig:sim:3}. %Porque estamos re masa.
 
 % Dado que la etapa posee ganancia de tensión unitaria, su forma de onda es aproximadamente igual a la tensión de salida del TL494. 
@@ -290,43 +286,27 @@ Además se observa un mejor resultado en la forma de onda respecto a la simulaci
 
 \subsection{Driver}
 
-En la figura \ref{fig:driver_vout_connected} se muestra la tensión de salida del driver, que coincide con la tensión entre \textit{gate} y \textit{source} del MOSFET de lado alto.
-Se puede ver que también están presentes las oscilaciones de alta frecuencia que se observan en la salida del TL494.
+%En la figura \ref{fig:driver_expected_waveforms} se muestran algunas formas de onda del circuito del driver con las que se hicieron comparaciones para verificar su correcto funcionamiento.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{images/capturas-osciloscopio/17-11-2022/31.png} %Acá tuve que dejar la simulación vieja, porque la nueva está desfasada y esta hecha con otro D, queda mal
-    \caption{Tensión a la salida del driver}
-    \label{fig:driver_vout_connected}
-\end{figure}
+%\begin{figure}[H]
+%    \centering
+%    \includegraphics[width=0.7\textwidth]{images/driver_expected_waveforms.png}
+%    \caption{Formas de onda esperadas de distintas señales del driver \cite{gatedrivers}}
+%    \label{fig:driver_expected_waveforms}
+%\end{figure}
 
-En la figura \ref{fig:sim:driver_vout_connected} puede verse los resultados de la simulación,
-que coincide con la tensión entre \textit{gate} y \textit{source} del MOSFET de lado alto.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{images/sim/15.pdf}
-    \caption{Simulación de la tensión a la salida del driver}
-    \label{fig:sim:driver_vout_connected}
-\end{figure}
-% HAY QUE ORDENAR ESTAS 2
-La amplitud y la forma de onda de la señal del prototipo coinciden respecto a la simulación. Presenta la oscilación de $f_{osc}=1.25MHz$.
-
-En la figura \ref{fig:driver_expected_waveforms} se muestran algunas formas de onda del circuito del driver con las que se hicieron comparaciones para verificar su correcto funcionamiento.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{images/driver_expected_waveforms.png}
-    \caption{Formas de onda esperadas de distintas señales del driver \cite{gatedrivers}}
-    \label{fig:driver_expected_waveforms}
-\end{figure}
-
-A continuación se presentan formas de ondas variadas del driver, comparándolas con las simulaciones para verificar su funcionamiento.
 % 1) Tensiones en el transformador de señal 
 
     % Forma de onda: Rectangular 
     % Amplitud: -Vc a Vdrv-Vc 
     % Son iguales dada la relación 1:1 del transformador. 
+    
+En la figura \ref{fig:osc:7} se muestra la tensión en el primario del transformador. 
+La forma de la señal presenta una gran distorsión respecto a la rectangular esperada según la nota de aplicación \cite{gatedrivers}.
+A pesar de ello, coincide en forma aproximada con la señal simulada, tanto en forma como en amplitud, de la figura \ref{fig:sim:4}.
+
+Dado que es la primera señal de tensión del driver, la situación descripta anteriormente se reproduce en las siguientes formas de onda, como lo son la tensión en el secundario de la figura \ref{fig:osc:9}, la corriente por la resistencia entre gate y source de la figura \ref{fig:osc:13} y la tensión a la salida del driver de la figura \ref{fig:driver_vout_connected}.
+Esta última señal es la que controla al MOSFET de lado alto (tensión entre \textit{gate} y \textit{source} del transistor) y presenta la oscilación no deseada de $f_{osc}=1.25MHz$.
 
 \begin{figure}[H]
     \centering
@@ -342,9 +322,6 @@ A continuación se presentan formas de ondas variadas del driver, comparándolas
     \label{fig:sim:4}
 \end{figure}
 
-La amplitud y la forma de onda de la señal del prototipo coinciden respecto a la simulación. 
-Se observan unos picos en los flancos de subida y de bajada. 
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{images/capturas-osciloscopio/17-11-2022/9.png}
@@ -358,27 +335,6 @@ Se observan unos picos en los flancos de subida y de bajada.
     \caption{Simulación de la tensión en el secundario del transformador del driver}
     \label{fig:sim:5}
 \end{figure}
-
-Para el caso del secundario, las formas de onda también coinciden. 
-Se observa un pico solo en el flanco de bajada.
-
-En las figuras \ref{fig:osc:11} y \ref{fig:sim:6} se muestran la forma de onda de la corriente por el primario del transformador del driver junto con su simulación.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{images/capturas-osciloscopio/17-11-2022/11.png}
-    \caption{Corriente por el primario del transformador del driver}
-    \label{fig:osc:11}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{images/sim/6.pdf}
-    \caption{Simulación de la corriente por el primario del transformador del driver}
-    \label{fig:sim:6}
-\end{figure}
-
-La forma de onda del prototipo presenta una deformación y posee levemente mayor amplitud. 
 
 \begin{figure}[H]
     \centering
@@ -394,8 +350,35 @@ La forma de onda del prototipo presenta una deformación y posee levemente mayor
     \label{fig:sim:7}
 \end{figure}
 
-La amplitud y la forma de onda de la señal del prototipo coinciden respecto a la simulación. 
-Presenta la oscilación de $f_{osc}=1.25MHz$. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/capturas-osciloscopio/17-11-2022/31.png} %Acá tuve que dejar la simulación vieja, porque la nueva está desfasada y esta hecha con otro D, queda mal
+    \caption{Tensión a la salida del driver}
+    \label{fig:driver_vout_connected}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/15.pdf}
+    \caption{Simulación de la tensión a la salida del driver}
+    \label{fig:sim:driver_vout_connected}
+\end{figure}
+
+En la figura \ref{fig:osc:11} se muestra la corriente por el primario del transformador. La forma de onda presenta deformación y levemente mayor amplitud que la simulada de la figura \ref{fig:sim:6}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/capturas-osciloscopio/17-11-2022/11.png}
+    \caption{Corriente por el primario del transformador del driver}
+    \label{fig:osc:11}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/6.pdf}
+    \caption{Simulación de la corriente por el primario del transformador del driver}
+    \label{fig:sim:6}
+\end{figure}
 
 % 2) Tensión Gate del MOSFET high side % Sería vout del driver?
 % DONE
@@ -423,7 +406,6 @@ Presenta la oscilación de $f_{osc}=1.25MHz$.
 
 \subsection{Convertidor}
 
-% Agregar intro
 \subsubsection{MOSFETs}
 
 % 1) Vgs de ambos MOSFETs %Ya se midió en otros lados
@@ -431,7 +413,7 @@ Presenta la oscilación de $f_{osc}=1.25MHz$.
 % 2) Vds de ambos MOSFETs
 
 En las figuras \ref{fig:vds_high} y \ref{fig:vds_low} se muestran las tensiones en los terminales \textit{drain} y \textit{source} de los MOSFETs del convertidor forward doble switch.
-Para comparar, se muestra en las figuras \ref{fig:vds_simulation_high} y \ref{fig:vds_simulation_low} las tensiones $V_{DS}$ de los MOSFETs simulados en LTSpice. 
+Exceptuando el sobrepico inicial y la oscilación de $f_{osc}=1.25MHz$, las señales coinciden con las simuladas de las figuras \ref{fig:vds_simulation_high} y \ref{fig:vds_simulation_low}. 
 
 \begin{figure}[H]
     \centering
@@ -463,7 +445,10 @@ Para comparar, se muestra en las figuras \ref{fig:vds_simulation_high} y \ref{fi
 
 % 3) Idrain de ambos MOSFETs
 
-En las figuras \ref{fig:osc:20} y \ref{fig:osc:22} puede verse la corriente por el terminal \textit{drain} de los MOSFETs del convertidor. Las figuras \ref{fig:sim:10} y \ref{fig:sim:11} muestran sus simulaciones, respectivamente.
+En las figuras \ref{fig:osc:20} y \ref{fig:osc:22} puede observarse la corriente por el terminal \textit{drain} de los MOSFETs del convertidor.
+A partir de estas mediciones, las formas de onda de corriente no presentan componente continua ya que se utilizaron las puntas de corriente. En consecuencia, en las comparaciones se analizarán las formas de onda y las posibles oscilaciones.  
+Si bien la forma de onda es triangular, respecto a las simulaciones de las figuras \ref{fig:sim:10} y \ref{fig:sim:11}, la amplitud obtenida es mucho menor. 
+Además se percibe un sobrepico negativo en el flanco de bajada del MOSFET de lado bajo. 
 
 \begin{figure}[H]
     \centering
@@ -493,12 +478,7 @@ En las figuras \ref{fig:osc:20} y \ref{fig:osc:22} puede verse la corriente por 
     \label{fig:sim:11}
 \end{figure}
 
-El prototipo presenta un sobrepico negativo en el flanco de bajada del MOSFET de lado bajo. 
-También se observa que la amplitud de la señal simulada es mucho mayor.
-
-Como último punto de los MOSFETs, se muestran en las figuras \ref{fig:osc:15} y \ref{fig:osc:17} las corrientes por \textit{gate} del MOSFET de lado alto y bajo, respectivamente.
-Sus simulaciones pueden verse en las figuras \ref{fig:sim:8} y \ref{fig:sim:9}.
-A partir de estas mediciones, las formas de onda de corriente no presentan componente continua ya que se utilizaron las puntas de corriente. En consecuencia, en las comparaciones se analizarán las formas de onda y las posibles oscilaciones. 
+En las figuras \ref{fig:osc:15} y \ref{fig:osc:17} se muestra la corriente por el terminal \textit{gate} de los MOSFETs. Las formas de onda coinciden de forma aproximada con las simulaciones de las figuras \ref{fig:sim:8} y \ref{fig:sim:9}.
 
 \begin{figure}[H]
     \centering
@@ -531,7 +511,7 @@ A partir de estas mediciones, las formas de onda de corriente no presentan compo
 \subsubsection{Transformador de potencia}
 % 4) Tensiones en el E70
 
-Las figuras \ref{fig:osc:38} y \ref{fig:osc:40} muestran las tensiones en el primario y el secundario del transformador de potencia, respectivamente. Puede observarse comparando con sus simulaciones (Figuras \ref{fig:sim:19} y \ref{fig:sim:20}) que las oscilaciones son mucho mayores en el secundario del transformador.
+Las figuras \ref{fig:osc:38} y \ref{fig:osc:40} muestran las tensiones en el primario y el secundario del transformador de potencia. Puede observarse comparando con sus simulaciones (figuras \ref{fig:sim:19} y \ref{fig:sim:20}) que las oscilaciones son mucho mayores en el secundario del transformador.
 
 \begin{figure}[H]
     \centering
