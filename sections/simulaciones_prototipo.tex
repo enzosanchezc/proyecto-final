@@ -511,7 +511,9 @@ En las figuras \ref{fig:osc:15} y \ref{fig:osc:17} se muestra la corriente por e
 \subsubsection{Transformador de potencia}
 % 4) Tensiones en el E70
 
-Las figuras \ref{fig:osc:38} y \ref{fig:osc:40} muestran las tensiones en el primario y el secundario del transformador de potencia. Puede observarse comparando con sus simulaciones (figuras \ref{fig:sim:19} y \ref{fig:sim:20}) que las oscilaciones son mucho mayores en el secundario del transformador.
+Las figuras \ref{fig:osc:38} y \ref{fig:osc:40} muestran las tensiones en el primario y el secundario del transformador de potencia. 
+En comparación con la simulación de la figura \ref{fig:sim:19}, la oscilación de $f_{osc}=1.25MHz$ deforma la tensión en el primario cuando la misma toma amplitud negativa y nula, y la amplitud de la señal coincide de forma aproximada.
+Al comparar con la forma de onda del secundario de la figura \ref{fig:sim:20}, se observa una nueva oscilación de $f_{osc}=3.23MHz$ mucho más marcada que la anterior y, a pesar de utilizar una relación 1:1, una gran disminución de la tensión de $36V$ a $20V$. 
 
 \begin{figure}[H]
     \centering
@@ -541,25 +543,20 @@ Las figuras \ref{fig:osc:38} y \ref{fig:osc:40} muestran las tensiones en el pri
     \label{fig:sim:20}
 \end{figure}
 
-Se observa que en el secundario del transformador, con una relación 1 a 1,
-la tensión se ve reducida en gran medida.
-Se ajustaron las vueltas del secundario para escalar a la tensión deseada.
+Con el objetivo de que el secundario tenga la misma tensión de $36V$ que el primario, se volvió a bobinar el transformador con una relación 1:2. La forma de onda resultante se observa en la figura \ref{fig:osc:41}. En comparación con la anterior relación de vueltas, se observa un estado indeseado en el cambio de tensión positiva a negativa durante el cual la amplitud es nula.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/capturas-osciloscopio/17-11-2022/56.png}
-    \caption{Tensión en el secundario del transformador de potencia luego de ajustar la relación de vueltas del transformador a 2:1}
+    \caption{Tensión en el secundario del transformador de potencia luego de ajustar la relación de vueltas del transformador a 1:2}
     \label{fig:osc:41}
 \end{figure}
-
-También puede observarse, comparándolo con la imagen anterior, que la señal pasa de una tensión de 36V a 0V,
-y luego de 0V a -36V, mientras que con la relación original y en la simulación la tensión pasa de 36V a -36V directamente,
-el cual es el comportamiento esperado.
 
 % 5) Corriente en el primario %Del e70?
 
     % Medir la componente continua. IMPOSSIBLE
-Las figuras \ref{fig:osc:24} muestra la corriente que circula por el primario del transformador de potencia. La figura \ref{fig:sim:12} muestra la simulación de la misma.
+La figura \ref{fig:osc:24} muestra la corriente que circula por el primario del transformador de potencia. 
+Si bien la forma de onda es triangular, respecto a la simulación de la figura \ref{fig:sim:12}, la amplitud obtenida es mucho menor. 
 
 \begin{figure}[H]
     \centering
@@ -578,7 +575,9 @@ Las figuras \ref{fig:osc:24} muestra la corriente que circula por el primario de
 \subsubsection{Circuito de salida}
 % 7) Corriente en el inductor junto con su ripple
 
-La corriente por el inductor de salida se muestra en la figura \ref{fig:osc:66}. La figura \ref{fig:sim:13} muestra su simulación.
+La figura \ref{fig:osc:66} muestra la corriente por el inductor de salida. 
+En comparación con la simulación de la figura \ref{fig:sim:13}, 
+la amplitud es menor y presenta una oscilación de $f=3.68MHz$ en la rampa de subida y de $f=38.5MHz$ en la de bajada, la cual causa que la captura del osciloscopio se vea recortada. 
 
 \begin{figure}[H]
     \centering
@@ -594,12 +593,8 @@ La corriente por el inductor de salida se muestra en la figura \ref{fig:osc:66}.
     \label{fig:sim:13}
 \end{figure}
 
-La amplitud de la forma de onda del prototipo es $30mA$ menor a la simulada. 
-Además, presenta una oscilación de $f=3.68MHz$ en la rampa de subida y de $f=38.5MHz$ en la de bajada, la cual causa que la captura del osciloscopio se vea recortada. 
+En las figuras \ref{fig:osc:67} y \ref{fig:sim:14ripple} se muestra la medición  del ripple de corriente en la resistencia de carga y su simulación. Se puede observar que el ripple obtenido es mayor al simulado.
 
-En las figuras \ref{fig:osc:67} y \ref{fig:sim:14ripple} se muestra la corriente por la resistencia de carga y su simulación, respectivamente. Se puede observar que el ripple obtenido es mayor al simulado.
-
-La figura \ref{fig:sim:14} muestra la simulación de la corriente de salida durante el encendido.
 % 8) Corriente de salida junto con su ripple 
 
     % Idealmente medir 1A-1.6A del modo elegido. 
@@ -618,16 +613,7 @@ La figura \ref{fig:sim:14} muestra la simulación de la corriente de salida dura
     \label{fig:sim:14ripple}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{images/sim/14.pdf}
-    \caption{Simulación de la corriente por la carga}
-    \label{fig:sim:14}
-\end{figure}
-
-El ripple de la simulación es de 0.2mA pico a pico, mientras que el prototipo da al rededor de 5mA pico a pico máximo.
-
-Análogamente, en las figuras \ref{fig:osc:58} y \ref{fig:sim:21ripple} se muestra el ripple de tensión en la salida salida y su simulación. En la figura \ref{fig:sim:21} se muestra la simulación de la tensión de salida durante el encendido.
+Análogamente, en la figura \ref{fig:osc:58} se muestra el ripple de tensión en la salida. El ripple medido es de $120mV$, muy superior al obtenido de $17mV$ en la simulación de la figura \ref{fig:sim:21ripple}. Este último es incluso mejor al establecido en el proceso de diseño de $25mV$. 
 % 9) Tensión de salida junto con su ripple 
 
 \begin{figure}[H]
@@ -644,11 +630,20 @@ Análogamente, en las figuras \ref{fig:osc:58} y \ref{fig:sim:21ripple} se muest
     \label{fig:sim:21ripple}
 \end{figure}
 
+Las figuras \ref{fig:sim:21} y \ref{fig:sim:14} muestran la simulación de la tensión y corriente de salida. Se observa como, luego de un pequeño transitorio, logran estabilizarse en $13.24V$ y $0.15A$. 
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/sim/21.pdf}
     \caption{Simulación de la tensión en la carga}
     \label{fig:sim:21}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/sim/14.pdf}
+    \caption{Simulación de la corriente por la carga}
+    \label{fig:sim:14}
 \end{figure}
 
 La mayor diferencia del prototipo implementado respecto a las simulaciones se obtuvo en la tensión de salida. 
