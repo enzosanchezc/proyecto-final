@@ -25,7 +25,6 @@ separando el proceso en 4 partes:
 En la Figura \ref{fig:esquema_cargador} se puede observar el esquema en bloques del cargador.
 El circuito de la fuente conmutada está compuesto por los bloques de rectificación, filtrado y conversión DC-DC.
 El controlador se encarga de generar una señal PWM en base a la tensión y la corriente de la batería.
-La referencia es una señal de corriente ya que la tensión nominal del cargador es fija.
 
 En primer lugar se implementó la etapa de tensión constante con el convertidor DC-DC, logrando una tensión de salida de 42V mediante un ciclo de trabajo fijo. 
 La etapa de corriente constante se implementó luego del convertidor con un circuito limitador de corriente,
