@@ -222,7 +222,7 @@ Sus parámetros principales son:
 \begin{itemize}
     \item Diámetro del cable: $d=0.723mm$
     \item Área de la sección transversal: $A_{w}=4.116\times10^{-3}cm^2$
-    \item Conductividad del cobre: $\sigma=\frac{481.9\mu\Omega}{cm}$
+    \item Conductividad del cobre: $\sigma=5.96\times10^7Sm^{-1}$
     \item Permeabilidad magnética del cobre: $\mu_r\simeq1$
 \end{itemize}
 
@@ -231,11 +231,11 @@ Este fenómeno se conoce como efecto pelicular\cite{skin} y provoca una variaci�
 Por lo tanto, para corriente alterna la mayor parte de la corriente eléctrica fluye entre la superficie y la profundidad superficial de los conductores $\delta$.
 Esta última depende de la frecuencia de la corriente y de las propiedades eléctricas y magnéticas del conductor.
 
-$$ \delta=\sqrt{\frac{1}{\pi f\mu\sigma}}=\sqrt{\frac{1}{\pi\times125kHz\times1\times4\pi\times10^{-7}\times\frac{481.9\mu\Omega}{cm}}}=65mm $$
+$$ \delta=\sqrt{\frac{1}{\pi f\mu\sigma}}=\sqrt{\frac{1}{\pi\times125kHz\times1\times4\pi\times10^{-7}\times5.96\times10^{7}Sm^{-1}}}=0.18mm $$
 
 El diámetro mínimo del conductor resulta:
 
-$$ d_{min}=2\times\delta=130mm$$
+$$ d_{min}=2\times\delta=0.36mm$$
 
 Por lo tanto, se verifica que el diámetro del cable AWG 21 es mayor al mínimo requerido. 
 
@@ -332,6 +332,8 @@ $$ N=\sqrt{\frac{L\times l_0}{A_e\times u_0}}=67\ vueltas$$
 
 Con $B_m=200mT$:
 $$ N=\sqrt{\frac{L\times l_0}{A_e\times u_0}}=34\ vueltas $$
+
+Por lo que se fijó $B_m=200mT$ para reducir el número de vueltas.
 
 \item{Construcción y verificación}
 
